@@ -17,6 +17,7 @@ import {
   InputGroup,
   InputLeftElement,
   Avatar,
+  Box,
 } from "@chakra-ui/react";
 import ChatBubble from "./ChatBubble";
 import {
@@ -54,7 +55,11 @@ type Props = {
 
 function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
   const [isBottom, setIsBottom] = useState(false);
-  const listInnerRef = useRef<HTMLDivElement>();
+  const bottom = useRef<Box>(null);
+  const scrollToBottom = () => {
+    bottom.current.scrollIntoView({ behavior: "smooth" });
+  };
+  const listInnerRef = useRef<Flex>();
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
@@ -136,6 +141,7 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
             from={from}
           />
         ))}
+        <Box ref={bottom}></Box>
       </Flex>
       {!isBottom && (
         <IconButton
@@ -150,6 +156,7 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
           left={0}
           right={0}
           bottom={"64px"}
+          onClick={() => scrollToBottom()}
         />
       )}
       <Flex
