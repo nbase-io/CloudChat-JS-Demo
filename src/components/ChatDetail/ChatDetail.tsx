@@ -17,7 +17,7 @@ import { TbLock } from "react-icons/tb";
 import { BiNotification } from "react-icons/bi";
 import ChatFile from "./ChatFile";
 import ChatLink from "./ChatLink";
-import UserAvatar from "./UserAvatar";
+import UserAvatar from "../UserAvatar/UserAvatar";
 
 const channelMembers = ["Asher Hong", "Shinbae Kong", "Han Kim"];
 

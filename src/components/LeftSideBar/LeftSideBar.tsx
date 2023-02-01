@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import ChatRow from "./ChatRow";
-import UserAvatar from "../ChatDetail/UserAvatar";
+import UserAvatar from "../UserAvatar/UserAvatar";
 import { GrAdd } from "react-icons/gr";
 
 const onlineFriends = [
