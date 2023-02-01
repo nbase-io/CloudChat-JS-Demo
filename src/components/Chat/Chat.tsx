@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import ChatBubble from "./ChatBubble";
 import {
-  IoMdSend,
+  IoIosSend,
   IoMdMenu,
   IoMdInformationCircleOutline,
 } from "react-icons/io";
@@ -166,7 +166,7 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
             colorScheme={"black"}
             aria-label="Send Message"
             variant={"ghost"}
-            icon={<IoMdSend />}
+            icon={<IoIosSend />}
             mr={2}
           />
         </Tooltip>

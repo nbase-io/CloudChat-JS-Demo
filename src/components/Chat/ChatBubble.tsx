@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Box, VStack, Text, HStack, Avatar } from "@chakra-ui/react";
+import {
+  Box,
+  VStack,
+  Text,
+  HStack,
+  Avatar,
+  IconButton,
+} from "@chakra-ui/react";
+import { FaImage, FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
 
 type Props = {
   message: string;
@@ -24,10 +32,35 @@ function ChatBubble({ message, dateSent, from }: Props) {
           </Text>
         </HStack>
       )}
-      <HStack alignItems={"flex-end"}>
+      <HStack
+        alignItems={isHovering ? "center" : "flex-end"}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         {isMe &&
           (isHovering ? (
-            <></>
+            <HStack>
+              <IconButton
+                colorScheme={"black"}
+                aria-label="Send Image"
+                variant={"ghost"}
+                icon={<FaTrashAlt />}
+                size={"sm"}
+              />
+              <IconButton
+                colorScheme={"black"}
+                aria-label="Send Image"
+                variant={"ghost"}
+                icon={<FaCopy />}
+                size={"sm"}
+              />
+              <IconButton
+                colorScheme={"black"}
+                aria-label="Send Image"
+                variant={"ghost"}
+                icon={<FaReply />}
+                size={"sm"}
+              />
+            </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
               {dateSent}
@@ -44,13 +77,34 @@ function ChatBubble({ message, dateSent, from }: Props) {
           borderBottomRightRadius={bottomRightRadius}
           _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
           onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
         >
           {message}
         </Box>
         {!isMe &&
           (isHovering ? (
-            <></>
+            <HStack>
+              <IconButton
+                colorScheme={"black"}
+                aria-label="Send Image"
+                variant={"ghost"}
+                icon={<FaReply />}
+                size={"sm"}
+              />
+              <IconButton
+                colorScheme={"black"}
+                aria-label="Send Image"
+                variant={"ghost"}
+                icon={<FaCopy />}
+                size={"sm"}
+              />
+              <IconButton
+                colorScheme={"black"}
+                aria-label="Send Image"
+                variant={"ghost"}
+                icon={<FaTrashAlt />}
+                size={"sm"}
+              />
+            </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
               {dateSent}
