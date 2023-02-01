@@ -13,7 +13,6 @@ import {
   VStack,
   Text,
 } from "@chakra-ui/react";
-import { RiAddCircleFill } from "react-icons/ri";
 import { Input } from "@chakra-ui/react";
 import ChatRow from "./ChatRow";
 import UserAvatar from "../ChatDetail/UserAvatar";

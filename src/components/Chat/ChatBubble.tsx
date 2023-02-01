@@ -22,21 +22,30 @@ function ChatBubble({ message, dateSent, from }: Props) {
           </Text>
         </HStack>
       )}
-      <Box
-        bg={isMe ? "blue.50" : "gray.100"}
-        px={6}
-        py={4}
-        maxW={80}
-        borderTopLeftRadius={topLeftRadius}
-        borderTopRightRadius={32}
-        borderBottomLeftRadius={32}
-        borderBottomRightRadius={bottomRightRadius}
-      >
-        {message}
-      </Box>
-      <Text fontSize={"xs"} color={"gray"}>
-        {dateSent}
-      </Text>
+      <HStack alignItems={"flex-end"}>
+        {isMe && (
+          <Text fontSize={"xs"} color={"gray"}>
+            {dateSent}
+          </Text>
+        )}
+        <Box
+          bg={isMe ? "blue.50" : "gray.100"}
+          px={6}
+          py={4}
+          maxW={80}
+          borderTopLeftRadius={topLeftRadius}
+          borderTopRightRadius={32}
+          borderBottomLeftRadius={32}
+          borderBottomRightRadius={bottomRightRadius}
+        >
+          {message}
+        </Box>
+        {!isMe && (
+          <Text fontSize={"xs"} color={"gray"}>
+            {dateSent}
+          </Text>
+        )}
+      </HStack>
     </VStack>
   );
 }

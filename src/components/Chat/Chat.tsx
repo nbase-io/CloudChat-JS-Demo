@@ -14,6 +14,13 @@ import {
   MenuGroup,
   MenuItem,
   MenuDivider,
+  Tooltip,
+  InputGroup,
+  InputLeftElement,
+  PopoverTrigger,
+  Popover,
+  PopoverContent,
+  Text,
 } from "@chakra-ui/react";
 import ChatBubble from "./ChatBubble";
 import {
@@ -26,6 +33,8 @@ import { SlOptions, SlSettings } from "react-icons/sl";
 import { RxExit } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaImage } from "react-icons/fa";
+import { HiOutlineEmojiHappy } from "react-icons/hi";
+import EmojiPicker from "emoji-picker-react";
 
 const messages = [
   { message: "you what's up", from: "me", dateSent: "20:23" },
@@ -47,13 +56,15 @@ type Props = {
 };
 
 function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
-  const listInnerRef = useRef();
+  const listInnerRef = useRef<HTMLDivElement>();
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
       if (scrollTop + clientHeight === scrollHeight) {
         // TO SOMETHING HERE
         console.log("Reached bottom");
+      } else {
+        console.log("Left bottom");
       }
     }
   };
@@ -125,21 +136,50 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
         ))}
       </Flex>
       <Flex pl={4} py={2} borderTopColor="gray.100" borderTopWidth={1}>
-        <Input variant={"outline"} placeholder="Type your message" />
-        <IconButton
-          colorScheme={"blue"}
-          aria-label="Send Image"
-          variant={"ghost"}
-          icon={<FaImage />}
-          ml={2}
-        />
-        <IconButton
-          colorScheme={"blue"}
-          aria-label="Send Message"
-          variant={"ghost"}
-          icon={<IoMdSend />}
-          mr={2}
-        />
+        <InputGroup>
+          <Popover>
+            <PopoverTrigger>
+              <InputLeftElement>
+                <Tooltip label={"이모지"}>
+                  <IconButton
+                    colorScheme={"black"}
+                    aria-label="Send Image"
+                    variant={"ghost"}
+                    icon={<HiOutlineEmojiHappy />}
+                    ml={2}
+                  />
+                </Tooltip>
+              </InputLeftElement>
+            </PopoverTrigger>
+            <PopoverContent>
+              <EmojiPicker />
+            </PopoverContent>
+          </Popover>
+          <Input
+            borderRadius={120}
+            variant={"outline"}
+            placeholder="입력 후 Enter 키를 누르세요"
+            pl={10}
+          />
+        </InputGroup>
+        <Tooltip label={"이미지 및 영상 보내기"}>
+          <IconButton
+            colorScheme={"black"}
+            aria-label="Send Image"
+            variant={"ghost"}
+            icon={<FaImage />}
+            ml={2}
+          />
+        </Tooltip>
+        <Tooltip label={"메세지 보내기"}>
+          <IconButton
+            colorScheme={"black"}
+            aria-label="Send Message"
+            variant={"ghost"}
+            icon={<IoMdSend />}
+            mr={2}
+          />
+        </Tooltip>
       </Flex>
     </Flex>
   );
