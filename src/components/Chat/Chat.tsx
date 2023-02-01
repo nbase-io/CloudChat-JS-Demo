@@ -1,9 +1,8 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Flex,
   HStack,
   Stat,
-  StatLabel,
   StatNumber,
   Input,
   IconButton,
@@ -44,6 +43,7 @@ const messages = [
   { message: "worth it?", from: "me", dateSent: "21:03" },
   { message: "of course man", from: "Asher Hong", dateSent: "21:13" },
   { message: "this is fantastic", from: "Asher Hong", dateSent: "22:23" },
+  { message: "ima watch it soon too!", from: "me", dateSent: "22:25" },
 ];
 
 type Props = {
@@ -52,15 +52,18 @@ type Props = {
 };
 
 function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
+  const [isBottom, setIsBottom] = useState(false);
   const listInnerRef = useRef<HTMLDivElement>();
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
       if (scrollTop + clientHeight === scrollHeight) {
-        // TO SOMETHING HERE
-        console.log("Reached bottom");
+        // scoll bottom reached
+        setIsBottom(true);
       } else {
-        console.log("Left bottom");
+        if (isBottom) {
+          setIsBottom(false);
+        }
       }
     }
   };
@@ -133,7 +136,12 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
           />
         ))}
       </Flex>
-      <Flex pl={4} py={2} borderTopColor="gray.100" borderTopWidth={1}>
+      <Flex
+        pl={4}
+        py={2}
+        borderTopColor="gray.100"
+        borderTopWidth={isBottom ? 0 : 1}
+      >
         <InputGroup>
           <InputLeftElement>
             <Tooltip label={"이모지"}>

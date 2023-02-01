@@ -6,6 +6,7 @@ import {
   HStack,
   Avatar,
   IconButton,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FaImage, FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
 
@@ -39,27 +40,33 @@ function ChatBubble({ message, dateSent, from }: Props) {
         {isMe &&
           (isHovering ? (
             <HStack>
-              <IconButton
-                colorScheme={"black"}
-                aria-label="Send Image"
-                variant={"ghost"}
-                icon={<FaTrashAlt />}
-                size={"sm"}
-              />
-              <IconButton
-                colorScheme={"black"}
-                aria-label="Send Image"
-                variant={"ghost"}
-                icon={<FaCopy />}
-                size={"sm"}
-              />
-              <IconButton
-                colorScheme={"black"}
-                aria-label="Send Image"
-                variant={"ghost"}
-                icon={<FaReply />}
-                size={"sm"}
-              />
+              <Tooltip label={"삭제"}>
+                <IconButton
+                  colorScheme={"black"}
+                  aria-label="Delete Message"
+                  variant={"ghost"}
+                  icon={<FaTrashAlt />}
+                  size={"sm"}
+                />
+              </Tooltip>
+              <Tooltip label={"복사"}>
+                <IconButton
+                  colorScheme={"black"}
+                  aria-label="Copy Message"
+                  variant={"ghost"}
+                  icon={<FaCopy />}
+                  size={"sm"}
+                />
+              </Tooltip>
+              <Tooltip label={"답장"}>
+                <IconButton
+                  colorScheme={"black"}
+                  aria-label="Reply Message"
+                  variant={"ghost"}
+                  icon={<FaReply />}
+                  size={"sm"}
+                />
+              </Tooltip>
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
@@ -83,27 +90,33 @@ function ChatBubble({ message, dateSent, from }: Props) {
         {!isMe &&
           (isHovering ? (
             <HStack>
-              <IconButton
-                colorScheme={"black"}
-                aria-label="Send Image"
-                variant={"ghost"}
-                icon={<FaReply />}
-                size={"sm"}
-              />
-              <IconButton
-                colorScheme={"black"}
-                aria-label="Send Image"
-                variant={"ghost"}
-                icon={<FaCopy />}
-                size={"sm"}
-              />
-              <IconButton
-                colorScheme={"black"}
-                aria-label="Send Image"
-                variant={"ghost"}
-                icon={<FaTrashAlt />}
-                size={"sm"}
-              />
+              <Tooltip label={"답장"}>
+                <IconButton
+                  colorScheme={"black"}
+                  aria-label="Reply Message"
+                  variant={"ghost"}
+                  icon={<FaReply />}
+                  size={"sm"}
+                />
+              </Tooltip>
+              <Tooltip label={"복사"}>
+                <IconButton
+                  colorScheme={"black"}
+                  aria-label="Copy Message"
+                  variant={"ghost"}
+                  icon={<FaCopy />}
+                  size={"sm"}
+                />
+              </Tooltip>
+              <Tooltip label={"삭제"}>
+                <IconButton
+                  colorScheme={"black"}
+                  aria-label="Delete Message"
+                  variant={"ghost"}
+                  icon={<FaTrashAlt />}
+                  size={"sm"}
+                />
+              </Tooltip>
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
