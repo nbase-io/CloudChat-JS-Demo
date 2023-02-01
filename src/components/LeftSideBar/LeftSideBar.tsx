@@ -12,6 +12,7 @@ import {
   ListItem,
   VStack,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import ChatRow from "./ChatRow";
@@ -76,13 +77,15 @@ function LeftSideBar() {
         justifyContent={"space-between"}
       >
         <Heading fontSize="xl">채널</Heading>
-        <IconButton
-          rounded={"full"}
-          variant="ghost"
-          icon={<GrAdd />}
-          size="md"
-          aria-label="Add Channel"
-        />
+        <Tooltip label={"채널 생성"}>
+          <IconButton
+            rounded={"full"}
+            variant="ghost"
+            icon={<GrAdd />}
+            size="md"
+            aria-label="Add Channel"
+          />
+        </Tooltip>
       </Box>
       <InputGroup size={"md"} px={8}>
         <Input

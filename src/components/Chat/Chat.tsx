@@ -30,6 +30,7 @@ import { RxExit } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaImage } from "react-icons/fa";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
+import { FaArrowDown } from "react-icons/fa";
 
 const messages = [
   { message: "you what's up", from: "me", dateSent: "20:23" },
@@ -136,6 +137,21 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
           />
         ))}
       </Flex>
+      {!isBottom && (
+        <IconButton
+          rounded={"full"}
+          variant="ghost"
+          icon={<FaArrowDown />}
+          size="lg"
+          aria-label="Scroll to Bottom"
+          position={"absolute"}
+          w={"50px"}
+          margin={"0 auto"}
+          left={0}
+          right={0}
+          bottom={"64px"}
+        />
+      )}
       <Flex
         pl={4}
         py={2}
