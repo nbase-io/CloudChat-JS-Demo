@@ -17,10 +17,7 @@ import {
   Tooltip,
   InputGroup,
   InputLeftElement,
-  PopoverTrigger,
-  Popover,
-  PopoverContent,
-  Text,
+  Avatar,
 } from "@chakra-ui/react";
 import ChatBubble from "./ChatBubble";
 import {
@@ -34,7 +31,6 @@ import { RxExit } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaImage } from "react-icons/fa";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
-import EmojiPicker from "emoji-picker-react";
 
 const messages = [
   { message: "you what's up", from: "me", dateSent: "20:23" },
@@ -82,8 +78,10 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
           aria-label="Toggle Left Side Bar Drawer"
         />
         <Stat mt={6}>
-          <StatLabel>Chatting on</StatLabel>
-          <StatNumber>nbase</StatNumber>
+          <HStack>
+            <Avatar size="md" name="nbase" />
+            <StatNumber>nbase</StatNumber>
+          </HStack>
         </Stat>
         <IconButton
           rounded={"full"}
@@ -137,29 +135,21 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
       </Flex>
       <Flex pl={4} py={2} borderTopColor="gray.100" borderTopWidth={1}>
         <InputGroup>
-          <Popover>
-            <PopoverTrigger>
-              <InputLeftElement>
-                <Tooltip label={"이모지"}>
-                  <IconButton
-                    colorScheme={"black"}
-                    aria-label="Send Image"
-                    variant={"ghost"}
-                    icon={<HiOutlineEmojiHappy />}
-                    ml={2}
-                  />
-                </Tooltip>
-              </InputLeftElement>
-            </PopoverTrigger>
-            <PopoverContent>
-              <EmojiPicker />
-            </PopoverContent>
-          </Popover>
+          <InputLeftElement>
+            <Tooltip label={"이모지"}>
+              <IconButton
+                colorScheme={"black"}
+                aria-label="Send Image"
+                variant={"ghost"}
+                icon={<HiOutlineEmojiHappy />}
+                ml={2}
+              />
+            </Tooltip>
+          </InputLeftElement>
           <Input
             borderRadius={120}
             variant={"outline"}
             placeholder="입력 후 Enter 키를 누르세요"
-            pl={10}
           />
         </InputGroup>
         <Tooltip label={"이미지 및 영상 보내기"}>

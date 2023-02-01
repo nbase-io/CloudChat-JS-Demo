@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, VStack, Text, HStack, Avatar } from "@chakra-ui/react";
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 };
 
 function ChatBubble({ message, dateSent, from }: Props) {
+  const [isHovering, setIsHovering] = useState(false);
   const isMe = from === "me";
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 32;
@@ -23,11 +25,14 @@ function ChatBubble({ message, dateSent, from }: Props) {
         </HStack>
       )}
       <HStack alignItems={"flex-end"}>
-        {isMe && (
-          <Text fontSize={"xs"} color={"gray"}>
-            {dateSent}
-          </Text>
-        )}
+        {isMe &&
+          (isHovering ? (
+            <></>
+          ) : (
+            <Text fontSize={"xs"} color={"gray"}>
+              {dateSent}
+            </Text>
+          ))}
         <Box
           bg={isMe ? "blue.50" : "gray.100"}
           px={6}
@@ -37,14 +42,20 @@ function ChatBubble({ message, dateSent, from }: Props) {
           borderTopRightRadius={32}
           borderBottomLeftRadius={32}
           borderBottomRightRadius={bottomRightRadius}
+          _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
         >
           {message}
         </Box>
-        {!isMe && (
-          <Text fontSize={"xs"} color={"gray"}>
-            {dateSent}
-          </Text>
-        )}
+        {!isMe &&
+          (isHovering ? (
+            <></>
+          ) : (
+            <Text fontSize={"xs"} color={"gray"}>
+              {dateSent}
+            </Text>
+          ))}
       </HStack>
     </VStack>
   );
