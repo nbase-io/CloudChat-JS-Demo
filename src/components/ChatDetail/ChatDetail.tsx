@@ -11,6 +11,7 @@ import {
   Button,
   ListItem,
   List,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FaBell, FaSearch } from "react-icons/fa";
 import { TbLock } from "react-icons/tb";
@@ -25,36 +26,46 @@ function ChatDetail() {
   return (
     <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>
       <HStack justify={"space-between"} w="full" px={8} mb={8}>
-        <Text color="gray.500">20 March 2021</Text>
+        <Tooltip label={"채널 생성일"}>
+          <Text color="gray.500">20 March 2021</Text>
+        </Tooltip>
         <HStack>
-          <IconButton
-            rounded={"full"}
-            color={"gray.500"}
-            variant="ghost"
-            icon={<TbLock />}
-            aria-label="Private Channel"
-          />
-          <IconButton
-            rounded={"full"}
-            color={"gray.500"}
-            variant="ghost"
-            icon={<BiNotification />}
-            aria-label="Push Notifications"
-          />
-          <IconButton
-            rounded={"full"}
-            color={"gray.500"}
-            variant="ghost"
-            icon={<FaBell />}
-            aria-label="Notifications"
-          />
-          <IconButton
-            rounded={"full"}
-            color={"gray.500"}
-            variant="ghost"
-            icon={<FaSearch />}
-            aria-label="Search"
-          />
+          <Tooltip label={"비공개"}>
+            <IconButton
+              rounded={"full"}
+              color={"gray.500"}
+              variant="ghost"
+              icon={<TbLock />}
+              aria-label="Private Channel"
+            />
+          </Tooltip>
+          <Tooltip label={"푸시 허용"}>
+            <IconButton
+              rounded={"full"}
+              color={"gray.500"}
+              variant="ghost"
+              icon={<BiNotification />}
+              aria-label="Push Notifications"
+            />
+          </Tooltip>
+          <Tooltip label={"알림 허용"}>
+            <IconButton
+              rounded={"full"}
+              color={"gray.500"}
+              variant="ghost"
+              icon={<FaBell />}
+              aria-label="Notifications"
+            />
+          </Tooltip>
+          <Tooltip label={"검색"}>
+            <IconButton
+              rounded={"full"}
+              color={"gray.500"}
+              variant="ghost"
+              icon={<FaSearch />}
+              aria-label="Search"
+            />
+          </Tooltip>
         </HStack>
       </HStack>
       <Avatar size="2xl" name="nbase"></Avatar>

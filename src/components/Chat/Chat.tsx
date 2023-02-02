@@ -77,38 +77,44 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
   return (
     <Flex w="full" flexDirection={"column"}>
       <HStack px={4} py={4} borderBottomColor="gray.100">
-        <IconButton
-          rounded={"full"}
-          onClick={onLeftSideBarOpen}
-          display={{ base: "inherit", lg: "none" }}
-          variant="ghost"
-          icon={<IoMdMenu />}
-          size="lg"
-          aria-label="Toggle Left Side Bar Drawer"
-        />
+        <Tooltip label={"채널 리스트"}>
+          <IconButton
+            rounded={"full"}
+            onClick={onLeftSideBarOpen}
+            display={{ base: "inherit", lg: "none" }}
+            variant="ghost"
+            icon={<IoMdMenu />}
+            size="lg"
+            aria-label="Toggle Left Side Bar Drawer"
+          />
+        </Tooltip>
         <Stat mt={6}>
           <HStack>
             <Avatar size="md" name="nbase" />
             <StatNumber>nbase</StatNumber>
           </HStack>
         </Stat>
-        <IconButton
-          rounded={"full"}
-          onClick={onChatDetailOpen}
-          display={{ base: "inherit", lg: "none" }}
-          variant="ghost"
-          icon={<IoMdInformationCircleOutline />}
-          size="lg"
-          aria-label="Toggle Chat Detail Drawer"
-        />
-        <Menu>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<SlOptions />}
-            variant="ghost"
+        <Tooltip label={"채널 정보"}>
+          <IconButton
             rounded={"full"}
+            onClick={onChatDetailOpen}
+            display={{ base: "inherit", lg: "none" }}
+            variant="ghost"
+            icon={<IoMdInformationCircleOutline />}
+            size="lg"
+            aria-label="Toggle Chat Detail Drawer"
           />
+        </Tooltip>
+        <Menu>
+          <Tooltip label={"채널 매뉴"}>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={<SlOptions />}
+              variant="ghost"
+              rounded={"full"}
+            />
+          </Tooltip>
           <MenuList>
             <MenuGroup title="맴버">
               <MenuItem icon={<GrAdd />}>초대</MenuItem>
@@ -144,20 +150,22 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
         <Box ref={bottom}></Box>
       </Flex>
       {!isBottom && (
-        <IconButton
-          rounded={"full"}
-          variant="ghost"
-          icon={<FaArrowDown />}
-          size="lg"
-          aria-label="Scroll to Bottom"
-          position={"absolute"}
-          w={"50px"}
-          margin={"0 auto"}
-          left={0}
-          right={0}
-          bottom={"64px"}
-          onClick={() => scrollToBottom()}
-        />
+        <Tooltip label="아래로 스크롤">
+          <IconButton
+            rounded={"full"}
+            variant="ghost"
+            icon={<FaArrowDown />}
+            size="lg"
+            aria-label="Scroll to Bottom"
+            position={"absolute"}
+            w={"50px"}
+            margin={"0 auto"}
+            left={0}
+            right={0}
+            bottom={"64px"}
+            onClick={() => scrollToBottom()}
+          />
+        </Tooltip>
       )}
       <Flex
         pl={4}
