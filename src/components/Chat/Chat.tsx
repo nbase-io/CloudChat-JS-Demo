@@ -25,13 +25,13 @@ import {
   IoMdMenu,
   IoMdInformationCircleOutline,
 } from "react-icons/io";
-import { GrAdd } from "react-icons/gr";
 import { SlOptions, SlSettings } from "react-icons/sl";
 import { RxExit } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaImage } from "react-icons/fa";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { FaArrowDown } from "react-icons/fa";
+import { MdOutlinePersonRemove, MdOutlinePersonAdd } from "react-icons/md";
 
 const messages = [
   { message: "you what's up", from: "me", dateSent: "20:23" },
@@ -117,7 +117,8 @@ function Chat({ onLeftSideBarOpen, onChatDetailOpen }: Props) {
           </Tooltip>
           <MenuList>
             <MenuGroup title="맴버">
-              <MenuItem icon={<GrAdd />}>초대</MenuItem>
+              <MenuItem icon={<MdOutlinePersonAdd />}>초대</MenuItem>
+              <MenuItem icon={<MdOutlinePersonRemove />}>내보내기</MenuItem>
             </MenuGroup>
             <MenuDivider />
             <MenuGroup title="채널">
