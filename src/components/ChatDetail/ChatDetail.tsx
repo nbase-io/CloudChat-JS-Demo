@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { FaBell, FaSearch } from "react-icons/fa";
 import { TbLock } from "react-icons/tb";
-import { BiNotification } from "react-icons/bi";
+import { RiNotificationBadgeFill, RiLockFill } from "react-icons/ri";
 import ChatFile from "./ChatFile";
 import ChatLink from "./ChatLink";
 import UserAvatar from "../UserAvatar/UserAvatar";
@@ -33,25 +33,25 @@ function ChatDetail() {
           <Tooltip label={"비공개"}>
             <IconButton
               rounded={"full"}
-              color={"gray.500"}
+              colorScheme={"blackAlpha"}
               variant="ghost"
-              icon={<TbLock />}
+              icon={<RiLockFill />}
               aria-label="Private Channel"
             />
           </Tooltip>
           <Tooltip label={"푸시 허용"}>
             <IconButton
               rounded={"full"}
-              color={"gray.500"}
+              colorScheme={"blackAlpha"}
               variant="ghost"
-              icon={<BiNotification />}
+              icon={<RiNotificationBadgeFill />}
               aria-label="Push Notifications"
             />
           </Tooltip>
           <Tooltip label={"알림 허용"}>
             <IconButton
               rounded={"full"}
-              color={"gray.500"}
+              colorScheme={"blackAlpha"}
               variant="ghost"
               icon={<FaBell />}
               aria-label="Notifications"
@@ -60,7 +60,7 @@ function ChatDetail() {
           <Tooltip label={"검색"}>
             <IconButton
               rounded={"full"}
-              color={"gray.500"}
+              colorScheme={"blackAlpha"}
               variant="ghost"
               icon={<FaSearch />}
               aria-label="Search"
