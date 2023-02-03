@@ -6,10 +6,10 @@ import LeftSideBarHeader from "../components/LeftSideBar/LeftSideBar";
 import LeftSideBarDrawer from "../components/LeftSideBar/LeftSideBarDrawer";
 import { useQuery } from "@tanstack/react-query";
 import { connect } from "../api";
-import { IConnect } from "../lib/interfaces/IConnect";
+import { IUser } from "../lib/interfaces/IUser";
 
 function Home() {
-  const { data, status, isLoading } = useQuery<IConnect>(["connect"], connect);
+  const { data, status, isLoading } = useQuery<IUser>(["connect"], connect);
 
   const {
     isOpen: isLeftSideBarOpen,
