@@ -4,8 +4,13 @@ import ChatDetail from "../components/ChatDetail/ChatDetail";
 import ChatDetailDrawer from "../components/ChatDetail/ChatDetailDrawer";
 import LeftSideBarHeader from "../components/LeftSideBar/LeftSideBar";
 import LeftSideBarDrawer from "../components/LeftSideBar/LeftSideBarDrawer";
+import { useQuery } from "@tanstack/react-query";
+import { connect } from "../api";
+import { IConnect } from "../lib/interfaces/IConnect";
 
 function Home() {
+  const { data, status, isLoading } = useQuery<IConnect>(["connect"], connect);
+
   const {
     isOpen: isLeftSideBarOpen,
     onOpen: onLeftSideBarOpen,

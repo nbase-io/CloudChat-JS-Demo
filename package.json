@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@tanstack/react-query": "^4.24.4",
     "framer-motion": "^8.5.5",
     "ncloudchat": "^1.0.39",
     "react": "^18.2.0",

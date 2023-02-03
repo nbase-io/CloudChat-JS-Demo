@@ -13,6 +13,8 @@ import {
   VStack,
   Text,
   Tooltip,
+  SkeletonCircle,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import ChatRow from "./ChatRow";
@@ -39,14 +41,21 @@ function LeftSideBar() {
         flexDirection={"column"}
         py={8}
       >
-        <Avatar name={"guest"} size="2xl">
-          <AvatarBadge bg="green.400" boxSize={8} borderWidth={4} />
-        </Avatar>
-        <VStack>
-          <Heading size="md" mt={3}>
-            Guest
-          </Heading>
-        </VStack>
+        <SkeletonCircle w={"128px"} height={"128px"} isLoaded={true}>
+          <Avatar name={"guest"} size="2xl">
+            <AvatarBadge bg="green.400" boxSize={8} borderWidth={4} />
+          </Avatar>
+        </SkeletonCircle>
+        <Heading size="md" mt={3}>
+          Guest
+        </Heading>
+        <SkeletonText
+          mt={3}
+          noOfLines={1}
+          skeletonHeight="6"
+          w={"128px"}
+          isLoaded={true}
+        ></SkeletonText>
       </Flex>
       <HStack px={8} w="full" justifyContent={"space-between"}>
         <Heading size="sm">온라인 친구들</Heading>
