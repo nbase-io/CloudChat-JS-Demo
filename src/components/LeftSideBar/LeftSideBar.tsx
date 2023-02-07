@@ -13,25 +13,31 @@ import {
   VStack,
   Text,
   Tooltip,
-  SkeletonCircle,
-  SkeletonText,
 } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import ChatRow from "./ChatRow";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import { GrAdd } from "react-icons/gr";
 
-const onlineFriends = [
-  "Jenny",
-  "Rose",
-  "Jisoo",
-  "Asher Hong",
-  "Shinbae Kong",
-  "Lisa",
-  "IU",
-];
+type Props = {
+  isConnecting: boolean;
+  user: any;
+  isGettingFriendships: boolean;
+  isGettingChannels: boolean;
+  friendships: any;
+  channels: any;
+  setChannel: (value: any) => void;
+};
 
-function LeftSideBar() {
+function LeftSideBar({
+  isConnecting,
+  user,
+  isGettingFriendships,
+  isGettingChannels,
+  channels,
+  friendships,
+  setChannel,
+}: Props) {
   return (
     <VStack h="full" alignItems={"center"} w="full" spacing={6}>
       <Flex
@@ -41,27 +47,22 @@ function LeftSideBar() {
         flexDirection={"column"}
         py={8}
       >
-        <SkeletonCircle w={"128px"} height={"128px"} isLoaded={true}>
-          <Avatar name={"guest"} size="2xl">
-            <AvatarBadge bg="green.400" boxSize={8} borderWidth={4} />
-          </Avatar>
-        </SkeletonCircle>
-        <Heading size="md" mt={3}>
-          Guest
-        </Heading>
-        <SkeletonText
-          mt={3}
-          noOfLines={1}
-          skeletonHeight="6"
-          w={"128px"}
-          isLoaded={true}
-        ></SkeletonText>
+        <Avatar name={user?.name} size="2xl" src={user?.profile}>
+          <AvatarBadge bg="green.400" boxSize={8} borderWidth={4} />
+        </Avatar>
+        {!isConnecting && (
+          <Heading size="md" mt={3}>
+            {user?.name}
+          </Heading>
+        )}
       </Flex>
       <HStack px={8} w="full" justifyContent={"space-between"}>
         <Heading size="sm">온라인 친구들</Heading>
-        <Text fontSize={"sm"} color="gray.500" fontWeight={"semibold"}>
-          {onlineFriends.length}
-        </Text>
+        {!isGettingFriendships && (
+          <Text fontSize={"sm"} color="gray.500" fontWeight={"semibold"}>
+            {friendships?.length}
+          </Text>
+        )}
       </HStack>
       <HStack
         overflowX={"auto"}
@@ -71,9 +72,10 @@ function LeftSideBar() {
         justifyContent={"flex-start"}
         spacing={3}
       >
-        {onlineFriends.map((friend) => (
-          <UserAvatar name={friend} key={friend} />
-        ))}
+        {friendships &&
+          friendships.map((friend: any) => (
+            <UserAvatar name={friend.friend.name} key={friend.friend.id} />
+          ))}
       </HStack>
       <Box px={8} w="full">
         <Divider />
@@ -107,21 +109,22 @@ function LeftSideBar() {
       </InputGroup>
       <Box w="full" overflow={"auto"}>
         <List w="full" spacing={0}>
-          <ListItem>
-            <ChatRow />
-          </ListItem>
-          <ListItem>
-            <ChatRow />
-          </ListItem>
-          <ListItem>
-            <ChatRow />
-          </ListItem>
-          <ListItem>
-            <ChatRow />
-          </ListItem>
-          <ListItem>
-            <ChatRow />
-          </ListItem>
+          {!isGettingChannels &&
+            channels?.map((channel: any) => (
+              <ListItem
+                key={channel.id}
+                onClick={() => {
+                  setChannel(channel);
+                }}
+              >
+                <ChatRow
+                  channelName={channel.name}
+                  channelProfile={channel.image_url}
+                  lastMessageUpdatedAt={channel.updated_at}
+                  lastMessageContent={channel.last_message.content}
+                />
+              </ListItem>
+            ))}
         </List>
       </Box>
     </VStack>

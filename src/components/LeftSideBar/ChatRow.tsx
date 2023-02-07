@@ -1,6 +1,18 @@
-import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 
-function ChatRow() {
+type Props = {
+  channelName: string;
+  channelProfile: string;
+  lastMessageUpdatedAt: string;
+  lastMessageContent: string;
+};
+
+function ChatRow({
+  channelName,
+  channelProfile,
+  lastMessageUpdatedAt,
+  lastMessageContent,
+}: Props) {
   return (
     <Flex
       py={4}
@@ -12,7 +24,7 @@ function ChatRow() {
       style={{ transition: "background 300ms" }}
       _hover={{ bg: "gray.50", cursor: "pointer" }}
     >
-      <Box rounded="full" bg="gray.100" minW={14} minH={14} />
+      <Avatar name={channelName} src={channelProfile} />
       <VStack
         overflow={"hidden"}
         flex={1}
@@ -21,7 +33,7 @@ function ChatRow() {
         alignItems="flex-start"
       >
         <Heading fontSize={12} w="full">
-          Title
+          {channelName}
         </Heading>
         <Text
           overflow={"hidden"}
@@ -31,11 +43,11 @@ function ChatRow() {
           fontSize={"xs"}
           color="gray.500"
         >
-          Sample text message goes here.
+          {lastMessageContent}
         </Text>
       </VStack>
       <Text ml={3} fontSize="xs" color={"gray.500"}>
-        08:30
+        {lastMessageUpdatedAt}
       </Text>
     </Flex>
   );
