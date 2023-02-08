@@ -13,5 +13,6 @@ export interface IMessage {
   sender: IUser;
   admin: IUser;
   content: string;
+  sended_at: string;
   created_at: string;
 }

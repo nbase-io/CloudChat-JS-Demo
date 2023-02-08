@@ -8,20 +8,21 @@ import {
   IconButton,
   Tooltip,
 } from "@chakra-ui/react";
-import { FaImage, FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
+import { FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
 
 type Props = {
   message: string;
-  dateSent: string;
+  created_at: string;
   from: string;
 };
 
-function ChatBubble({ message, dateSent, from }: Props) {
+function ChatBubble({ message, created_at, from }: Props) {
   const [isHovering, setIsHovering] = useState(false);
-  const isMe = from === "me";
+  const isMe = from === "guest";
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 32;
   const topLeftRadius = isMe ? 32 : 0;
+  console.log(created_at);
 
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
@@ -70,7 +71,7 @@ function ChatBubble({ message, dateSent, from }: Props) {
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
-              {dateSent}
+              {created_at}
             </Text>
           ))}
         <Box
@@ -120,7 +121,7 @@ function ChatBubble({ message, dateSent, from }: Props) {
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
-              {dateSent}
+              {created_at}
             </Text>
           ))}
       </HStack>

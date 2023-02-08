@@ -1,4 +1,5 @@
-import { Avatar, Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import Moment from "react-moment";
 
 type Props = {
   channelName: string;
@@ -47,7 +48,7 @@ function ChatRow({
         </Text>
       </VStack>
       <Text ml={3} fontSize="xs" color={"gray.500"}>
-        {lastMessageUpdatedAt}
+        <Moment fromNow>{lastMessageUpdatedAt}</Moment>
       </Text>
     </Flex>
   );

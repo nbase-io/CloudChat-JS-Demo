@@ -3,7 +3,6 @@ import { Link, Outlet } from "react-router-dom";
 import { FaSketch } from "react-icons/fa";
 
 function Root() {
-  console.log("we");
   return (
     <Box>
       <HStack

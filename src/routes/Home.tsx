@@ -1,41 +1,71 @@
 import { useState, useEffect } from "react";
-import { Center, Flex, HStack, Spinner, useDisclosure } from "@chakra-ui/react";
-import { useConnect, useGetChannels, useGetFriendships } from "../api";
+import { Flex, HStack, useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  useConnect,
+  useGetChannel,
+  useGetChannels,
+  useGetFriendships,
+  useGetMessages,
+} from "../api";
 import Chat from "../components/Chat/Chat";
 import ChatDetail from "../components/ChatDetail/ChatDetail";
 import ChatDetailDrawer from "../components/ChatDetail/ChatDetailDrawer";
 import LeftSideBar from "../components/LeftSideBar/LeftSideBar";
 import LeftSideBarDrawer from "../components/LeftSideBar/LeftSideBarDrawer";
 import { IChannel } from "../lib/interfaces/IChannel";
-import { useIsFetching } from "@tanstack/react-query";
 
 function Home() {
-  const isFetching = useIsFetching();
-  // connect
+  const toast = useToast();
+  // current channel
+  const [channel, setChannel] = useState<IChannel | null>(null);
+  // 1. connect
   const { data: user, isLoading: isConnecting } = useConnect();
   const userId = user?.id;
-  // getFriendships after connect
+  // 2. getFriendships after connect
   const { data: friendships, isLoading: isGettingFriendships } =
     useGetFriendships(!!userId);
-  // getChannels after connect
+  // 2. getChannels after connect
   const { data: channels, isLoading: isGettingChannels } = useGetChannels(
     !!userId
   );
-  const [channel, setChannel] = useState<IChannel | null>(null);
+  // 3. getMessages after current channel is set
+  const {
+    data: messages,
+    isFetching: isGettingMessages,
+    refetch: reGetMessages,
+    error: getMessagesError,
+  } = useGetMessages(!!channel, channel?.id);
+  // 3. getChannel after current channel is set
+  // const { data: channelDetail, isLoading: isGettingChannelDetail } =
+  //   useGetChannel(!!channel, channel?.id);
 
+  // default channel is the 1st channel
   useEffect(() => {
     if (!isGettingChannels && channels) {
       setChannel(channels[0]);
     }
   }, [isGettingChannels]);
 
-  // drawers
+  // once current channel is set, fetch messages
+  useEffect(() => {
+    if (channel) {
+      reGetMessages();
+    }
+  }, [channel]);
+
+  // error handlings
+  useEffect(() => {
+    console.log(getMessagesError);
+  }, [getMessagesError]);
+
+  // left side bar drawers
   const {
     isOpen: isLeftSideBarOpen,
     onOpen: onLeftSideBarOpen,
     onClose: onLeftSideBarClose,
   } = useDisclosure();
 
+  // rigth side bar chat detail drawers
   const {
     isOpen: isChatDetailOpen,
     onOpen: onChatDetailOpen,
@@ -67,6 +97,8 @@ function Home() {
           onLeftSideBarOpen={onLeftSideBarOpen}
           onChatDetailOpen={onChatDetailOpen}
           channel={channel}
+          isGettingMessages={isGettingMessages}
+          messages={messages}
         />
       </Flex>
       <Flex
@@ -76,7 +108,7 @@ function Home() {
         maxW={{ base: "xs", xl: "sm" }}
         display={{ base: "none", lg: "flex" }}
       >
-        <ChatDetail />
+        <ChatDetail channel={channel} />
       </Flex>
       <LeftSideBarDrawer
         isOpen={isLeftSideBarOpen}
@@ -89,7 +121,11 @@ function Home() {
         channels={channels}
         setChannel={setChannel}
       />
-      <ChatDetailDrawer isOpen={isChatDetailOpen} onClose={onChatDetailClose} />
+      <ChatDetailDrawer
+        isOpen={isChatDetailOpen}
+        onClose={onChatDetailClose}
+        channel={channel}
+      />
     </HStack>
   );
 }

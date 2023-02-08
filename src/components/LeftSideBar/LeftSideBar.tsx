@@ -1,23 +1,23 @@
 import {
-  Avatar,
-  AvatarBadge,
+  // Avatar,
+  // AvatarBadge,
   Box,
-  Divider,
-  Flex,
+  // Divider,
+  // Flex,
   Heading,
-  HStack,
+  // HStack,
   IconButton,
   InputGroup,
   List,
   ListItem,
   VStack,
-  Text,
+  // Text,
   Tooltip,
+  Input,
 } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import ChatRow from "./ChatRow";
-import UserAvatar from "../UserAvatar/UserAvatar";
-import { GrAdd } from "react-icons/gr";
+// import UserAvatar from "../UserAvatar/UserAvatar";
 
 type Props = {
   isConnecting: boolean;
@@ -30,25 +30,25 @@ type Props = {
 };
 
 function LeftSideBar({
-  isConnecting,
-  user,
-  isGettingFriendships,
+  // isConnecting,
+  // user,
+  // isGettingFriendships,
   isGettingChannels,
   channels,
-  friendships,
+  // friendships,
   setChannel,
 }: Props) {
   return (
     <VStack h="full" alignItems={"center"} w="full" spacing={6}>
-      <Flex
+      {/* <Flex
         w="full"
         alignItems="center"
         justifyContent="space-between"
         flexDirection={"column"}
         py={8}
       >
-        <Avatar name={user?.name} size="2xl" src={user?.profile}>
-          <AvatarBadge bg="green.400" boxSize={8} borderWidth={4} />
+        <Avatar name={user?.name} size="xl" src={user?.profile}>
+          <AvatarBadge bg="green.400" boxSize={7} borderWidth={4} />
         </Avatar>
         {!isConnecting && (
           <Heading size="md" mt={3}>
@@ -66,7 +66,7 @@ function LeftSideBar({
       </HStack>
       <HStack
         overflowX={"auto"}
-        minH={24}
+        minH={friendships?.length === 0 ? 0 : 24}
         px={8}
         w="full"
         justifyContent={"flex-start"}
@@ -79,22 +79,25 @@ function LeftSideBar({
       </HStack>
       <Box px={8} w="full">
         <Divider />
-      </Box>
+      </Box> */}
       <Box
         w="full"
         px={8}
         display={"flex"}
         alignItems="center"
         justifyContent={"space-between"}
+        mt={8}
       >
-        <Heading fontSize="xl">채널</Heading>
+        <Heading fontSize="xl">채팅</Heading>
         <Tooltip label={"채널 생성"}>
           <IconButton
             rounded={"full"}
             variant="ghost"
-            icon={<GrAdd />}
-            size="md"
+            icon={<AddIcon color="white" />}
+            bg="blue.500"
+            size="xs"
             aria-label="Add Channel"
+            _hover={{ bg: "gray" }}
           />
         </Tooltip>
       </Box>

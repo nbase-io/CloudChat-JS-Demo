@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { IUser } from "./lib/interfaces/IUser";
 import { IFriendship } from "./lib/interfaces/IFriendship";
 import { IChannel } from "./lib/interfaces/IChannel";
+import { IMessage } from "./lib/interfaces/IMessage";
 
 const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
 
@@ -54,4 +55,41 @@ export const useGetChannels = (enabled: boolean) =>
       return await nc.getChannels(filter, sort, option);
     },
     { enabled: enabled, suspense: true }
+  );
+
+// ncloudchat 특정 채널 메세지들 가져오기
+export const useGetMessages = (
+  enabled: boolean,
+  channel_id: string | undefined
+) =>
+  useQuery<IMessage[]>(
+    ["messages"],
+    async () => {
+      if (channel_id) {
+        const filter = { channel_id: channel_id };
+        const sort = { created_at: 1 };
+        const option = { offset: 0, per_page: 100 };
+        return await nc.getMessages(filter, sort, option);
+      }
+    },
+    {
+      enabled: enabled,
+    }
+  );
+
+// ncloudchat 특정 채널 가져오기
+export const useGetChannel = (
+  enabled: boolean,
+  channel_id: string | undefined
+) =>
+  useQuery<IChannel>(
+    ["channel"],
+    async () => {
+      if (channel_id) {
+        return await nc.getChannel(channel_id);
+      }
+    },
+    {
+      enabled: enabled,
+    }
   );

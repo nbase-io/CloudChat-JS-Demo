@@ -6,9 +6,11 @@ import {
   InputLeftElement,
   Tooltip,
 } from "@chakra-ui/react";
-import { FaImage } from "react-icons/fa";
-import { HiOutlineEmojiHappy } from "react-icons/hi";
-import { IoIosSend } from "react-icons/io";
+import {
+  RiSendPlaneLine,
+  RiImageLine,
+  RiEmotionHappyLine,
+} from "react-icons/ri";
 
 type Props = {
   isBottom: boolean;
@@ -29,7 +31,7 @@ function ChatInput({ isBottom }: Props) {
               colorScheme={"black"}
               aria-label="Send Image"
               variant={"ghost"}
-              icon={<HiOutlineEmojiHappy />}
+              icon={<RiEmotionHappyLine />}
               ml={2}
             />
           </Tooltip>
@@ -45,7 +47,7 @@ function ChatInput({ isBottom }: Props) {
           colorScheme={"black"}
           aria-label="Send Image"
           variant={"ghost"}
-          icon={<FaImage />}
+          icon={<RiImageLine />}
           ml={2}
         />
       </Tooltip>
@@ -54,7 +56,7 @@ function ChatInput({ isBottom }: Props) {
           colorScheme={"black"}
           aria-label="Send Message"
           variant={"ghost"}
-          icon={<IoIosSend />}
+          icon={<RiSendPlaneLine />}
           mr={2}
         />
       </Tooltip>
