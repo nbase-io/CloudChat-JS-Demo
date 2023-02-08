@@ -9,10 +9,10 @@ function ChatDetailHeader({ channel }: Props) {
   return (
     <HStack justify={"space-between"} w="full" px={8} mb={8}>
       <Text fontSize={"xl"} as="b">
-        채팅방 정보
+        Channel Info.
       </Text>
       <HStack>
-        <Tooltip label={"검색"}>
+        <Tooltip label={"Search"}>
           <IconButton
             rounded={"full"}
             variant="ghost"
@@ -21,7 +21,7 @@ function ChatDetailHeader({ channel }: Props) {
             aria-label="Search"
           />
         </Tooltip>
-        <Tooltip label={"설정"}>
+        <Tooltip label={"Settings"}>
           <IconButton
             rounded={"full"}
             variant="ghost"

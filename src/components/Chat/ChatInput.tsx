@@ -26,10 +26,10 @@ function ChatInput({ isBottom }: Props) {
     >
       <InputGroup>
         <InputLeftElement>
-          <Tooltip label={"이모지"}>
+          <Tooltip label={"Add emoji"}>
             <IconButton
               colorScheme={"black"}
-              aria-label="Send Image"
+              aria-label="Emogi"
               variant={"ghost"}
               icon={<RiEmotionHappyLine />}
               ml={2}
@@ -39,10 +39,10 @@ function ChatInput({ isBottom }: Props) {
         <Input
           borderRadius={120}
           variant={"outline"}
-          placeholder="입력 후 Enter 키를 누르세요"
+          placeholder="Type your message"
         />
       </InputGroup>
-      <Tooltip label={"이미지 및 영상 보내기"}>
+      <Tooltip label={"Send image or video"}>
         <IconButton
           colorScheme={"black"}
           aria-label="Send Image"
@@ -51,7 +51,7 @@ function ChatInput({ isBottom }: Props) {
           ml={2}
         />
       </Tooltip>
-      <Tooltip label={"메세지 보내기"}>
+      <Tooltip label={"Send message"}>
         <IconButton
           colorScheme={"black"}
           aria-label="Send Message"

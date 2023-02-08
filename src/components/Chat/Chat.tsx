@@ -28,8 +28,6 @@ function Chat({
   channel,
   isGettingMessages,
   messages,
-  displayChannelDetail,
-  setDisplayChannelDetail,
 }: Props) {
   const [isBottom, setIsBottom] = useState(false);
   const bottom = useRef<Box>(null);
@@ -57,8 +55,6 @@ function Chat({
         onLeftSideBarOpen={onLeftSideBarOpen}
         onChatDetailOpen={onChatDetailOpen}
         channel={channel}
-        displayChannelDetail={displayChannelDetail}
-        setDisplayChannelDetail={setDisplayChannelDetail}
       />
       <Divider />
       {isGettingMessages ? (
@@ -79,14 +75,14 @@ function Chat({
               key={index}
               message={content}
               created_at={created_at}
-              from={sender.id}
+              from={sender.name}
             />
           ))}
           <Box ref={bottom}></Box>
         </Flex>
       )}
       {!isBottom && (
-        <Tooltip label="아래로 스크롤">
+        <Tooltip label="Scroll to bottom">
           <IconButton
             rounded={"full"}
             bg={"black"}

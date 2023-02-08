@@ -4,13 +4,13 @@ import {
   Text,
   Avatar,
   Heading,
-  Divider,
   Box,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  VStack,
 } from "@chakra-ui/react";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import ChatDetailHeader from "./ChatDetailHeader";
@@ -31,11 +31,10 @@ function ChatDetail({ channel }: Props) {
         <AccordionItem border={"none"}>
           <AccordionButton bg="gray.100" borderRadius={4}>
             <HStack spacing={0} flex={1}>
-              <Text as="b">참석 중&nbsp;</Text>
               <Text fontSize={"s"} color="blue.500">
-                {channel?.members.length}
+                {channel?.members.length}&nbsp;
               </Text>
-              <Text as="b">명</Text>
+              <Text as="b">Members</Text>
             </HStack>
             <Box
               // size={"xs"}
@@ -50,14 +49,15 @@ function ChatDetail({ channel }: Props) {
               _hover={{ bg: "gray" }}
               onClick={(e) => e.stopPropagation()}
             >
-              초대하기
+              Invite
             </Box>
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel pb={4}>
-            <HStack
-              overflowX={"auto"}
+            <VStack
+              overflowY={"auto"}
               minH={channel?.members.length === 0 ? 0 : 24}
+              py={8}
               px={8}
               w="full"
               justifyContent={"flex-start"}
@@ -66,7 +66,7 @@ function ChatDetail({ channel }: Props) {
               {channel?.members.map((member: string) => (
                 <UserAvatar name={member} key={member} />
               ))}
-            </HStack>
+            </VStack>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

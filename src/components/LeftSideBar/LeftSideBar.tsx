@@ -88,8 +88,8 @@ function LeftSideBar({
         justifyContent={"space-between"}
         mt={8}
       >
-        <Heading fontSize="xl">채팅</Heading>
-        <Tooltip label={"채널 생성"}>
+        <Heading fontSize="xl">Channels</Heading>
+        <Tooltip label={"Create new channel"}>
           <IconButton
             rounded={"full"}
             variant="ghost"
@@ -103,7 +103,7 @@ function LeftSideBar({
       </Box>
       <InputGroup size={"md"} px={8}>
         <Input
-          placeholder="이름 검색"
+          placeholder="Search by channel name"
           mt={2}
           variant="filled"
           w="full"

@@ -27,7 +27,7 @@ type Props = {
 function ChatHeader({ onLeftSideBarOpen, onChatDetailOpen, channel }: Props) {
   return (
     <HStack px={4} py={4} borderBottomColor="gray.100">
-      <Tooltip label={"채널 리스트"}>
+      <Tooltip label={"Channels"}>
         <IconButton
           rounded={"full"}
           onClick={onLeftSideBarOpen}
@@ -44,7 +44,7 @@ function ChatHeader({ onLeftSideBarOpen, onChatDetailOpen, channel }: Props) {
           <StatNumber>{channel?.name}</StatNumber>
         </HStack>
       </Stat>
-      <Tooltip label={"채널 정보"}>
+      <Tooltip label={"Channel information"}>
         <IconButton
           rounded={"full"}
           onClick={onChatDetailOpen}
@@ -56,7 +56,7 @@ function ChatHeader({ onLeftSideBarOpen, onChatDetailOpen, channel }: Props) {
         />
       </Tooltip>
       <Menu>
-        <Tooltip label={"채널 매뉴"}>
+        <Tooltip label={"Channel menu"}>
           <MenuButton
             as={IconButton}
             aria-label="Options"
@@ -66,16 +66,16 @@ function ChatHeader({ onLeftSideBarOpen, onChatDetailOpen, channel }: Props) {
           />
         </Tooltip>
         <MenuList>
-          <MenuGroup title="맴버">
-            <MenuItem icon={<MdOutlinePersonAddAlt />}>초대</MenuItem>
-            <MenuItem icon={<MdOutlinePersonRemove />}>내보내기</MenuItem>
+          <MenuGroup title="Member">
+            <MenuItem icon={<MdOutlinePersonAddAlt />}>Add users</MenuItem>
+            <MenuItem icon={<MdOutlinePersonRemove />}>Remove users</MenuItem>
           </MenuGroup>
           <MenuDivider />
-          <MenuGroup title="채널">
-            <MenuItem icon={<RxExit />}>나가기</MenuItem>
-            <MenuItem icon={<SlSettings />}>설정</MenuItem>
+          <MenuGroup title="Channel">
+            <MenuItem icon={<RxExit />}>Leave</MenuItem>
+            <MenuItem icon={<SlSettings />}>Settings</MenuItem>
             <MenuItem icon={<AiOutlineDelete />} color={"red"}>
-              삭제
+              Delete
             </MenuItem>
           </MenuGroup>
         </MenuList>

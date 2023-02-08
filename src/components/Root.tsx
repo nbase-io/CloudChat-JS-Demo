@@ -27,7 +27,7 @@ function Root() {
             }
           >
             <Button leftIcon={<FaSketch />} colorScheme="blue">
-              스케치 다운로드
+              Download Sketch
             </Button>
           </Link>
         </HStack>

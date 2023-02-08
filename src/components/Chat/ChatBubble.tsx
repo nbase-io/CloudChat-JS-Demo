@@ -9,6 +9,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
+import Moment from "react-moment";
 
 type Props = {
   message: string;
@@ -22,7 +23,6 @@ function ChatBubble({ message, created_at, from }: Props) {
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 32;
   const topLeftRadius = isMe ? 32 : 0;
-  console.log(created_at);
 
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
@@ -41,7 +41,7 @@ function ChatBubble({ message, created_at, from }: Props) {
         {isMe &&
           (isHovering ? (
             <HStack>
-              <Tooltip label={"삭제"}>
+              <Tooltip label={"Delete"}>
                 <IconButton
                   colorScheme={"black"}
                   aria-label="Delete Message"
@@ -50,7 +50,7 @@ function ChatBubble({ message, created_at, from }: Props) {
                   size={"sm"}
                 />
               </Tooltip>
-              <Tooltip label={"복사"}>
+              <Tooltip label={"Copy"}>
                 <IconButton
                   colorScheme={"black"}
                   aria-label="Copy Message"
@@ -59,7 +59,7 @@ function ChatBubble({ message, created_at, from }: Props) {
                   size={"sm"}
                 />
               </Tooltip>
-              <Tooltip label={"답장"}>
+              <Tooltip label={"Reply"}>
                 <IconButton
                   colorScheme={"black"}
                   aria-label="Reply Message"
@@ -77,7 +77,7 @@ function ChatBubble({ message, created_at, from }: Props) {
         <Box
           bg={isMe ? "blue.50" : "gray.100"}
           px={6}
-          py={4}
+          py={2}
           maxW={80}
           borderTopLeftRadius={topLeftRadius}
           borderTopRightRadius={32}
@@ -91,7 +91,7 @@ function ChatBubble({ message, created_at, from }: Props) {
         {!isMe &&
           (isHovering ? (
             <HStack>
-              <Tooltip label={"답장"}>
+              <Tooltip label={"Reply"}>
                 <IconButton
                   colorScheme={"black"}
                   aria-label="Reply Message"
@@ -100,7 +100,7 @@ function ChatBubble({ message, created_at, from }: Props) {
                   size={"sm"}
                 />
               </Tooltip>
-              <Tooltip label={"복사"}>
+              <Tooltip label={"Copy"}>
                 <IconButton
                   colorScheme={"black"}
                   aria-label="Copy Message"
@@ -109,7 +109,7 @@ function ChatBubble({ message, created_at, from }: Props) {
                   size={"sm"}
                 />
               </Tooltip>
-              <Tooltip label={"삭제"}>
+              <Tooltip label={"Delete"}>
                 <IconButton
                   colorScheme={"black"}
                   aria-label="Delete Message"
@@ -121,7 +121,7 @@ function ChatBubble({ message, created_at, from }: Props) {
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
-              {created_at}
+              <Moment local>{created_at}</Moment>
             </Text>
           ))}
       </HStack>
