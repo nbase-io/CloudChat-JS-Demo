@@ -1,7 +1,7 @@
 import { Avatar, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import Moment from "react-moment";
 import { useCountUnread } from "../../api";
-import { FaLock, FaUnlock } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 
 type Props = {
   channel: any;
@@ -29,15 +29,11 @@ function ChatRow({ channel }: Props) {
         spacing={0}
         alignItems="flex-start"
       >
-        <HStack>
+        <HStack spacing={1}>
           <Heading fontSize={12} w="full">
             {channel.name}
           </Heading>
-          {channel.type === "PUBLIC" ? (
-            <FaUnlock size={"10"} />
-          ) : (
-            <FaLock size={"10"} />
-          )}
+          {channel.type === "PRIVATE" && <FaLock size={"10"} />}
         </HStack>
         <Text
           overflow={"hidden"}

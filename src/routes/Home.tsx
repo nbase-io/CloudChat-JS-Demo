@@ -110,7 +110,7 @@ function Home() {
           />
         ) : (
           <Center w="full">
-            <Text>👈 Please select a channel</Text>
+            <Text as="b">👈 Please select a channel</Text>
           </Center>
         )}
       </Flex>
