@@ -8,7 +8,7 @@ type Props = {
 };
 
 function ChatRow({ channel }: Props) {
-  // const { data, isLoading } = useCountUnread(!!channel, channel.id);
+  // const { data: mark, isLoading } = useCountUnread(!!channel, channel.id);
 
   return (
     <Flex
@@ -54,6 +54,18 @@ function ChatRow({ channel }: Props) {
             </Moment>
           )}
         </Text>
+        {/* {mark && (
+          <Text
+            fontSize={"xs"}
+            color={"white"}
+            as="b"
+            bg={"red"}
+            px={1}
+            rounded="full"
+          >
+            {mark.unread}
+          </Text>
+        )} */}
         <Text
           fontSize={"xs"}
           color={"white"}
@@ -62,7 +74,7 @@ function ChatRow({ channel }: Props) {
           px={1}
           rounded="full"
         >
-          {channel.last_message && "300+"}
+          300+
         </Text>
       </VStack>
     </Flex>

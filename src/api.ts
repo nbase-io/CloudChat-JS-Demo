@@ -4,11 +4,12 @@ import { IUser } from "./lib/interfaces/IUser";
 import { IFriendship } from "./lib/interfaces/IFriendship";
 import { IChannel } from "./lib/interfaces/IChannel";
 import { IMessage } from "./lib/interfaces/IMessage";
+import { ICountUnread } from "./lib/interfaces/ICountUnread";
 
 const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
 
 // ncloudchat 초기화
-const nc = new ncloudchat.Chat(true);
+export const nc = new ncloudchat.Chat(true);
 nc.initialize(PROJECT_ID);
 nc.setLang("en");
 nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
@@ -21,7 +22,7 @@ export const useConnect = () =>
     async () =>
       await nc.connect(
         {
-          id: "guest22",
+          id: "guest",
           name: "Guest",
           profile: "",
           customField: "",
@@ -94,11 +95,12 @@ export const useGetChannel = (
     }
   );
 
+// ncloudchat 안읽은 메세지 수 가져오기
 export const useCountUnread = (
   enabled: boolean,
   channel_id: string | undefined
 ) =>
-  useQuery(
+  useQuery<ICountUnread>(
     ["countUnread"],
     async () => {
       if (channel_id) {
@@ -109,3 +111,6 @@ export const useCountUnread = (
       enabled: enabled,
     }
   );
+
+export const fetchCountUnread = (channel_id: string) =>
+  nc.countUnread(channel_id);

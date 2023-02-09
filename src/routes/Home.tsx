@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import {
   useConnect,
+  useCountUnread,
   // useGetChannel,
   useGetChannels,
   // useGetFriendships,
@@ -28,14 +29,17 @@ function Home() {
   // 1. connect
   const { data: user, isLoading: isConnecting } = useConnect();
   const userId = user?.id;
-  // 2. getFriendships after connect
-  // const { data: friendships, isLoading: isGettingFriendships } =
-  //   useGetFriendships(!!userId);
   // 2. getChannels after connect
   const { data: channels, isLoading: isGettingChannels } = useGetChannels(
     !!userId
   );
-  // 3. getMessages after current channel is set
+  // 2. getFriendships after connect
+  // const { data: friendships, isLoading: isGettingFriendships } =
+  //   useGetFriendships(!!userId);
+  // 3. countUnreads
+  // const { data: countUnread } = useCountUnread(!!channels, channels[0].id);
+
+  // getMessages after current channel is set
   const {
     data: messages,
     isFetching: isGettingMessages,
@@ -61,9 +65,9 @@ function Home() {
   }, [channel]);
 
   // error handlings
-  useEffect(() => {
-    console.log(getMessagesError);
-  }, [getMessagesError]);
+  // useEffect(() => {
+  //   console.log(getMessagesError);
+  // }, [getMessagesError]);
 
   // left side bar drawers
   const {

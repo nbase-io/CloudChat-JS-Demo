@@ -86,7 +86,7 @@ function Chat({
       <Divider />
       {channel && messagesComponent}
       {!channel && (
-        <Center w="full" h={"40%"}>
+        <Center w="full" mt={"40%"}>
           <Text as="b">Please select a channel</Text>
         </Center>
       )}

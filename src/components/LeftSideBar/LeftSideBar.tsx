@@ -17,7 +17,11 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatRow from "./ChatRow";
+import { useQueries } from "@tanstack/react-query";
 // import UserAvatar from "../UserAvatar/UserAvatar";
+import { fetchCountUnread, nc } from "../../api";
+import { ICountUnread } from "../../lib/interfaces/ICountUnread";
+import { IChannel } from "../../lib/interfaces/IChannel";
 
 type Props = {
   isConnecting: boolean;
@@ -38,6 +42,15 @@ function LeftSideBar({
   // friendships,
   setChannel,
 }: Props) {
+  // const result = useQueries<ICountUnread[]>(
+  //   channels?.map((channel: any) => {
+  //     return {
+  //       queryKey: ["countUnread", channel.id],
+  //       queryFn: fetchCountUnread(channel.id),
+  //     };
+  //   })
+  // );
+
   return (
     <VStack h="full" alignItems={"center"} w="full" spacing={6}>
       {/* <Flex
