@@ -1,6 +1,7 @@
-import { Avatar, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import Moment from "react-moment";
 import { useCountUnread } from "../../api";
+import { FaLock, FaUnlock } from "react-icons/fa";
 
 type Props = {
   channel: any;
@@ -28,9 +29,16 @@ function ChatRow({ channel }: Props) {
         spacing={0}
         alignItems="flex-start"
       >
-        <Heading fontSize={12} w="full">
-          {channel.name}
-        </Heading>
+        <HStack>
+          <Heading fontSize={12} w="full">
+            {channel.name}
+          </Heading>
+          {channel.type === "PUBLIC" ? (
+            <FaUnlock size={"10"} />
+          ) : (
+            <FaLock size={"10"} />
+          )}
+        </HStack>
         <Text
           overflow={"hidden"}
           textOverflow="ellipsis"
@@ -39,14 +47,16 @@ function ChatRow({ channel }: Props) {
           fontSize={"xs"}
           color="gray.500"
         >
-          {channel.last_message.content}
+          {channel.last_message && channel.last_message.content}
         </Text>
       </VStack>
       <VStack justifyContent={"center"} alignItems="center">
         <Text ml={3} fontSize="xs" color={"gray.500"} w="full">
-          <Moment fromNow local>
-            {channel.last_message.created_at}
-          </Moment>
+          {channel.last_message && (
+            <Moment fromNow local>
+              {channel.last_message.created_at}
+            </Moment>
+          )}
         </Text>
         <Text
           fontSize={"xs"}
@@ -56,7 +66,7 @@ function ChatRow({ channel }: Props) {
           px={1}
           rounded="full"
         >
-          300+
+          {channel.last_message && "300+"}
         </Text>
       </VStack>
     </Flex>
