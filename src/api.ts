@@ -101,7 +101,7 @@ export const useCountUnread = (
   channel_id: string | undefined
 ) =>
   useQuery<ICountUnread>(
-    ["countUnread"],
+    [`countUnread: ${channel_id}`],
     async () => {
       if (channel_id) {
         return await nc.countUnread(channel_id);
@@ -111,6 +111,3 @@ export const useCountUnread = (
       enabled: enabled,
     }
   );
-
-export const fetchCountUnread = (channel_id: string) =>
-  nc.countUnread(channel_id);
