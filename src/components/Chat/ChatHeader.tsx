@@ -86,7 +86,7 @@ export const ChatHeader = ({
           aria-label="Toggle Chat Detail Drawer"
         />
       </Tooltip>
-      {channelMenu}
+      {channel && channelMenu}
     </HStack>
   );
 };

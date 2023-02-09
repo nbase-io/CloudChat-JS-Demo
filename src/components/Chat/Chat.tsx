@@ -7,6 +7,8 @@ import {
   Box,
   Center,
   Spinner,
+  Text,
+  Progress,
 } from "@chakra-ui/react";
 import ChatBubble from "./ChatBubble";
 import { ChatHeader } from "./ChatHeader";
@@ -49,6 +51,31 @@ function Chat({
     }
   };
 
+  const messagesComponent = isGettingMessages ? (
+    <Flex flexDirection={"column"} flex={1}>
+      <Progress size="xs" isIndeterminate />
+    </Flex>
+  ) : (
+    <Flex
+      px={6}
+      overflowY="auto"
+      flexDirection={"column"}
+      flex={1}
+      onScroll={() => onScroll()}
+      ref={listInnerRef}
+    >
+      {messages?.map(({ content, sender, created_at }, index) => (
+        <ChatBubble
+          key={index}
+          message={content}
+          created_at={created_at}
+          from={sender.name}
+        />
+      ))}
+      <Box ref={bottom}></Box>
+    </Flex>
+  );
+
   return (
     <Flex w="full" flexDirection={"column"}>
       <ChatHeader
@@ -57,31 +84,13 @@ function Chat({
         channel={channel}
       />
       <Divider />
-      {isGettingMessages ? (
-        <Center h={"100vh"}>
-          <Spinner />
+      {channel && messagesComponent}
+      {!channel && (
+        <Center w="full" h={"40%"}>
+          <Text as="b">Please select a channel</Text>
         </Center>
-      ) : (
-        <Flex
-          px={6}
-          overflowY="auto"
-          flexDirection={"column"}
-          flex={1}
-          onScroll={() => onScroll()}
-          ref={listInnerRef}
-        >
-          {messages?.map(({ content, sender, created_at }, index) => (
-            <ChatBubble
-              key={index}
-              message={content}
-              created_at={created_at}
-              from={sender.name}
-            />
-          ))}
-          <Box ref={bottom}></Box>
-        </Flex>
       )}
-      {!isBottom && (
+      {!isBottom && channel && (
         <Tooltip label="Scroll to bottom">
           <IconButton
             rounded={"full"}
@@ -100,7 +109,7 @@ function Chat({
           />
         </Tooltip>
       )}
-      <ChatInput isBottom={isBottom} />
+      {channel && <ChatInput isBottom={isBottom} />}
     </Flex>
   );
 }

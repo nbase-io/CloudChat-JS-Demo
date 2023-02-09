@@ -100,7 +100,7 @@ function Home() {
         />
       </Flex>
       <Flex as="main" h={"full"} flex={1} borderRightWidth={1}>
-        {channel ? (
+        {/* {channel ? (
           <Chat
             onLeftSideBarOpen={onLeftSideBarOpen}
             onChatDetailOpen={onChatDetailOpen}
@@ -112,7 +112,14 @@ function Home() {
           <Center w="full">
             <Text as="b">👈 Please select a channel</Text>
           </Center>
-        )}
+        )} */}
+        <Chat
+          onLeftSideBarOpen={onLeftSideBarOpen}
+          onChatDetailOpen={onChatDetailOpen}
+          channel={channel}
+          isGettingMessages={isGettingMessages}
+          messages={messages}
+        />
       </Flex>
       <Flex
         as="aside"
