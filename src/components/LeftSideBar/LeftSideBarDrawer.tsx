@@ -11,9 +11,9 @@ type Props = {
   onClose: () => void;
   isConnecting: boolean;
   user: any;
-  isGettingFriendships: boolean;
+  // isGettingFriendships: boolean;
   isGettingChannels: boolean;
-  friendships: any;
+  // friendships: any;
   channels: any;
   setChannel: (value: any) => void;
 };
@@ -23,10 +23,10 @@ function LeftSideBarDrawer({
   onClose,
   isConnecting,
   user,
-  isGettingFriendships,
+  // isGettingFriendships,
   isGettingChannels,
   channels,
-  friendships,
+  // friendships,
   setChannel,
 }: Props) {
   return (
@@ -37,9 +37,9 @@ function LeftSideBarDrawer({
           <LeftSideBar
             isConnecting={isConnecting}
             user={user}
-            isGettingFriendships={isGettingFriendships}
+            // isGettingFriendships={isGettingFriendships}
             isGettingChannels={isGettingChannels}
-            friendships={friendships}
+            // friendships={friendships}
             channels={channels}
             setChannel={setChannel}
           />

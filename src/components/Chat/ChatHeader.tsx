@@ -24,7 +24,38 @@ type Props = {
   channel: any;
 };
 
-function ChatHeader({ onLeftSideBarOpen, onChatDetailOpen, channel }: Props) {
+export const ChatHeader = ({
+  onLeftSideBarOpen,
+  onChatDetailOpen,
+  channel,
+}: Props) => {
+  const channelMenu = (
+    <Menu>
+      <Tooltip label={"Channel menu"}>
+        <MenuButton
+          as={IconButton}
+          aria-label="Options"
+          icon={<SlOptions />}
+          variant="ghost"
+          rounded={"full"}
+        />
+      </Tooltip>
+      <MenuList>
+        <MenuGroup title="Member">
+          <MenuItem icon={<MdOutlinePersonAddAlt />}>Add users</MenuItem>
+          <MenuItem icon={<MdOutlinePersonRemove />}>Remove users</MenuItem>
+        </MenuGroup>
+        <MenuDivider />
+        <MenuGroup title="Channel">
+          <MenuItem icon={<RxExit />}>Leave</MenuItem>
+          <MenuItem icon={<SlSettings />}>Settings</MenuItem>
+          <MenuItem icon={<AiOutlineDelete />} color={"red"}>
+            Delete
+          </MenuItem>
+        </MenuGroup>
+      </MenuList>
+    </Menu>
+  );
   return (
     <HStack px={4} py={4} borderBottomColor="gray.100">
       <Tooltip label={"Channels"}>
@@ -55,33 +86,7 @@ function ChatHeader({ onLeftSideBarOpen, onChatDetailOpen, channel }: Props) {
           aria-label="Toggle Chat Detail Drawer"
         />
       </Tooltip>
-      <Menu>
-        <Tooltip label={"Channel menu"}>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<SlOptions />}
-            variant="ghost"
-            rounded={"full"}
-          />
-        </Tooltip>
-        <MenuList>
-          <MenuGroup title="Member">
-            <MenuItem icon={<MdOutlinePersonAddAlt />}>Add users</MenuItem>
-            <MenuItem icon={<MdOutlinePersonRemove />}>Remove users</MenuItem>
-          </MenuGroup>
-          <MenuDivider />
-          <MenuGroup title="Channel">
-            <MenuItem icon={<RxExit />}>Leave</MenuItem>
-            <MenuItem icon={<SlSettings />}>Settings</MenuItem>
-            <MenuItem icon={<AiOutlineDelete />} color={"red"}>
-              Delete
-            </MenuItem>
-          </MenuGroup>
-        </MenuList>
-      </Menu>
+      {channelMenu}
     </HStack>
   );
-}
-
-export default ChatHeader;
+};

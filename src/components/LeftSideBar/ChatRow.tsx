@@ -7,7 +7,7 @@ type Props = {
 };
 
 function ChatRow({ channel }: Props) {
-  const { data, isLoading } = useCountUnread(!!channel, channel.id);
+  // const { data, isLoading } = useCountUnread(!!channel, channel.id);
 
   return (
     <Flex

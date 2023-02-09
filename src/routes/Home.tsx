@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
-import { Flex, HStack, useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  Flex,
+  HStack,
+  useDisclosure,
+  useToast,
+  Text,
+  Center,
+} from "@chakra-ui/react";
 import {
   useConnect,
-  useGetChannel,
+  // useGetChannel,
   useGetChannels,
-  useGetFriendships,
+  // useGetFriendships,
   useGetMessages,
 } from "../api";
 import Chat from "../components/Chat/Chat";
@@ -22,8 +29,8 @@ function Home() {
   const { data: user, isLoading: isConnecting } = useConnect();
   const userId = user?.id;
   // 2. getFriendships after connect
-  const { data: friendships, isLoading: isGettingFriendships } =
-    useGetFriendships(!!userId);
+  // const { data: friendships, isLoading: isGettingFriendships } =
+  //   useGetFriendships(!!userId);
   // 2. getChannels after connect
   const { data: channels, isLoading: isGettingChannels } = useGetChannels(
     !!userId
@@ -40,11 +47,11 @@ function Home() {
   //   useGetChannel(!!channel, channel?.id);
 
   // default channel is the 1st channel
-  useEffect(() => {
-    if (!isGettingChannels && channels) {
-      setChannel(channels[0]);
-    }
-  }, [isGettingChannels]);
+  // useEffect(() => {
+  //   if (!isGettingChannels && channels) {
+  //     setChannel(channels[0]);
+  //   }
+  // }, [isGettingChannels]);
 
   // once current channel is set, fetch messages
   useEffect(() => {
@@ -85,21 +92,27 @@ function Home() {
         <LeftSideBar
           isConnecting={isConnecting}
           user={user}
-          isGettingFriendships={isGettingFriendships}
+          // isGettingFriendships={isGettingFriendships}
           isGettingChannels={isGettingChannels}
-          friendships={friendships}
+          // friendships={friendships}
           channels={channels}
           setChannel={setChannel}
         />
       </Flex>
       <Flex as="main" h={"full"} flex={1} borderRightWidth={1}>
-        <Chat
-          onLeftSideBarOpen={onLeftSideBarOpen}
-          onChatDetailOpen={onChatDetailOpen}
-          channel={channel}
-          isGettingMessages={isGettingMessages}
-          messages={messages}
-        />
+        {channel ? (
+          <Chat
+            onLeftSideBarOpen={onLeftSideBarOpen}
+            onChatDetailOpen={onChatDetailOpen}
+            channel={channel}
+            isGettingMessages={isGettingMessages}
+            messages={messages}
+          />
+        ) : (
+          <Center w="full">
+            <Text>👈 Please select a channel</Text>
+          </Center>
+        )}
       </Flex>
       <Flex
         as="aside"
@@ -115,9 +128,9 @@ function Home() {
         onClose={onLeftSideBarClose}
         isConnecting={isConnecting}
         user={user}
-        isGettingFriendships={isGettingFriendships}
+        // isGettingFriendships={isGettingFriendships}
         isGettingChannels={isGettingChannels}
-        friendships={friendships}
+        // friendships={friendships}
         channels={channels}
         setChannel={setChannel}
       />

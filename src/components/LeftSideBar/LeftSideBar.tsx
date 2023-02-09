@@ -22,9 +22,9 @@ import ChatRow from "./ChatRow";
 type Props = {
   isConnecting: boolean;
   user: any;
-  isGettingFriendships: boolean;
+  // isGettingFriendships: boolean;
   isGettingChannels: boolean;
-  friendships: any;
+  // friendships: any;
   channels: any;
   setChannel: (value: any) => void;
 };

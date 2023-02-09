@@ -9,7 +9,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import ChatBubble from "./ChatBubble";
-import ChatHeader from "./ChatHeader";
+import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { IMessage } from "../../lib/interfaces/IMessage";
 import { HiArrowDown } from "react-icons/hi";
