@@ -120,12 +120,7 @@ function LeftSideBar({
                   setChannel(channel);
                 }}
               >
-                <ChatRow
-                  channelName={channel.name}
-                  channelProfile={channel.image_url}
-                  lastMessageUpdatedAt={channel.updated_at}
-                  lastMessageContent={channel.last_message.content}
-                />
+                <ChatRow channel={channel} />
               </ListItem>
             ))}
         </List>

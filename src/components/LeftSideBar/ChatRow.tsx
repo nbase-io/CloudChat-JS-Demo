@@ -1,19 +1,14 @@
-import { Avatar, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Avatar, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import Moment from "react-moment";
+import { useCountUnread } from "../../api";
 
 type Props = {
-  channelName: string;
-  channelProfile: string;
-  lastMessageUpdatedAt: string;
-  lastMessageContent: string;
+  channel: any;
 };
 
-function ChatRow({
-  channelName,
-  channelProfile,
-  lastMessageUpdatedAt,
-  lastMessageContent,
-}: Props) {
+function ChatRow({ channel }: Props) {
+  const { data, isLoading } = useCountUnread(!!channel, channel.id);
+
   return (
     <Flex
       py={4}
@@ -25,7 +20,7 @@ function ChatRow({
       style={{ transition: "background 300ms" }}
       _hover={{ bg: "gray.50", cursor: "pointer" }}
     >
-      <Avatar name={channelName} src={channelProfile} />
+      <Avatar name={channel.name} src={channel.image_url} />
       <VStack
         overflow={"hidden"}
         flex={1}
@@ -34,7 +29,7 @@ function ChatRow({
         alignItems="flex-start"
       >
         <Heading fontSize={12} w="full">
-          {channelName}
+          {channel.name}
         </Heading>
         <Text
           overflow={"hidden"}
@@ -44,13 +39,13 @@ function ChatRow({
           fontSize={"xs"}
           color="gray.500"
         >
-          {lastMessageContent}
+          {channel.last_message.content}
         </Text>
       </VStack>
       <VStack justifyContent={"center"} alignItems="center">
         <Text ml={3} fontSize="xs" color={"gray.500"} w="full">
           <Moment fromNow local>
-            {lastMessageUpdatedAt}
+            {channel.last_message.created_at}
           </Moment>
         </Text>
         <Text

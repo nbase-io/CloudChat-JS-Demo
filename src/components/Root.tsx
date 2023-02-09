@@ -26,7 +26,12 @@ function Root() {
               "https://kr.object.ncloudstorage.com/ncloudchat/NCP_Ncloud%20Chat_UI%20Kit_v1.0.sketch"
             }
           >
-            <Button leftIcon={<FaSketch />} colorScheme="blue">
+            <Button
+              leftIcon={<FaSketch />}
+              bg="black"
+              color={"white"}
+              _hover={{ bg: "gray" }}
+            >
               Download Sketch
             </Button>
           </Link>

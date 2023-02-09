@@ -76,7 +76,7 @@ function ChatBubble({ message, created_at, from }: Props) {
           ))}
         <Box
           bg={isMe ? "blue.50" : "gray.100"}
-          px={6}
+          px={4}
           py={2}
           maxW={80}
           borderTopLeftRadius={topLeftRadius}

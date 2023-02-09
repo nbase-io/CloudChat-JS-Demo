@@ -93,3 +93,19 @@ export const useGetChannel = (
       enabled: enabled,
     }
   );
+
+export const useCountUnread = (
+  enabled: boolean,
+  channel_id: string | undefined
+) =>
+  useQuery(
+    ["countUnread"],
+    async () => {
+      if (channel_id) {
+        return await nc.countUnread(channel_id);
+      }
+    },
+    {
+      enabled: enabled,
+    }
+  );
