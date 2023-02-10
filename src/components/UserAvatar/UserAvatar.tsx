@@ -14,7 +14,7 @@ function UserAvatar({ user, userId }: Props) {
           <AvatarBadge boxSize={4} bg="green.500" />
         </Avatar>
       </Tooltip>
-      <Text>{user.name}</Text>
+      <Text as="b">{user.name}</Text>
     </HStack>
   );
 }
