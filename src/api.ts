@@ -1,9 +1,8 @@
 import * as ncloudchat from "ncloudchat";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { IUser } from "./lib/interfaces/IUser";
 import { IFriendship } from "./lib/interfaces/IFriendship";
 import { IChannel } from "./lib/interfaces/IChannel";
-import { IMessage } from "./lib/interfaces/IMessage";
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ISubscription } from "./lib/interfaces/ISubscription";
@@ -61,22 +60,44 @@ export const useGetChannels = (enabled: boolean) =>
   );
 
 // ncloudchat 특정 채널 메세지들 가져오기
+// export const useGetMessages = (
+//   enabled: boolean,
+//   channel_id: string | undefined
+// ) =>
+//   useQuery<IMessage[]>(
+//     [`messages: ${channel_id}`],
+//     async () => {
+//       if (channel_id) {
+//         const filter = { channel_id: channel_id };
+//         const sort = { created_at: 1 };
+//         const option = { offset: 0, per_page: 25 };
+//         return await nc.getMessages(filter, sort, option);
+//       }
+//     },
+//     {
+//       enabled: enabled,
+//     }
+//   );
 export const useGetMessages = (
   enabled: boolean,
   channel_id: string | undefined
 ) =>
-  useQuery<IMessage[]>(
+  useInfiniteQuery(
     [`messages: ${channel_id}`],
-    async () => {
+    async ({ pageParam = 0 }) => {
       if (channel_id) {
         const filter = { channel_id: channel_id };
-        const sort = { created_at: 1 };
-        const option = { offset: 0, per_page: 100 };
+        const sort = { created_at: -1 };
+        const option = { offset: pageParam, per_page: 25 };
         return await nc.getMessages(filter, sort, option);
       }
     },
     {
       enabled: enabled,
+      getNextPageParam: (lastPage, allPage: any[]) => {
+        const nextPage = allPage.length * 25;
+        return lastPage.length === 25 ? nextPage : undefined;
+      },
     }
   );
 

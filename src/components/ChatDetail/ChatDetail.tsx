@@ -64,9 +64,8 @@ function ChatDetail({ channel, subscription }: Props) {
           <AccordionPanel pb={4}>
             <VStack
               overflowY={"auto"}
-              minH={subscriptions?.length === 0 ? 0 : 24}
-              py={8}
-              // px={8}
+              // minH={subscriptions?.length === 0 ? 0 : 24}
+              py={2}
               w="full"
               justifyContent={"flex-start"}
               alignItems={"flex-start"}
@@ -75,7 +74,7 @@ function ChatDetail({ channel, subscription }: Props) {
               {subscriptions?.map((subscription: any) => (
                 <UserAvatar
                   user={subscription.user}
-                  key={subscription.user}
+                  key={subscription.user_id}
                   userId={subscription.user_id}
                 />
               ))}

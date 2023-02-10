@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Flex,
   IconButton,
@@ -12,24 +12,32 @@ import {
 import ChatBubble from "./ChatBubble";
 import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatInput";
-import { IMessage } from "../../lib/interfaces/IMessage";
 import { HiArrowDown } from "react-icons/hi";
+import { useGetMessages } from "../../api";
+import { IMessage } from "../../lib/interfaces/IMessage";
 
 type Props = {
   onLeftSideBarOpen: () => void;
   onChatDetailOpen: () => void;
   channel: any;
-  isGettingMessages: boolean;
-  messages: IMessage[] | undefined;
+  subscription: any;
 };
 
 function Chat({
   onLeftSideBarOpen,
   onChatDetailOpen,
   channel,
-  isGettingMessages,
-  messages,
+  subscription,
 }: Props) {
+  // getMessages after subscription
+  const {
+    data: messages,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useGetMessages(!!subscription, channel?.id);
+
+  // scroll to bottom
   const [isBottom, setIsBottom] = useState(false);
   const bottom = useRef<any>(null);
   const scrollToBottom = () => {
@@ -39,6 +47,7 @@ function Chat({
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+      // handle bottom
       if (scrollTop + clientHeight === scrollHeight) {
         // scoll bottom reached
         setIsBottom(true);
@@ -47,8 +56,22 @@ function Chat({
           setIsBottom(false);
         }
       }
+
+      // handle top intinite scroll
+      if (!isFetchingNextPage && scrollTop === 0) {
+        // if (hasNextPage) {
+        fetchNextPage();
+        console.log("REFETCH");
+        // }
+      }
     }
   };
+
+  // useEffect(() => {
+  //   if (messages) {
+  //     console.log(messages);
+  //   }
+  // }, [messages]);
 
   const messagesComponent =
     messages === undefined ? (
@@ -64,14 +87,20 @@ function Chat({
         onScroll={() => onScroll()}
         ref={listInnerRef}
       >
-        {messages?.map(({ content, sender, created_at }, index) => (
-          <ChatBubble
-            key={index}
-            message={content}
-            created_at={created_at}
-            from={sender}
-          />
-        ))}
+        {messages.pages
+          .map((page: any[]) =>
+            page
+              ?.map(({ content, sender, created_at }, index) => (
+                <ChatBubble
+                  key={index}
+                  message={content}
+                  created_at={created_at}
+                  from={sender}
+                />
+              ))
+              .reverse()
+          )
+          .reverse()}
         <Box ref={bottom}></Box>
       </Flex>
     );

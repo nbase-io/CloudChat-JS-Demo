@@ -1,20 +1,10 @@
 import { useState, useEffect } from "react";
-import {
-  Flex,
-  HStack,
-  useDisclosure,
-  useToast,
-  Text,
-  Center,
-} from "@chakra-ui/react";
+import { Flex, HStack, useDisclosure, useToast } from "@chakra-ui/react";
 import {
   useConnect,
-  useCountUnread,
   // useGetChannel,
   useGetChannels,
   // useGetFriendships,
-  useGetMessages,
-  useGetSubscriptions,
   useSubscribe,
 } from "../api";
 import Chat from "../components/Chat/Chat";
@@ -39,20 +29,8 @@ function Home() {
   // const { data: friendships, isLoading: isGettingFriendships } =
   //   useGetFriendships(!!userId);
 
-  // 3. getChannel after current channel is set
-  // const { data: channelDetail, isLoading: isGettingChannelDetail } =
-  //   useGetChannel(!!channel, channel?.id);
-
   // subscribe when channel is selected
   const { data: subscription } = useSubscribe(!!channel, channel?.id);
-
-  // getMessages after subscription
-  const {
-    data: messages,
-    isFetching: isGettingMessages,
-    refetch: reGetMessages,
-    error: getMessagesError,
-  } = useGetMessages(!!subscription, channel?.id);
 
   // once current channel is set, fetch messages
   useEffect(() => {
@@ -61,11 +39,6 @@ function Home() {
     // }
     console.log("!@#!@#!@#!@#");
   }, [channel]);
-
-  // error handlings
-  // useEffect(() => {
-  //   console.log(getMessagesError);
-  // }, [getMessagesError]);
 
   // left side bar drawers
   const {
@@ -107,8 +80,6 @@ function Home() {
             onLeftSideBarOpen={onLeftSideBarOpen}
             onChatDetailOpen={onChatDetailOpen}
             channel={channel}
-            isGettingMessages={isGettingMessages}
-            messages={messages}
           />
         ) : (
           <Center w="full">
@@ -119,8 +90,7 @@ function Home() {
           onLeftSideBarOpen={onLeftSideBarOpen}
           onChatDetailOpen={onChatDetailOpen}
           channel={channel}
-          isGettingMessages={isGettingMessages}
-          messages={messages}
+          subscription={subscription}
         />
       </Flex>
       <Flex
