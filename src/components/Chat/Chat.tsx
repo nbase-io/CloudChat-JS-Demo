@@ -6,7 +6,6 @@ import {
   Tooltip,
   Box,
   Center,
-  Spinner,
   Text,
   Progress,
 } from "@chakra-ui/react";
@@ -32,11 +31,11 @@ function Chat({
   messages,
 }: Props) {
   const [isBottom, setIsBottom] = useState(false);
-  const bottom = useRef<Box>(null);
+  const bottom = useRef<any>(null);
   const scrollToBottom = () => {
     bottom.current.scrollIntoView({ behavior: "smooth" });
   };
-  const listInnerRef = useRef<Flex>();
+  const listInnerRef = useRef<any>();
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
@@ -51,30 +50,31 @@ function Chat({
     }
   };
 
-  const messagesComponent = isGettingMessages ? (
-    <Flex flexDirection={"column"} flex={1}>
-      <Progress size="xs" isIndeterminate />
-    </Flex>
-  ) : (
-    <Flex
-      px={6}
-      overflowY="auto"
-      flexDirection={"column"}
-      flex={1}
-      onScroll={() => onScroll()}
-      ref={listInnerRef}
-    >
-      {messages?.map(({ content, sender, created_at }, index) => (
-        <ChatBubble
-          key={index}
-          message={content}
-          created_at={created_at}
-          from={sender.name}
-        />
-      ))}
-      <Box ref={bottom}></Box>
-    </Flex>
-  );
+  const messagesComponent =
+    messages === undefined ? (
+      <Flex flexDirection={"column"} flex={1}>
+        <Progress size="xs" isIndeterminate />
+      </Flex>
+    ) : (
+      <Flex
+        px={6}
+        overflowY="auto"
+        flexDirection={"column"}
+        flex={1}
+        onScroll={() => onScroll()}
+        ref={listInnerRef}
+      >
+        {messages?.map(({ content, sender, created_at }, index) => (
+          <ChatBubble
+            key={index}
+            message={content}
+            created_at={created_at}
+            from={sender.name}
+          />
+        ))}
+        <Box ref={bottom}></Box>
+      </Flex>
+    );
 
   return (
     <Flex w="full" flexDirection={"column"}>
@@ -90,7 +90,7 @@ function Chat({
           <Text as="b">Please select a channel</Text>
         </Center>
       )}
-      {!isBottom && channel && (
+      {!isBottom && messages && (
         <Tooltip label="Scroll to bottom">
           <IconButton
             rounded={"full"}

@@ -14,6 +14,7 @@ import {
   useGetChannels,
   // useGetFriendships,
   useGetMessages,
+  useSubscribe,
 } from "../api";
 import Chat from "../components/Chat/Chat";
 import ChatDetail from "../components/ChatDetail/ChatDetail";
@@ -36,32 +37,26 @@ function Home() {
   // 2. getFriendships after connect
   // const { data: friendships, isLoading: isGettingFriendships } =
   //   useGetFriendships(!!userId);
-  // 3. countUnreads
-  // const { data: countUnread } = useCountUnread(!!channels, channels[0].id);
 
   // getMessages after current channel is set
+
+  // 3. getChannel after current channel is set
+  // const { data: channelDetail, isLoading: isGettingChannelDetail } =
+  //   useGetChannel(!!channel, channel?.id);
+  const { data: subscription } = useSubscribe(!!channel, channel?.id);
   const {
     data: messages,
     isFetching: isGettingMessages,
     refetch: reGetMessages,
     error: getMessagesError,
-  } = useGetMessages(!!channel, channel?.id);
-  // 3. getChannel after current channel is set
-  // const { data: channelDetail, isLoading: isGettingChannelDetail } =
-  //   useGetChannel(!!channel, channel?.id);
-
-  // default channel is the 1st channel
-  // useEffect(() => {
-  //   if (!isGettingChannels && channels) {
-  //     setChannel(channels[0]);
-  //   }
-  // }, [isGettingChannels]);
+  } = useGetMessages(!!subscription, channel?.id);
 
   // once current channel is set, fetch messages
   useEffect(() => {
-    if (channel) {
-      reGetMessages();
-    }
+    // if (channel) {
+    // reGetMessages();
+    // }
+    console.log("!@#!@#!@#!@#");
   }, [channel]);
 
   // error handlings

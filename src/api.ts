@@ -5,6 +5,7 @@ import { IFriendship } from "./lib/interfaces/IFriendship";
 import { IChannel } from "./lib/interfaces/IChannel";
 import { IMessage } from "./lib/interfaces/IMessage";
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
+import { ISubscription } from "./lib/interfaces/ISubscription";
 
 const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
 
@@ -64,7 +65,7 @@ export const useGetMessages = (
   channel_id: string | undefined
 ) =>
   useQuery<IMessage[]>(
-    ["messages"],
+    [`messages: ${channel_id}`],
     async () => {
       if (channel_id) {
         const filter = { channel_id: channel_id };
@@ -110,4 +111,19 @@ export const useCountUnread = (
     {
       enabled: enabled,
     }
+  );
+
+// ncloudchat 구독
+export const useSubscribe = (
+  enabled: boolean,
+  channel_id: string | undefined
+) =>
+  useQuery<ISubscription>(
+    [`subscribe: ${channel_id}`],
+    async () => {
+      if (channel_id) {
+        return await nc.subscribe(channel_id);
+      }
+    },
+    { enabled: enabled }
   );
