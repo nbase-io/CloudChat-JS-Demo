@@ -12,14 +12,22 @@ import {
   AccordionPanel,
   VStack,
 } from "@chakra-ui/react";
+import { useGetSubscriptions } from "../../api";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import ChatDetailHeader from "./ChatDetailHeader";
 
 type Props = {
   channel: any;
+  subscription: any;
 };
 
-function ChatDetail({ channel }: Props) {
+function ChatDetail({ channel, subscription }: Props) {
+  // getSubscriptions after subscribe
+  const { data: subscriptions } = useGetSubscriptions(
+    !!subscription,
+    channel?.id
+  );
+
   return (
     <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>
       <ChatDetailHeader channel={channel} />
@@ -32,7 +40,7 @@ function ChatDetail({ channel }: Props) {
           <AccordionButton bg="gray.100" borderRadius={4}>
             <HStack spacing={0} flex={1}>
               <Text fontSize={"s"} color="blue.500">
-                {channel?.members.length}&nbsp;
+                {subscriptions?.length}&nbsp;
               </Text>
               <Text as="b">Members</Text>
             </HStack>
@@ -56,15 +64,18 @@ function ChatDetail({ channel }: Props) {
           <AccordionPanel pb={4}>
             <VStack
               overflowY={"auto"}
-              minH={channel?.members.length === 0 ? 0 : 24}
+              minH={subscriptions?.length === 0 ? 0 : 24}
               py={8}
               px={8}
               w="full"
               justifyContent={"flex-start"}
               spacing={3}
             >
-              {channel?.members.map((member: string) => (
-                <UserAvatar name={member} key={member} />
+              {subscriptions?.map((subscription: any) => (
+                <UserAvatar
+                  name={subscription.user.name}
+                  key={subscription.user.name}
+                />
               ))}
             </VStack>
           </AccordionPanel>

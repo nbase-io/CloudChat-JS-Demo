@@ -79,6 +79,7 @@ function ChatBubble({ message, created_at, from }: Props) {
           px={4}
           py={2}
           maxW={80}
+          minH={"40px"}
           borderTopLeftRadius={topLeftRadius}
           borderTopRightRadius={32}
           borderBottomLeftRadius={32}

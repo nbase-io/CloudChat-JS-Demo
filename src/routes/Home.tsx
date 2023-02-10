@@ -14,6 +14,7 @@ import {
   useGetChannels,
   // useGetFriendships,
   useGetMessages,
+  useGetSubscriptions,
   useSubscribe,
 } from "../api";
 import Chat from "../components/Chat/Chat";
@@ -38,12 +39,14 @@ function Home() {
   // const { data: friendships, isLoading: isGettingFriendships } =
   //   useGetFriendships(!!userId);
 
-  // getMessages after current channel is set
-
   // 3. getChannel after current channel is set
   // const { data: channelDetail, isLoading: isGettingChannelDetail } =
   //   useGetChannel(!!channel, channel?.id);
+
+  // subscribe when channel is selected
   const { data: subscription } = useSubscribe(!!channel, channel?.id);
+
+  // getMessages after subscription
   const {
     data: messages,
     isFetching: isGettingMessages,
@@ -127,7 +130,7 @@ function Home() {
         maxW={{ base: "xs", xl: "sm" }}
         display={{ base: "none", lg: "flex" }}
       >
-        <ChatDetail channel={channel} />
+        <ChatDetail channel={channel} subscription={subscription} />
       </Flex>
       <LeftSideBarDrawer
         isOpen={isLeftSideBarOpen}

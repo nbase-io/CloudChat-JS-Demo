@@ -5,6 +5,7 @@ import { IFriendship } from "./lib/interfaces/IFriendship";
 import { IChannel } from "./lib/interfaces/IChannel";
 import { IMessage } from "./lib/interfaces/IMessage";
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
+import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ISubscription } from "./lib/interfaces/ISubscription";
 
 const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
@@ -118,11 +119,28 @@ export const useSubscribe = (
   enabled: boolean,
   channel_id: string | undefined
 ) =>
-  useQuery<ISubscription>(
+  useQuery<ICreateSubscription>(
     [`subscribe: ${channel_id}`],
     async () => {
       if (channel_id) {
         return await nc.subscribe(channel_id);
+      }
+    },
+    { enabled: enabled }
+  );
+
+export const useGetSubscriptions = (
+  enabled: boolean,
+  channel_id: string | undefined
+) =>
+  useQuery<ISubscription[]>(
+    [`subscriptions: ${channel_id}`],
+    async () => {
+      if (channel_id) {
+        const filter = { channel_id: channel_id };
+        const sort = { created_at: -1 };
+        const option = { offset: 0, per_page: 100 };
+        return await nc.getSubscriptions(filter, sort, option);
       }
     },
     { enabled: enabled }
