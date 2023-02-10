@@ -69,7 +69,7 @@ function Chat({
             key={index}
             message={content}
             created_at={created_at}
-            from={sender.name}
+            from={sender}
           />
         ))}
         <Box ref={bottom}></Box>

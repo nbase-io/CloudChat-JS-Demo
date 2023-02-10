@@ -66,15 +66,17 @@ function ChatDetail({ channel, subscription }: Props) {
               overflowY={"auto"}
               minH={subscriptions?.length === 0 ? 0 : 24}
               py={8}
-              px={8}
+              // px={8}
               w="full"
               justifyContent={"flex-start"}
+              alignItems={"flex-start"}
               spacing={3}
             >
               {subscriptions?.map((subscription: any) => (
                 <UserAvatar
-                  name={subscription.user.name}
-                  key={subscription.user.name}
+                  user={subscription.user}
+                  key={subscription.user}
+                  userId={subscription.user_id}
                 />
               ))}
             </VStack>

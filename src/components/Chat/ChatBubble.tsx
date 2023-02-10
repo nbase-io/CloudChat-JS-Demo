@@ -10,16 +10,17 @@ import {
 } from "@chakra-ui/react";
 import { FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
 import Moment from "react-moment";
+import { IUser } from "../../lib/interfaces/IUser";
 
 type Props = {
   message: string;
   created_at: string;
-  from: string;
+  from: IUser;
 };
 
 function ChatBubble({ message, created_at, from }: Props) {
   const [isHovering, setIsHovering] = useState(false);
-  const isMe = from === "guest";
+  const isMe = from.id === "guest";
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 32;
   const topLeftRadius = isMe ? 32 : 0;
@@ -28,9 +29,11 @@ function ChatBubble({ message, created_at, from }: Props) {
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
       {!isMe && (
         <HStack>
-          <Avatar size={"sm"} name={from}></Avatar>
+          <Tooltip label={from.id}>
+            <Avatar size={"sm"} name={from.name}></Avatar>
+          </Tooltip>
           <Text ml={6} fontSize={"small"}>
-            {from}
+            {from.name}
           </Text>
         </HStack>
       )}

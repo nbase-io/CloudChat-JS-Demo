@@ -1,16 +1,21 @@
-import { Avatar, AvatarBadge, Tooltip } from "@chakra-ui/react";
+import { Avatar, AvatarBadge, HStack, Tooltip, Text } from "@chakra-ui/react";
+import { IUser } from "../../lib/interfaces/IUser";
 
 type Props = {
-  name: string;
+  user: IUser;
+  userId: string;
 };
 
-function UserAvatar({ name }: Props) {
+function UserAvatar({ user, userId }: Props) {
   return (
-    <Tooltip label={name}>
-      <Avatar name={name} _hover={{ borderWidth: 1 }}>
-        <AvatarBadge boxSize={4} bg="green.500" />
-      </Avatar>
-    </Tooltip>
+    <HStack>
+      <Tooltip label={userId}>
+        <Avatar name={user.name} _hover={{ borderWidth: 1 }}>
+          <AvatarBadge boxSize={4} bg="green.500" />
+        </Avatar>
+      </Tooltip>
+      <Text>{user.name}</Text>
+    </HStack>
   );
 }
 
