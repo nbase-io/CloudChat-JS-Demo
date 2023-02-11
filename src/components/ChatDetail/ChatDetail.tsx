@@ -11,6 +11,7 @@ import {
   AccordionIcon,
   AccordionPanel,
   VStack,
+  Spinner,
 } from "@chakra-ui/react";
 import { useGetSubscriptions } from "../../api";
 import UserAvatar from "../UserAvatar/UserAvatar";
@@ -39,6 +40,7 @@ function ChatDetail({ channel, subscription }: Props) {
         <AccordionItem border={"none"}>
           <AccordionButton bg="gray.100" borderRadius={4}>
             <HStack spacing={0} flex={1}>
+              {!subscriptions && <Spinner size={"xs"} />}
               <Text fontSize={"s"} color="blue.500">
                 {subscriptions?.length}&nbsp;
               </Text>

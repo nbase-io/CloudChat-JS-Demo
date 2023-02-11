@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Flex, HStack, useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  Center,
+  Flex,
+  HStack,
+  useDisclosure,
+  useToast,
+  Text,
+} from "@chakra-ui/react";
 import {
   useConnect,
   // useGetChannel,
@@ -75,33 +82,36 @@ function Home() {
         />
       </Flex>
       <Flex as="main" h={"full"} flex={1} borderRightWidth={1}>
-        {/* {channel ? (
+        {channel ? (
           <Chat
             onLeftSideBarOpen={onLeftSideBarOpen}
             onChatDetailOpen={onChatDetailOpen}
             channel={channel}
+            subscription={subscription}
           />
         ) : (
           <Center w="full">
             <Text as="b">👈 Please select a channel</Text>
           </Center>
-        )} */}
-        <Chat
+        )}
+        {/* <Chat
           onLeftSideBarOpen={onLeftSideBarOpen}
           onChatDetailOpen={onChatDetailOpen}
           channel={channel}
           subscription={subscription}
-        />
+        /> */}
       </Flex>
-      <Flex
-        as="aside"
-        h="full"
-        w="full"
-        maxW={{ base: "xs", xl: "sm" }}
-        display={{ base: "none", lg: "flex" }}
-      >
-        <ChatDetail channel={channel} subscription={subscription} />
-      </Flex>
+      {channel && (
+        <Flex
+          as="aside"
+          h="full"
+          w="full"
+          maxW={{ base: "xs", xl: "sm" }}
+          display={{ base: "none", lg: "flex" }}
+        >
+          <ChatDetail channel={channel} subscription={subscription} />
+        </Flex>
+      )}
       <LeftSideBarDrawer
         isOpen={isLeftSideBarOpen}
         onClose={onLeftSideBarClose}
