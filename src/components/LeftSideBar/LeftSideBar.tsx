@@ -27,6 +27,7 @@ type Props = {
   // friendships: any;
   channels: any;
   setChannel: (value: any) => void;
+  subscription: any;
 };
 
 function LeftSideBar({
@@ -37,6 +38,7 @@ function LeftSideBar({
   channels,
   // friendships,
   setChannel,
+  subscription,
 }: Props) {
   return (
     <VStack h="full" alignItems={"center"} w="full" spacing={6}>
@@ -120,7 +122,7 @@ function LeftSideBar({
                   setChannel(channel);
                 }}
               >
-                <ChatRow channel={channel} />
+                <ChatRow channel={channel} subscription={subscription} />
               </ListItem>
             ))}
         </List>

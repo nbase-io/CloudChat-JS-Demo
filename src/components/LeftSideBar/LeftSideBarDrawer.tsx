@@ -16,6 +16,7 @@ type Props = {
   // friendships: any;
   channels: any;
   setChannel: (value: any) => void;
+  subscription: any;
 };
 
 function LeftSideBarDrawer({
@@ -28,6 +29,7 @@ function LeftSideBarDrawer({
   channels,
   // friendships,
   setChannel,
+  subscription,
 }: Props) {
   return (
     <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -42,6 +44,7 @@ function LeftSideBarDrawer({
             // friendships={friendships}
             channels={channels}
             setChannel={setChannel}
+            subscription={subscription}
           />
         </DrawerContent>
       </DrawerOverlay>

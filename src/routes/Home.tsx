@@ -25,6 +25,8 @@ function Home() {
   const toast = useToast();
   // current channel
   const [channel, setChannel] = useState<IChannel | null>(null);
+  // subscribe when channel is selected
+  const { data: subscription } = useSubscribe(!!channel, channel?.id);
   // 1. connect
   const { data: user, isLoading: isConnecting } = useConnect();
   const userId = user?.id;
@@ -35,17 +37,6 @@ function Home() {
   // 2. getFriendships after connect
   // const { data: friendships, isLoading: isGettingFriendships } =
   //   useGetFriendships(!!userId);
-
-  // subscribe when channel is selected
-  const { data: subscription } = useSubscribe(!!channel, channel?.id);
-
-  // once current channel is set, fetch messages
-  useEffect(() => {
-    // if (channel) {
-    // reGetMessages();
-    // }
-    console.log("!@#!@#!@#!@#");
-  }, [channel]);
 
   // left side bar drawers
   const {
@@ -79,6 +70,7 @@ function Home() {
           // friendships={friendships}
           channels={channels}
           setChannel={setChannel}
+          subscription={subscription}
         />
       </Flex>
       <Flex as="main" h={"full"} flex={1} borderRightWidth={1}>
@@ -118,6 +110,7 @@ function Home() {
         // friendships={friendships}
         channels={channels}
         setChannel={setChannel}
+        subscription={subscription}
       />
       <ChatDetailDrawer
         isOpen={isChatDetailOpen}
