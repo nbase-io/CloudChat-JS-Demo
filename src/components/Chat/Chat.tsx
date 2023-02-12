@@ -78,7 +78,7 @@ function Chat({
       ref={listInnerRef}
     >
       {messages?.pages
-        .map((page: any[]) =>
+        .map((page: any[], pageIndex, pagesArray) =>
           page
             ?.map(({ content, sender, created_at }, index, array) => {
               if (index > 0) {
@@ -86,39 +86,66 @@ function Chat({
                 const pastMessageDate = new Date(
                   array[index - 1].created_at
                 ).getDate();
-                return currentMessageDate != pastMessageDate ? (
+                // lsat message date
+                var isLastMessageDate = false;
+                if (
+                  (pageIndex === pagesArray.length - 1,
+                  index === array.length - 1)
+                ) {
+                  isLastMessageDate = true;
+                  console.log(`${isLastMessageDate}: ${created_at}`);
+                }
+                return (
                   <Box key={index}>
-                    <Flex align="center" mt={6}>
-                      <Divider />
-                      <Text
-                        my={4}
-                        fontSize={10}
-                        minW={"40"}
-                        color={"gray"}
-                        align="center"
-                      >
-                        <Moment calendar>{created_at}</Moment>
-                      </Text>
-                      <Divider />
-                    </Flex>
-                    <ChatBubble
-                      key={index}
-                      message={content}
-                      created_at={created_at}
-                      from={sender}
-                    />
+                    {isLastMessageDate && (
+                      <Flex align="center" mt={6}>
+                        <Divider />
+                        <Text
+                          my={4}
+                          fontSize={10}
+                          minW={"40"}
+                          color={"gray"}
+                          align="center"
+                        >
+                          <Moment calendar>{created_at}</Moment>
+                        </Text>
+                        <Divider />
+                      </Flex>
+                    )}
+                    {currentMessageDate != pastMessageDate ? (
+                      <Box>
+                        <ChatBubble
+                          key={index}
+                          message={content}
+                          created_at={created_at}
+                          from={sender}
+                        />
+                        <Flex align="center" mt={6}>
+                          <Divider />
+                          <Text
+                            my={4}
+                            fontSize={10}
+                            minW={"40"}
+                            color={"gray"}
+                            align="center"
+                          >
+                            <Moment calendar>
+                              {array[index - 1].created_at}
+                            </Moment>
+                          </Text>
+                          <Divider />
+                        </Flex>
+                      </Box>
+                    ) : (
+                      <ChatBubble
+                        key={index}
+                        message={content}
+                        created_at={created_at}
+                        from={sender}
+                      />
+                    )}
                   </Box>
-                ) : (
-                  <ChatBubble
-                    key={index}
-                    message={content}
-                    created_at={created_at}
-                    from={sender}
-                  />
                 );
-              } else {
-                // TODO 첫 날자 나오게 하기
-                console.log(created_at);
               }
             })
             .reverse()
