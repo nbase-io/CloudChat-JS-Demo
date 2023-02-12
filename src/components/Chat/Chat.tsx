@@ -112,7 +112,8 @@ function Chat({
                         <Divider />
                       </Flex>
                     )}
-                    {currentMessageDate != pastMessageDate ? (
+                    {!isLastMessageDate &&
+                    currentMessageDate != pastMessageDate ? (
                       <Box>
                         <ChatBubble
                           key={index}
