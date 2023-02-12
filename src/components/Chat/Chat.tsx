@@ -116,6 +116,9 @@ function Chat({
                     from={sender}
                   />
                 );
+              } else {
+                // TODO 첫 날자 나오게 하기
+                console.log(created_at);
               }
             })
             .reverse()
@@ -137,11 +140,6 @@ function Chat({
         <Progress size="xs" isIndeterminate />
       )}
       {channel && messagesComponent}
-      {!channel && (
-        <Center w="full" mt={"20%"}>
-          <Text as="b">Please select a channel</Text>
-        </Center>
-      )}
       {!isBottom && messages && (
         <Tooltip label="Scroll to bottom">
           <IconButton

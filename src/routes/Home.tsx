@@ -68,7 +68,7 @@ function Home() {
         w={"full"}
         h={"full"}
         maxW={{ base: "xs", xl: "sm" }}
-        display={{ base: "none", lg: "flex" }}
+        display={{ base: !channel ? "flex" : "none", lg: "flex" }}
         borderRightWidth={1}
       >
         <LeftSideBar
@@ -82,17 +82,13 @@ function Home() {
         />
       </Flex>
       <Flex as="main" h={"full"} flex={1} borderRightWidth={1}>
-        {channel ? (
+        {channel && (
           <Chat
             onLeftSideBarOpen={onLeftSideBarOpen}
             onChatDetailOpen={onChatDetailOpen}
             channel={channel}
             subscription={subscription}
           />
-        ) : (
-          <Center w="full">
-            <Text as="b">👈 Please select a channel</Text>
-          </Center>
         )}
         {/* <Chat
           onLeftSideBarOpen={onLeftSideBarOpen}
