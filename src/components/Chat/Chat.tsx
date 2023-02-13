@@ -93,17 +93,31 @@ function Chat({
                   index === array.length - 1)
                 ) {
                   isLastMessageDate = true;
-                  console.log(`${isLastMessageDate}: ${node.created_at}`);
                 }
-                return currentMessageDate != pastMessageDate ? (
+                return (
                   <Box key={index}>
-                    <Box>
-                      <ChatBubble
-                        key={index}
-                        message={node.content}
-                        created_at={node.created_at}
-                        from={node.sender}
-                      />
+                    {isLastMessageDate && (
+                      <Flex align="center" mt={6}>
+                        <Divider />
+                        <Text
+                          my={4}
+                          fontSize={10}
+                          minW={"40"}
+                          color={"gray"}
+                          align="center"
+                        >
+                          <Moment calendar>{node.created_at}</Moment>
+                        </Text>
+                        <Divider />
+                      </Flex>
+                    )}
+                    <ChatBubble
+                      key={index}
+                      message={node.content}
+                      created_at={node.created_at}
+                      from={node.sender}
+                    />
+                    {currentMessageDate != pastMessageDate && (
                       <Flex align="center" mt={6}>
                         <Divider />
                         <Text
@@ -119,15 +133,8 @@ function Chat({
                         </Text>
                         <Divider />
                       </Flex>
-                    </Box>
+                    )}
                   </Box>
-                ) : (
-                  <ChatBubble
-                    key={index}
-                    message={node.content}
-                    created_at={node.created_at}
-                    from={node.sender}
-                  />
                 );
               }
             })
