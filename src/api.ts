@@ -96,7 +96,11 @@ export const useGetMessages = (
       enabled: enabled,
       getNextPageParam: (lastPage, allPage: any[]) => {
         const nextPage = allPage.length * 25;
-        return lastPage.length === 25 ? nextPage : undefined;
+        var currentLength = 0;
+        allPage.map((page) => {
+          return (currentLength += page.edges.length);
+        });
+        return currentLength < lastPage.totalCount ? nextPage : undefined;
       },
     }
   );

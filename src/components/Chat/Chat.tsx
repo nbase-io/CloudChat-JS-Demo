@@ -78,13 +78,13 @@ function Chat({
       ref={listInnerRef}
     >
       {messages?.pages
-        .map((page: any[], pageIndex, pagesArray) =>
-          page
-            ?.map(({ content, sender, created_at }, index, array) => {
+        .map((page: any, pageIndex, pagesArray) =>
+          page?.edges
+            ?.map(({ node }: any, index: number, array: any[]) => {
               if (index > 0) {
-                const currentMessageDate = new Date(created_at).getDate();
+                const currentMessageDate = new Date(node.created_at).getDate();
                 const pastMessageDate = new Date(
-                  array[index - 1].created_at
+                  array[index - 1].node.created_at
                 ).getDate();
                 // lsat message date
                 var isLastMessageDate = false;
@@ -93,11 +93,17 @@ function Chat({
                   index === array.length - 1)
                 ) {
                   isLastMessageDate = true;
-                  console.log(`${isLastMessageDate}: ${created_at}`);
+                  console.log(`${isLastMessageDate}: ${node.created_at}`);
                 }
-                return (
+                return currentMessageDate != pastMessageDate ? (
                   <Box key={index}>
-                    {isLastMessageDate && (
+                    <Box>
+                      <ChatBubble
+                        key={index}
+                        message={node.content}
+                        created_at={node.created_at}
+                        from={node.sender}
+                      />
                       <Flex align="center" mt={6}>
                         <Divider />
                         <Text
@@ -107,45 +113,21 @@ function Chat({
                           color={"gray"}
                           align="center"
                         >
-                          <Moment calendar>{created_at}</Moment>
+                          <Moment calendar>
+                            {array[index - 1].node.created_at}
+                          </Moment>
                         </Text>
                         <Divider />
                       </Flex>
-                    )}
-                    {!isLastMessageDate &&
-                    currentMessageDate != pastMessageDate ? (
-                      <Box>
-                        <ChatBubble
-                          key={index}
-                          message={content}
-                          created_at={created_at}
-                          from={sender}
-                        />
-                        <Flex align="center" mt={6}>
-                          <Divider />
-                          <Text
-                            my={4}
-                            fontSize={10}
-                            minW={"40"}
-                            color={"gray"}
-                            align="center"
-                          >
-                            <Moment calendar>
-                              {array[index - 1].created_at}
-                            </Moment>
-                          </Text>
-                          <Divider />
-                        </Flex>
-                      </Box>
-                    ) : (
-                      <ChatBubble
-                        key={index}
-                        message={content}
-                        created_at={created_at}
-                        from={sender}
-                      />
-                    )}
+                    </Box>
                   </Box>
+                ) : (
+                  <ChatBubble
+                    key={index}
+                    message={node.content}
+                    created_at={node.created_at}
+                    from={node.sender}
+                  />
                 );
               }
             })

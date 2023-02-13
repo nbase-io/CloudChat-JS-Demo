@@ -11,12 +11,26 @@ import {
   RiImageLine,
   RiEmotionHappyLine,
 } from "react-icons/ri";
+import { useFilePicker } from "use-file-picker";
 
 type Props = {
   isBottom: boolean;
 };
 
 function ChatInput({ isBottom }: Props) {
+  const [openFileSelector, { filesContent, loading: filePickerLoading }] =
+    useFilePicker({
+      accept: ".png",
+    });
+
+  // {filesContent.map((file, index) => (
+  //   <div key={index}>
+  //     <h2>{file.name}</h2>
+  //     <div key={index}>{file.content}</div>
+  //     <br />
+  //   </div>
+  // ))}
+
   return (
     <Flex
       pl={4}
@@ -49,6 +63,7 @@ function ChatInput({ isBottom }: Props) {
           variant={"ghost"}
           icon={<RiImageLine />}
           ml={2}
+          // onClick={() => openFileSelector()}
         />
       </Tooltip>
       <Tooltip label={"Send message"}>
