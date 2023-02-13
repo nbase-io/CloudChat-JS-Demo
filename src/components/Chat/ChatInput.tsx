@@ -21,13 +21,16 @@ import {
 import { useFilePicker } from "use-file-picker";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import { useSendMessage } from "../../api";
 
 type Props = {
   isBottom: boolean;
+  channel: any;
 };
 
-function ChatInput({ isBottom }: Props) {
-  const [input, setInput] = useState("");
+function ChatInput({ isBottom, channel }: Props) {
+  const [input, setInput] = useState<any>("");
+  const { mutate: sendMessage } = useSendMessage(channel.id, input);
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [openFileSelector, { filesContent, loading: filePickerLoading }] =
     useFilePicker({
@@ -35,15 +38,18 @@ function ChatInput({ isBottom }: Props) {
       multiple: false,
     });
 
-  const sendMessage = (e: any) => {
+  const sendText = (e: any) => {
     e.preventDefault();
-    console.log(input);
+    if (input) {
+      // send message
+      sendMessage(channel.id, input);
+    }
     setInput(""); // clear input
   };
 
   const emojiSelected = (e: any) => {
     setInput(input + e.native);
-    onToggle();
+    onToggle(); // close popover
   };
 
   // {filesContent.map((file, index) => (
@@ -55,7 +61,7 @@ function ChatInput({ isBottom }: Props) {
   // ))}
 
   return (
-    <FormControl as={"form"} onSubmit={sendMessage}>
+    <FormControl as={"form"} onSubmit={sendText}>
       <Flex
         pl={4}
         py={2}

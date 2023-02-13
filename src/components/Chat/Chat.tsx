@@ -78,6 +78,7 @@ function Chat({
         .map((page: any, pageIndex, pagesArray) =>
           page?.edges
             ?.map(({ node }: any, index: number, array: any[]) => {
+              // all messages except the most recent message
               if (index > 0) {
                 const currentMessageDate = new Date(node.created_at).getDate();
                 const pastMessageDate = new Date(
@@ -134,6 +135,16 @@ function Chat({
                       )}
                   </Box>
                 );
+              } else {
+                // most recent message
+                return (
+                  <ChatBubble
+                    key={index}
+                    message={node.content}
+                    created_at={node.created_at}
+                    from={node.sender}
+                  />
+                );
               }
             })
             .reverse()
@@ -174,7 +185,7 @@ function Chat({
           />
         </Tooltip>
       )}
-      {channel && <ChatInput isBottom={isBottom} />}
+      {channel && <ChatInput isBottom={isBottom} channel={channel} />}
     </Flex>
   );
 }
