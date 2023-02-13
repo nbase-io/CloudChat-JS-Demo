@@ -60,24 +60,6 @@ export const useGetChannels = (enabled: boolean) =>
   );
 
 // ncloudchat 특정 채널 메세지들 가져오기
-// export const useGetMessages = (
-//   enabled: boolean,
-//   channel_id: string | undefined
-// ) =>
-//   useQuery<IMessage[]>(
-//     [`messages: ${channel_id}`],
-//     async () => {
-//       if (channel_id) {
-//         const filter = { channel_id: channel_id };
-//         const sort = { created_at: 1 };
-//         const option = { offset: 0, per_page: 25 };
-//         return await nc.getMessages(filter, sort, option);
-//       }
-//     },
-//     {
-//       enabled: enabled,
-//     }
-//   );
 export const useGetMessages = (
   enabled: boolean,
   channel_id: string | undefined
@@ -154,6 +136,7 @@ export const useSubscribe = (
     { enabled: enabled }
   );
 
+// ncloudchat 구독 모두 가져오기
 export const useGetSubscriptions = (
   enabled: boolean,
   channel_id: string | undefined
