@@ -1,21 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   Flex,
   IconButton,
   Divider,
   Tooltip,
   Box,
-  Center,
   Text,
   Progress,
-  Spinner,
 } from "@chakra-ui/react";
 import ChatBubble from "./ChatBubble";
 import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { HiArrowDown } from "react-icons/hi";
 import { useGetMessages } from "../../api";
-import { IMessage } from "../../lib/interfaces/IMessage";
 import Moment from "react-moment";
 
 type Props = {

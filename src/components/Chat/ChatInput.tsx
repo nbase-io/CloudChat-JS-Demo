@@ -1,9 +1,17 @@
 import {
+  Box,
+  Button,
   Flex,
   IconButton,
   Input,
   InputGroup,
   InputLeftElement,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
   Tooltip,
 } from "@chakra-ui/react";
 import {
@@ -12,6 +20,8 @@ import {
   RiEmotionHappyLine,
 } from "react-icons/ri";
 import { useFilePicker } from "use-file-picker";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 
 type Props = {
   isBottom: boolean;
@@ -20,7 +30,8 @@ type Props = {
 function ChatInput({ isBottom }: Props) {
   const [openFileSelector, { filesContent, loading: filePickerLoading }] =
     useFilePicker({
-      accept: ".png",
+      accept: [".png", ".jpeg"],
+      multiple: false,
     });
 
   // {filesContent.map((file, index) => (
@@ -40,15 +51,24 @@ function ChatInput({ isBottom }: Props) {
     >
       <InputGroup>
         <InputLeftElement>
-          <Tooltip label={"Add emoji"}>
-            <IconButton
-              colorScheme={"black"}
-              aria-label="Emogi"
-              variant={"ghost"}
-              icon={<RiEmotionHappyLine />}
-              ml={2}
-            />
-          </Tooltip>
+          <Popover>
+            <PopoverTrigger>
+              <Box>
+                <Tooltip label={"Add emoji"}>
+                  <IconButton
+                    colorScheme={"black"}
+                    aria-label="Emoji"
+                    variant={"ghost"}
+                    icon={<RiEmotionHappyLine />}
+                    ml={2}
+                  />
+                </Tooltip>
+              </Box>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Picker data={data} onEmojiSelect={console.log} />
+            </PopoverContent>
+          </Popover>
         </InputLeftElement>
         <Input
           borderRadius={120}
@@ -63,7 +83,7 @@ function ChatInput({ isBottom }: Props) {
           variant={"ghost"}
           icon={<RiImageLine />}
           ml={2}
-          // onClick={() => openFileSelector()}
+          onClick={() => openFileSelector()}
         />
       </Tooltip>
       <Tooltip label={"Send message"}>
