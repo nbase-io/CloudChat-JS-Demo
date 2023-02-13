@@ -117,23 +117,24 @@ function Chat({
                       created_at={node.created_at}
                       from={node.sender}
                     />
-                    {currentMessageDate != pastMessageDate && (
-                      <Flex align="center" mt={6}>
-                        <Divider />
-                        <Text
-                          my={4}
-                          fontSize={10}
-                          minW={"40"}
-                          color={"gray"}
-                          align="center"
-                        >
-                          <Moment calendar>
-                            {array[index - 1].node.created_at}
-                          </Moment>
-                        </Text>
-                        <Divider />
-                      </Flex>
-                    )}
+                    {!isLastMessageDate &&
+                      currentMessageDate != pastMessageDate && (
+                        <Flex align="center" mt={6}>
+                          <Divider />
+                          <Text
+                            my={4}
+                            fontSize={10}
+                            minW={"40"}
+                            color={"gray"}
+                            align="center"
+                          >
+                            <Moment calendar>
+                              {array[index - 1].node.created_at}
+                            </Moment>
+                          </Text>
+                          <Divider />
+                        </Flex>
+                      )}
                   </Box>
                 );
               }
