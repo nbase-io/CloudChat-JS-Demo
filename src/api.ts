@@ -1,5 +1,10 @@
 import * as ncloudchat from "ncloudchat";
-import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { IUser } from "./lib/interfaces/IUser";
 import { IFriendship } from "./lib/interfaces/IFriendship";
 import { IChannel } from "./lib/interfaces/IChannel";
@@ -157,8 +162,10 @@ export const useGetSubscriptions = (
 export const useSendMessage = (
   channel_id: string | undefined,
   message: string
-) =>
-  useMutation(
+) => {
+  const queryClient = useQueryClient();
+  return useMutation(
     async () =>
       await nc.sendMessage(channel_id, { type: "text", message: message })
   );
+};

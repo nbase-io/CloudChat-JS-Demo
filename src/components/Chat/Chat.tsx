@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Flex,
   IconButton,
@@ -14,6 +14,7 @@ import ChatInput from "./ChatInput";
 import { HiArrowDown } from "react-icons/hi";
 import { useGetMessages } from "../../api";
 import Moment from "react-moment";
+import { nc } from "../../api";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -35,6 +36,18 @@ function Chat({
     hasNextPage,
     fetchNextPage,
   } = useGetMessages(!!subscription, channel?.id);
+
+  // nc.bind("onMessageReceived", function (channel: any, message: any) {
+  //   // 수신된 메시지
+  //   console.log(message);
+  //   messages?.pages[0].edges.push({
+  //     node: {
+  //       created_at: "12",
+  //       sender: "guest",
+  //       content: "qweqwe",
+  //     },
+  //   });
+  // });
 
   // scroll to bottom
   const [isBottom, setIsBottom] = useState(false);
