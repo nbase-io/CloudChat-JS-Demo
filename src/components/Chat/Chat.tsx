@@ -16,6 +16,7 @@ import { HiArrowDown } from "react-icons/hi";
 import Moment from "react-moment";
 import { nc } from "../../api";
 import { useQueryClient } from "@tanstack/react-query";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -32,111 +33,67 @@ function Chat({
 }: Props) {
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
 
   // getMessages: using state instead of react infinite query for educational purpose
+  const getMessages = async () => {
+    setIsGettingMessages(true);
+    try {
+      const filter = { channel_id: channel.id };
+      const sort = { created_at: -1 };
+      const option = { offset: messages.length, per_page: 25 };
+      const response = await nc.getMessages(filter, sort, option);
+      console.log(response);
+      const newMessages = messages.concat(response.edges);
+      setMessages(newMessages);
+      console.log(messages);
+      setHasMore(messages.length + response.edges.length < response.totalCount);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsGettingMessages(false);
+  };
+
   useEffect(() => {
-    const getMessages = async () => {
-      try {
-        setIsGettingMessages(true);
-        const filter = { channel_id: channel.id };
-        const sort = { created_at: -1 };
-        const option = { offset: 0, per_page: 25 };
-        const response = await nc.getMessages(filter, sort, option);
-        console.log(response);
-        setMessages(response);
-        setIsGettingMessages(false);
-      } catch (error) {
-        console.log(error);
-        setIsGettingMessages(false);
-      }
-    };
     getMessages();
   }, [channel]);
 
-  // getMessages after subscription
-  // const {
-  //   data: messages,
-  //   isFetchingNextPage,
-  //   hasNextPage,
-  //   fetchNextPage,
-  // } = useGetMessages(!!subscription, channel?.id);
-  // const queryClient = useQueryClient();
-
-  // nc.bind("onMessageReceived", function (channel: any, message: any) {
-  // 수신된 메시지
-  // console.log(channel);
-  // console.log(message);
-  // const { pages, ...extraData } = queryClient.getQueryData([
-  //   `messages`,
-  //   { channelId: channel },
-  // ]);
-
-  // const newData: any = { node: message };
-  // const edges = [].concat(pages[0].edges, newData);
-  // const updatedFirstPage = { ...newData, ...pages[0].edges };
-  // const updatedFirstPage = { ...pages[0].edges, 25: newData };
-  // const updatedData = {
-  //   ...extraData,
-  //   pages: [updatedFirstPage, ...pages.slice(1)],
-  // };
-  // console.log(updatedFirstPage);
-  // console.log(updatedData);
-  // queryClient.setQueryData([`messages`, { channelId: channel }], updatedData);
-  // });
-
   // scroll to bottom
   const [isBottom, setIsBottom] = useState(false);
-  const bottom = useRef<any>(null);
-  const scrollToBottom = () => {
-    bottom.current.scrollIntoView({ behavior: "smooth" });
-  };
-  const listInnerRef = useRef<any>();
-  const onScroll = () => {
-    if (listInnerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-      // handle bottom
-      if (scrollTop + clientHeight === scrollHeight) {
-        // scoll bottom reached
-        setIsBottom(true);
-      } else {
-        if (isBottom) {
-          setIsBottom(false);
-        }
-      }
-
-      // handle top intinite scroll
-      // if (!isFetchingNextPage && scrollTop === 0) {
-      //   if (hasNextPage) {
-      //     fetchNextPage();
-      //   }
-      // }
-    }
-  };
 
   const messagesComponent = (
     <Flex
       px={6}
       overflowY="auto"
-      flexDirection={"column"}
+      flexDirection={"column-reverse"}
       flex={1}
-      onScroll={() => onScroll()}
-      ref={listInnerRef}
+      pb={4}
+      id="scrollableDiv"
     >
-      {messages.edges
-        ?.map(({ node }: any, index: number, array: any[]) => {
+      <InfiniteScroll
+        dataLength={messages.length}
+        next={getMessages}
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+        }}
+        inverse
+        hasMore={hasMore}
+        scrollableTarget="scrollableDiv"
+        loader={<h4>Loading...</h4>}
+      >
+        {messages.map(({ node }: any, index: number, array: any[]) => {
           // all messages except the most recent message
-          if (index > 0) {
+          if (index < 0) {
             const currentMessageDate = new Date(node.created_at).getDate();
             const pastMessageDate = new Date(
               array[index - 1].node.created_at
             ).getDate();
             // lsat message date
             var isLastMessageDate = false;
-            // if (
-            //   (pageIndex === pagesArray.length - 1, index === array.length - 1)
-            // ) {
-            //   isLastMessageDate = true;
-            // }
+            if (index === array.length - 1) {
+              isLastMessageDate = true;
+            }
             return (
               <Box key={index}>
                 {isLastMessageDate && (
@@ -191,85 +148,8 @@ function Chat({
               />
             );
           }
-        })
-        .reverse()}
-      {/* {messages?.pages
-        .map((page: any, pageIndex, pagesArray) =>
-          page?.edges
-            ?.map(({ node }: any, index: number, array: any[]) => {
-              // all messages except the most recent message
-              if (index > 0) {
-                const currentMessageDate = new Date(node.created_at).getDate();
-                const pastMessageDate = new Date(
-                  array[index - 1].node.created_at
-                ).getDate();
-                // lsat message date
-                var isLastMessageDate = false;
-                if (
-                  (pageIndex === pagesArray.length - 1,
-                  index === array.length - 1)
-                ) {
-                  isLastMessageDate = true;
-                }
-                return (
-                  <Box key={index}>
-                    {isLastMessageDate && (
-                      <Flex align="center" mt={6}>
-                        <Divider />
-                        <Text
-                          my={4}
-                          fontSize={10}
-                          minW={"40"}
-                          color={"gray"}
-                          align="center"
-                        >
-                          <Moment calendar>{node.created_at}</Moment>
-                        </Text>
-                        <Divider />
-                      </Flex>
-                    )}
-                    <ChatBubble
-                      key={index}
-                      message={node.content}
-                      created_at={node.created_at}
-                      from={node.sender}
-                    />
-                    {!isLastMessageDate &&
-                      currentMessageDate != pastMessageDate && (
-                        <Flex align="center" mt={6}>
-                          <Divider />
-                          <Text
-                            my={4}
-                            fontSize={10}
-                            minW={"40"}
-                            color={"gray"}
-                            align="center"
-                          >
-                            <Moment calendar>
-                              {array[index - 1].node.created_at}
-                            </Moment>
-                          </Text>
-                          <Divider />
-                        </Flex>
-                      )}
-                  </Box>
-                );
-              } else {
-                // most recent message
-                return (
-                  <ChatBubble
-                    key={index}
-                    message={node.content}
-                    created_at={node.created_at}
-                    from={node.sender}
-                  />
-                );
-              }
-            })
-            .reverse()
-        )
-        .reverse()} */}
-      <Box ref={bottom}></Box>
+        })}
+      </InfiniteScroll>
     </Flex>
   );
 

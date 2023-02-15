@@ -74,7 +74,7 @@ function ChatBubble({ message, created_at, from }: Props) {
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
-              <Moment local format="LT">
+              <Moment local format="LLL">
                 {created_at}
               </Moment>
             </Text>
@@ -127,7 +127,7 @@ function ChatBubble({ message, created_at, from }: Props) {
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
-              <Moment local format="LT">
+              <Moment local format="LLL">
                 {created_at}
               </Moment>
             </Text>
