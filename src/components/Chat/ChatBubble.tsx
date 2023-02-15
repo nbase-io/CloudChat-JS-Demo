@@ -115,15 +115,6 @@ function ChatBubble({ message, created_at, from }: Props) {
                   size={"sm"}
                 />
               </Tooltip>
-              <Tooltip label={"Delete"}>
-                <IconButton
-                  colorScheme={"black"}
-                  aria-label="Delete Message"
-                  variant={"ghost"}
-                  icon={<FaTrashAlt />}
-                  size={"sm"}
-                />
-              </Tooltip>
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -24,13 +24,15 @@ import Picker from "@emoji-mart/react";
 import { useSendMessage } from "../../api";
 
 type Props = {
-  isBottom: boolean;
   channel: any;
 };
 
-function ChatInput({ isBottom, channel }: Props) {
+function ChatInput({ channel }: Props) {
   const [input, setInput] = useState<any>("");
-  const { mutate: sendMessage } = useSendMessage(channel.id, input);
+  const { mutate: sendMessage, status: sendMessageStatus } = useSendMessage(
+    channel.id,
+    input
+  );
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [openFileSelector, { filesContent, loading: filePickerLoading }] =
     useFilePicker({
@@ -52,6 +54,10 @@ function ChatInput({ isBottom, channel }: Props) {
     onToggle(); // close popover
   };
 
+  useEffect(() => {
+    console.log(sendMessageStatus);
+  }, [sendMessageStatus]);
+
   // {filesContent.map((file, index) => (
   //   <div key={index}>
   //     <h2>{file.name}</h2>
@@ -62,12 +68,7 @@ function ChatInput({ isBottom, channel }: Props) {
 
   return (
     <FormControl as={"form"} onSubmit={sendText}>
-      <Flex
-        pl={4}
-        py={2}
-        borderTopColor="gray.100"
-        borderTopWidth={isBottom ? 0 : 1}
-      >
+      <Flex pl={4} py={2} borderTopColor="gray.100" borderTopWidth={1}>
         <InputGroup>
           <InputLeftElement>
             <Popover isLazy isOpen={isOpen} onClose={onClose}>

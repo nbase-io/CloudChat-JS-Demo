@@ -164,7 +164,6 @@ export const useSendMessage = (
   channel_id: string | undefined,
   message: string
 ) => {
-  const queryClient = useQueryClient();
   return useMutation(
     async () =>
       await nc.sendMessage(channel_id, { type: "text", message: message })

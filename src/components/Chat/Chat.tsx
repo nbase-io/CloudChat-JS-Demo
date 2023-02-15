@@ -1,24 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  Flex,
-  IconButton,
-  Divider,
-  Tooltip,
-  Box,
-  Text,
-  Progress,
-  Center,
-  Spinner,
-} from "@chakra-ui/react";
-import ChatBubble from "./ChatBubble";
+import { Flex, Divider, Box, Text, Progress } from "@chakra-ui/react";
 import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { HiArrowDown } from "react-icons/hi";
-// import { useGetMessages } from "../../api";
-import Moment from "react-moment";
 import { nc } from "../../api";
-import { useQueryClient } from "@tanstack/react-query";
-import InfiniteScroll from "react-infinite-scroll-component";
+import ChatMessages from "./ChatMessages";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -68,116 +54,6 @@ function Chat({
     }
   }, [messages]);
 
-  // scroll to bottom
-  const [isBottom, setIsBottom] = useState(false);
-
-  const messagesComponent = (
-    <Flex
-      px={6}
-      overflowY="auto"
-      flexDirection={"column-reverse"}
-      flex={1}
-      pb={4}
-      id="scrollableDiv"
-    >
-      <InfiniteScroll
-        dataLength={messages.length}
-        next={getMessages}
-        style={{
-          display: "flex",
-          flexDirection: "column-reverse",
-        }}
-        inverse
-        hasMore={hasMore.current}
-        scrollableTarget="scrollableDiv"
-        loader={<></>}
-        endMessage={
-          <Flex align="center" mt={6}>
-            <Divider />
-            <Text
-              my={4}
-              fontSize={10}
-              minW={"40"}
-              color={"gray"}
-              align="center"
-            >
-              Beginning of the conversation
-            </Text>
-            <Divider />
-          </Flex>
-        }
-      >
-        {messages.map(({ node }: any, index: number, array: any[]) => {
-          // all messages except the most recent message
-          console.log(index);
-          if (index > 0) {
-            const currentMessageDate = new Date(node.created_at).getDate();
-            const pastMessageDate = new Date(
-              array[index - 1].node.created_at
-            ).getDate();
-            // lsat message date
-            var isLastMessageDate = false;
-            if (index === array.length - 1) {
-              isLastMessageDate = true;
-            }
-            return (
-              <Box key={index}>
-                {isLastMessageDate && (
-                  <Flex align="center" mt={6}>
-                    <Divider />
-                    <Text
-                      my={4}
-                      fontSize={10}
-                      minW={"40"}
-                      color={"gray"}
-                      align="center"
-                    >
-                      <Moment calendar>{node.created_at}</Moment>
-                    </Text>
-                    <Divider />
-                  </Flex>
-                )}
-                <ChatBubble
-                  key={index}
-                  message={node.content}
-                  created_at={node.created_at}
-                  from={node.sender}
-                />
-                {currentMessageDate != pastMessageDate && (
-                  <Flex align="center" mt={6}>
-                    <Divider />
-                    <Text
-                      my={4}
-                      fontSize={10}
-                      minW={"40"}
-                      color={"gray"}
-                      align="center"
-                    >
-                      <Moment calendar>
-                        {array[index - 1].node.created_at}
-                      </Moment>
-                    </Text>
-                    <Divider />
-                  </Flex>
-                )}
-              </Box>
-            );
-          } else {
-            // most recent message
-            return (
-              <ChatBubble
-                key={index}
-                message={node.content}
-                created_at={node.created_at}
-                from={node.sender}
-              />
-            );
-          }
-        })}
-      </InfiniteScroll>
-    </Flex>
-  );
-
   return (
     <Flex w="full" flexDirection={"column"}>
       <ChatHeader
@@ -187,7 +63,13 @@ function Chat({
       />
       <Divider />
       {channel && isGettingMessages && <Progress size="xs" isIndeterminate />}
-      {channel && messagesComponent}
+      {channel && (
+        <ChatMessages
+          messages={messages}
+          getMessages={getMessages}
+          hasMore={hasMore.current}
+        />
+      )}
       {/* {!isBottom && messages.length > 0 && (
         <Tooltip label="Scroll to bottom">
           <IconButton
@@ -207,7 +89,7 @@ function Chat({
           />
         </Tooltip>
       )} */}
-      {channel && <ChatInput isBottom={isBottom} channel={channel} />}
+      {channel && <ChatInput channel={channel} />}
     </Flex>
   );
 }
