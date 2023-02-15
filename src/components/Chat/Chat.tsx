@@ -7,6 +7,8 @@ import {
   Box,
   Text,
   Progress,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import ChatBubble from "./ChatBubble";
 import { ChatHeader } from "./ChatHeader";
@@ -33,9 +35,9 @@ function Chat({
 }: Props) {
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
-  const [hasMore, setHasMore] = useState(false);
+  const hasMore = useRef(false);
 
-  // getMessages: using state instead of react infinite query for educational purpose
+  // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
     setIsGettingMessages(true);
     try {
@@ -43,20 +45,28 @@ function Chat({
       const sort = { created_at: -1 };
       const option = { offset: messages.length, per_page: 25 };
       const response = await nc.getMessages(filter, sort, option);
-      console.log(response);
       const newMessages = messages.concat(response.edges);
       setMessages(newMessages);
-      console.log(messages);
-      setHasMore(messages.length + response.edges.length < response.totalCount);
+      hasMore.current =
+        messages.length + response.edges.length < response.totalCount;
     } catch (error) {
       console.log(error);
     }
     setIsGettingMessages(false);
   };
 
+  // clear messages when channel changed (and after subscribed)
   useEffect(() => {
-    getMessages();
-  }, [channel]);
+    setMessages([]);
+    hasMore.current = false;
+  }, [subscription]);
+
+  // getMessages if messages are cleared (channel changed)
+  useEffect(() => {
+    if (messages.length === 0) {
+      getMessages();
+    }
+  }, [messages]);
 
   // scroll to bottom
   const [isBottom, setIsBottom] = useState(false);
@@ -78,9 +88,26 @@ function Chat({
           flexDirection: "column-reverse",
         }}
         inverse
-        hasMore={hasMore}
+        hasMore={hasMore.current}
         scrollableTarget="scrollableDiv"
-        loader={<h4>Loading...</h4>}
+        loader={<></>}
+        endMessage={
+          !isGettingMessages && (
+            <Flex align="center" mt={6}>
+              <Divider />
+              <Text
+                my={4}
+                fontSize={10}
+                minW={"40"}
+                color={"gray"}
+                align="center"
+              >
+                Beginning of the conversation
+              </Text>
+              <Divider />
+            </Flex>
+          )
+        }
       >
         {messages.map(({ node }: any, index: number, array: any[]) => {
           // all messages except the most recent message
@@ -90,13 +117,13 @@ function Chat({
               array[index - 1].node.created_at
             ).getDate();
             // lsat message date
-            var isLastMessageDate = false;
-            if (index === array.length - 1) {
-              isLastMessageDate = true;
-            }
+            // var isLastMessageDate = false;
+            // if (index === array.length - 1) {
+            //   isLastMessageDate = true;
+            // }
             return (
               <Box key={index}>
-                {isLastMessageDate && (
+                {/* {isLastMessageDate && (
                   <Flex align="center" mt={6}>
                     <Divider />
                     <Text
@@ -110,14 +137,14 @@ function Chat({
                     </Text>
                     <Divider />
                   </Flex>
-                )}
+                )} */}
                 <ChatBubble
                   key={index}
                   message={node.content}
                   created_at={node.created_at}
                   from={node.sender}
                 />
-                {!isLastMessageDate &&
+                {/* {!isLastMessageDate &&
                   currentMessageDate != pastMessageDate && (
                     <Flex align="center" mt={6}>
                       <Divider />
@@ -134,7 +161,7 @@ function Chat({
                       </Text>
                       <Divider />
                     </Flex>
-                  )}
+                  )} */}
               </Box>
             );
           } else {
