@@ -22,6 +22,7 @@ function Chat({
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const hasMore = useRef(false);
+  const [arrivalMessage, setArrivalMessage] = useState<any>(null);
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
@@ -40,6 +41,22 @@ function Chat({
     }
     setIsGettingMessages(false);
   };
+
+  // once channel is set, setEventListener for the channel
+  useEffect(() => {
+    nc.bind("onMessageReceived", function (channelId: string, message: any) {
+      if (channel.id === channelId) {
+        setArrivalMessage({ node: message });
+      }
+    });
+  }, [channel]);
+
+  // receive message
+  useEffect(() => {
+    setMessages((prev: any) => [arrivalMessage, ...prev]);
+    console.log(messages);
+    console.log(arrivalMessage);
+  }, [arrivalMessage]);
 
   // clear messages when channel changed (and after subscribed)
   useEffect(() => {
