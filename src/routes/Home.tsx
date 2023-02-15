@@ -53,7 +53,7 @@ function Home() {
   } = useDisclosure();
 
   return (
-    <HStack w="full" h="-webkit-calc(100vh - 81px)" bg={"grey.100"} spacing={0}>
+    <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>
       <Flex
         as={"aside"}
         w={"full"}

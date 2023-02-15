@@ -65,32 +65,33 @@ export const useGetChannels = (enabled: boolean) =>
   );
 
 // ncloudchat 특정 채널 메세지들 가져오기
-export const useGetMessages = (
-  enabled: boolean,
-  channel_id: string | undefined
-) =>
-  useInfiniteQuery(
-    [`messages: ${channel_id}`],
-    async ({ pageParam = 0 }) => {
-      if (channel_id) {
-        const filter = { channel_id: channel_id };
-        const sort = { created_at: -1 };
-        const option = { offset: pageParam, per_page: 25 };
-        return await nc.getMessages(filter, sort, option);
-      }
-    },
-    {
-      enabled: enabled,
-      getNextPageParam: (lastPage, allPage: any[]) => {
-        const nextPage = allPage.length * 25;
-        var currentLength = 0;
-        allPage.map((page) => {
-          return (currentLength += page.edges.length);
-        });
-        return currentLength < lastPage.totalCount ? nextPage : undefined;
-      },
-    }
-  );
+// export const useGetMessages = (
+//   enabled: boolean,
+//   channel_id: string | undefined
+// ) =>
+//   useInfiniteQuery(
+//     [`messages`, { channelId: channel_id }],
+//     async ({ pageParam = 0 }) => {
+//       if (channel_id) {
+//         const filter = { channel_id: channel_id };
+//         const sort = { created_at: -1 };
+//         const option = { offset: pageParam, per_page: 25 };
+//         return await nc.getMessages(filter, sort, option);
+//       }
+//     },
+//     {
+//       enabled: enabled,
+//       getNextPageParam: (lastPage, allPage: any[]) => {
+//         const nextPage = allPage.length * 25;
+//         var currentLength = 0;
+//         allPage.map((page) => {
+//           console.log();
+//           return (currentLength += page.edges.length);
+//         });
+//         return currentLength < lastPage.totalCount ? nextPage : undefined;
+//       },
+//     }
+//   );
 
 // ncloudchat 특정 채널 가져오기
 export const useGetChannel = (
@@ -115,7 +116,7 @@ export const useCountUnread = (
   channel_id: string | undefined
 ) =>
   useQuery<ICountUnread>(
-    [`countUnread: ${channel_id}`],
+    [`countUnread`, { channelId: channel_id }],
     async () => {
       if (channel_id) {
         return await nc.countUnread(channel_id);
@@ -132,7 +133,7 @@ export const useSubscribe = (
   channel_id: string | undefined
 ) =>
   useQuery<ICreateSubscription>(
-    [`subscribe: ${channel_id}`],
+    [`subscribe`, { channelId: channel_id }],
     async () => {
       if (channel_id) {
         return await nc.subscribe(channel_id);
@@ -147,7 +148,7 @@ export const useGetSubscriptions = (
   channel_id: string | undefined
 ) =>
   useQuery<ISubscription[]>(
-    [`subscriptions: ${channel_id}`],
+    [`subscriptions`, { channelId: channel_id }],
     async () => {
       if (channel_id) {
         const filter = { channel_id: channel_id };

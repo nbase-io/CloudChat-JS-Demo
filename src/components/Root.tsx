@@ -7,8 +7,8 @@ function Root() {
     <Box>
       <HStack
         justifyContent={"space-between"}
-        py={5}
-        px={10}
+        py={3}
+        px={8}
         borderBottomWidth={1}
       >
         <Box color="red.500">
