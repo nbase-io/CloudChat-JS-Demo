@@ -21,7 +21,7 @@ import {
 import { useFilePicker } from "use-file-picker";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import { useSendMessage } from "../../api";
+import { useSendImage, useSendMessage } from "../../api";
 
 type Props = {
   channel: any;
@@ -34,11 +34,25 @@ function ChatInput({ channel }: Props) {
     input
   );
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const [openFileSelector, { filesContent, loading: filePickerLoading }] =
-    useFilePicker({
-      accept: [".png", ".jpeg"],
-      multiple: false,
-    });
+  const [
+    openFileSelector,
+    { filesContent, loading: filePickerLoading, plainFiles, clear },
+  ] = useFilePicker({
+    accept: [
+      ".bmp",
+      ".gif",
+      ".jpeg",
+      ".png",
+      ".webp",
+      ".heic",
+      ".heic-sequence",
+      ".heif",
+      ".heif-sequence",
+      ".svgz",
+    ],
+    multiple: false,
+  });
+  const { mutate: sendImage } = useSendImage(channel.id, plainFiles[0]);
 
   const sendText = (e: any) => {
     e.preventDefault();
@@ -57,6 +71,14 @@ function ChatInput({ channel }: Props) {
   useEffect(() => {
     console.log(sendMessageStatus);
   }, [sendMessageStatus]);
+
+  useEffect(() => {
+    if (plainFiles.length > 0) {
+      console.log(plainFiles);
+      sendImage();
+      clear();
+    }
+  }, [plainFiles]);
 
   // {filesContent.map((file, index) => (
   //   <div key={index}>

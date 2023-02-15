@@ -1,4 +1,4 @@
-import { Box, HStack, Button, Image, Tooltip } from "@chakra-ui/react";
+import { Box, HStack, Image, Tooltip, IconButton } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
 
@@ -23,14 +23,11 @@ function Root() {
         <HStack spacing={2}>
           <Tooltip label={"Go to Github"}>
             <Link to={"https://github.com/nbase-io/CloudChat-JS-Demo"}>
-              <Button
-                leftIcon={<FaGithub />}
-                bg="black"
-                color={"white"}
-                _hover={{ bg: "gray" }}
-              >
-                Github
-              </Button>
+              <IconButton
+                icon={<FaGithub />}
+                variant={"ghost"}
+                aria-label={"Github Button"}
+              />
             </Link>
           </Tooltip>
           <Tooltip label={"Download Sketch"}>
@@ -39,14 +36,11 @@ function Root() {
                 "https://kr.object.ncloudstorage.com/ncloudchat/NCP_Ncloud%20Chat_UI%20Kit_v1.0.sketch"
               }
             >
-              <Button
-                leftIcon={<FaSketch />}
-                bg="black"
-                color={"white"}
-                _hover={{ bg: "gray" }}
-              >
-                Download Sketch
-              </Button>
+              <IconButton
+                icon={<FaSketch />}
+                variant={"ghost"}
+                aria-label={"Download Sketch Button"}
+              />
             </Link>
           </Tooltip>
         </HStack>

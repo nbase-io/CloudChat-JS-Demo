@@ -169,3 +169,7 @@ export const useSendMessage = (
       await nc.sendMessage(channel_id, { type: "text", message: message })
   );
 };
+
+export const useSendImage = (channel_id: string | undefined, file: any) => {
+  return useMutation(async () => await nc.sendImage(channel_id, file));
+};

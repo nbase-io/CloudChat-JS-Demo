@@ -54,8 +54,6 @@ function Chat({
   // receive message
   useEffect(() => {
     setMessages((prev: any) => [arrivalMessage, ...prev]);
-    console.log(messages);
-    console.log(arrivalMessage);
   }, [arrivalMessage]);
 
   // clear messages when channel changed (and after subscribed)

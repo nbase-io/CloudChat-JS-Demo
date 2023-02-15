@@ -10,17 +10,14 @@ import {
 } from "@chakra-ui/react";
 import { FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
 import Moment from "react-moment";
-import { IUser } from "../../lib/interfaces/IUser";
 
 type Props = {
-  message: string;
-  created_at: string;
-  from: IUser;
+  node: any;
 };
 
-function ChatBubble({ message, created_at, from }: Props) {
+function ChatBubble({ node }: Props) {
   const [isHovering, setIsHovering] = useState(false);
-  const isMe = from.id === "guest";
+  const isMe = node.sender.id === "guest";
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 32;
   const topLeftRadius = isMe ? 32 : 0;
@@ -29,11 +26,11 @@ function ChatBubble({ message, created_at, from }: Props) {
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
       {!isMe && (
         <HStack>
-          <Tooltip label={from.id}>
-            <Avatar size={"sm"} name={from.name}></Avatar>
+          <Tooltip label={node.sender.id}>
+            <Avatar size={"sm"} name={node.sender.name}></Avatar>
           </Tooltip>
           <Text ml={6} fontSize={"small"}>
-            {from.name}
+            {node.sender.name}
           </Text>
         </HStack>
       )}
@@ -75,7 +72,7 @@ function ChatBubble({ message, created_at, from }: Props) {
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
               <Moment local format="LT">
-                {created_at}
+                {node.created_at}
               </Moment>
             </Text>
           ))}
@@ -92,7 +89,7 @@ function ChatBubble({ message, created_at, from }: Props) {
           _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
           onMouseEnter={() => setIsHovering(true)}
         >
-          {message}
+          {node.content}
         </Box>
         {!isMe &&
           (isHovering ? (
@@ -119,7 +116,7 @@ function ChatBubble({ message, created_at, from }: Props) {
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
               <Moment local format="LT">
-                {created_at}
+                {node.created_at}
               </Moment>
             </Text>
           ))}

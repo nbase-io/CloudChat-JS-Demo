@@ -77,9 +77,10 @@ function ChatMessages({ messages, getMessages, hasMore }: Props) {
                 )}
                 <ChatBubble
                   key={index}
-                  message={node.content}
-                  created_at={node.created_at}
-                  from={node.sender}
+                  node={node}
+                  //   message={node.content}
+                  //   created_at={node.created_at}
+                  //   from={node.sender}
                 />
                 {currentMessageDate != pastMessageDate && (
                   <Flex align="center" mt={6}>
@@ -105,9 +106,10 @@ function ChatMessages({ messages, getMessages, hasMore }: Props) {
             return (
               <ChatBubble
                 key={index}
-                message={node.content}
-                created_at={node.created_at}
-                from={node.sender}
+                node={node}
+                // message={node.content}
+                // created_at={node.created_at}
+                // from={node.sender}
               />
             );
           }
