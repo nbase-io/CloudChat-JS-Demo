@@ -49,12 +49,12 @@ function ChatBubble({ node }: Props) {
   }, [node.content]);
   const toast = useToast({
     position: "top",
-    description: `"${node.content}" has been copied to the clipboard!`,
-    status: "success",
   });
   const onCopyButtonClicked = () => {
     onCopy();
-    toast();
+    toast({
+      description: `"${node.content}" has been copied to the clipboard!`,
+    });
   };
 
   return (
@@ -78,7 +78,6 @@ function ChatBubble({ node }: Props) {
             <HStack>
               <Tooltip label={"Delete"}>
                 <IconButton
-                  colorScheme={"black"}
                   aria-label="Delete Message"
                   variant={"ghost"}
                   icon={<FaTrashAlt />}
@@ -89,7 +88,6 @@ function ChatBubble({ node }: Props) {
               {node.message_type === "text" && (
                 <Tooltip label={"Copy"}>
                   <IconButton
-                    colorScheme={"black"}
                     aria-label="Copy Message"
                     variant={"ghost"}
                     icon={hasCopied ? <FaCheck /> : <FaCopy />}
@@ -100,7 +98,6 @@ function ChatBubble({ node }: Props) {
               )}
               <Tooltip label={"Reply"}>
                 <IconButton
-                  colorScheme={"black"}
                   aria-label="Reply Message"
                   variant={"ghost"}
                   icon={<FaReply />}
@@ -144,7 +141,6 @@ function ChatBubble({ node }: Props) {
             <HStack>
               <Tooltip label={"Reply"}>
                 <IconButton
-                  colorScheme={"black"}
                   aria-label="Reply Message"
                   variant={"ghost"}
                   icon={<FaReply />}
@@ -154,7 +150,6 @@ function ChatBubble({ node }: Props) {
               {node.message_type === "text" && (
                 <Tooltip label={"Copy"}>
                   <IconButton
-                    colorScheme={"black"}
                     aria-label="Copy Message"
                     variant={"ghost"}
                     icon={hasCopied ? <FaCheck /> : <FaCopy />}
