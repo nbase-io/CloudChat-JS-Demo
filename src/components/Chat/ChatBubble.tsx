@@ -7,6 +7,9 @@ import {
   Avatar,
   IconButton,
   Tooltip,
+  Image,
+  Spinner,
+  Skeleton,
 } from "@chakra-ui/react";
 import { FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
 import Moment from "react-moment";
@@ -89,7 +92,16 @@ function ChatBubble({ node }: Props) {
           _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
           onMouseEnter={() => setIsHovering(true)}
         >
-          {node.content}
+          {node.message_type === "text" ? (
+            node.content
+          ) : (
+            <Image
+              src={`https://alpha-api.cloudchat.dev${node.attachment_filenames.url}`}
+              alt={node.attachment_filenames.name}
+              onClick={() => console.log("haha")}
+              fallback={<Spinner />}
+            />
+          )}
         </Box>
         {!isMe &&
           (isHovering ? (

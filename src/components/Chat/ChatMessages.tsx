@@ -75,13 +75,7 @@ function ChatMessages({ messages, getMessages, hasMore }: Props) {
                     <Divider />
                   </Flex>
                 )}
-                <ChatBubble
-                  key={index}
-                  node={node}
-                  //   message={node.content}
-                  //   created_at={node.created_at}
-                  //   from={node.sender}
-                />
+                <ChatBubble key={index} node={node} />
                 {currentMessageDate != pastMessageDate && (
                   <Flex align="center" mt={6}>
                     <Divider />
@@ -103,15 +97,7 @@ function ChatMessages({ messages, getMessages, hasMore }: Props) {
             );
           } else {
             // most recent message
-            return (
-              <ChatBubble
-                key={index}
-                node={node}
-                // message={node.content}
-                // created_at={node.created_at}
-                // from={node.sender}
-              />
-            );
+            return <ChatBubble key={index} node={node} />;
           }
         })}
       </InfiniteScroll>
