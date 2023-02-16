@@ -61,9 +61,6 @@ function Chat({
     }
   });
 
-  // once channel is set, set message event listeners for the channel
-  useEffect(() => {}, [channel]);
-
   // receive message
   useEffect(() => {
     setMessages((prev: any) => [arrivalMessage, ...prev]);

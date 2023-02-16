@@ -38,10 +38,8 @@ function ChatBubble({ node }: Props) {
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 32;
   const topLeftRadius = isMe ? 32 : 0;
-  const { mutate: deleteMessage } = useDeleteMessage(
-    node.channel_id,
-    node.message_id
-  );
+  const { mutate: deleteMessage, status: deleteMessageStatus } =
+    useDeleteMessage(node.channel_id, node.message_id);
   const { onCopy, setValue, hasCopied } = useClipboard(node.content);
   // this is needed for copy-to-clipboard
   useEffect(() => {
@@ -56,6 +54,20 @@ function ChatBubble({ node }: Props) {
       description: `"${node.content}" has been copied to the clipboard!`,
     });
   };
+
+  useEffect(() => {
+    if (deleteMessageStatus === "success") {
+      toast({
+        description: `A message has been deleted!`,
+        status: deleteMessageStatus,
+      });
+    } else if (deleteMessageStatus === "error") {
+      toast({
+        description: `Failed to delete the message.`,
+        status: deleteMessageStatus,
+      });
+    }
+  }, [deleteMessageStatus]);
 
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>

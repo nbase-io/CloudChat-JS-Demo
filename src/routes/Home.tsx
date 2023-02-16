@@ -116,6 +116,7 @@ function Home() {
         isOpen={isChatDetailOpen}
         onClose={onChatDetailClose}
         channel={channel}
+        subscription={subscription}
       />
     </HStack>
   );
