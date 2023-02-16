@@ -12,6 +12,12 @@ import {
   PopoverTrigger,
   Tooltip,
   useDisclosure,
+  Text,
+  VStack,
+  HStack,
+  CloseButton,
+  Image,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   RiSendPlaneLine,
@@ -25,13 +31,20 @@ import { useSendImage, useSendMessage } from "../../api";
 
 type Props = {
   channel: any;
+  replyParentMessage: any;
+  setReplyParentMessage: any;
 };
 
-function ChatInput({ channel }: Props) {
+function ChatInput({
+  channel,
+  replyParentMessage,
+  setReplyParentMessage,
+}: Props) {
   const [input, setInput] = useState<any>("");
   const { mutate: sendMessage, status: sendMessageStatus } = useSendMessage(
     channel.id,
-    input
+    input,
+    replyParentMessage?.message_id
   );
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [
@@ -61,6 +74,7 @@ function ChatInput({ channel }: Props) {
       sendMessage(channel.id, input);
     }
     setInput(""); // clear input
+    setReplyParentMessage(null); // clear parent message
   };
 
   const emojiSelected = (e: any) => {
@@ -80,17 +94,36 @@ function ChatInput({ channel }: Props) {
     }
   }, [plainFiles]);
 
-  // {filesContent.map((file, index) => (
-  //   <div key={index}>
-  //     <h2>{file.name}</h2>
-  //     <div key={index}>{file.content}</div>
-  //     <br />
-  //   </div>
-  // ))}
-
   return (
-    <FormControl as={"form"} onSubmit={sendText}>
-      <Flex pl={4} py={2} borderTopColor="gray.100" borderTopWidth={1}>
+    <FormControl
+      as={"form"}
+      onSubmit={sendText}
+      borderTopColor="gray.100"
+      borderTopWidth={1}
+    >
+      {replyParentMessage !== null && (
+        <HStack px={4} py={2} justifyContent={"space-between"}>
+          <VStack alignItems={"flex-start"}>
+            <Text fontSize={"2xs"} as="b">
+              {`Reply to ${replyParentMessage.sender.name}`}
+            </Text>
+            {replyParentMessage.message_type === "text" ? (
+              <Text fontSize={"xs"} noOfLines={1} color={"gray"}>
+                {replyParentMessage.content}
+              </Text>
+            ) : (
+              <Image
+                src={`https://alpha-api.cloudchat.dev${replyParentMessage.attachment_filenames.url}`}
+                alt={replyParentMessage.attachment_filenames.name}
+                fallback={<Spinner />}
+                maxW={"3xs"}
+              />
+            )}
+          </VStack>
+          <CloseButton onClick={() => setReplyParentMessage(null)} />
+        </HStack>
+      )}
+      <Flex pl={4} py={2}>
         <InputGroup>
           <InputLeftElement>
             <Popover isLazy isOpen={isOpen} onClose={onClose}>

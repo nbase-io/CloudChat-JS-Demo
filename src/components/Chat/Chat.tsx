@@ -23,6 +23,7 @@ function Chat({
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const hasMore = useRef(false);
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
+  const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
@@ -47,7 +48,6 @@ function Chat({
     if (channel.id === channelId) {
       setArrivalMessage({ node: message });
     }
-    console.log(channelId);
   });
 
   // message deleted
@@ -93,6 +93,7 @@ function Chat({
           messages={messages}
           getMessages={getMessages}
           hasMore={hasMore.current}
+          setReplyParentMessage={setReplyParentMessage}
         />
       )}
       {/* {!isBottom && messages.length > 0 && (
@@ -114,7 +115,13 @@ function Chat({
           />
         </Tooltip>
       )} */}
-      {channel && <ChatInput channel={channel} />}
+      {channel && (
+        <ChatInput
+          channel={channel}
+          replyParentMessage={replyParentMessage}
+          setReplyParentMessage={setReplyParentMessage}
+        />
+      )}
     </Flex>
   );
 }

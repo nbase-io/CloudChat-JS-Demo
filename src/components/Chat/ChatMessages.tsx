@@ -7,9 +7,15 @@ type Props = {
   messages: any[];
   getMessages: () => void;
   hasMore: boolean;
+  setReplyParentMessage: any;
 };
 
-function ChatMessages({ messages, getMessages, hasMore }: Props) {
+function ChatMessages({
+  messages,
+  getMessages,
+  hasMore,
+  setReplyParentMessage,
+}: Props) {
   return (
     <Flex
       px={6}
@@ -75,7 +81,11 @@ function ChatMessages({ messages, getMessages, hasMore }: Props) {
                     <Divider />
                   </Flex>
                 )}
-                <ChatBubble key={index} node={node} />
+                <ChatBubble
+                  key={index}
+                  node={node}
+                  setReplyParentMessage={setReplyParentMessage}
+                />
                 {currentMessageDate != pastMessageDate && (
                   <Flex align="center" mt={6}>
                     <Divider />
@@ -97,7 +107,13 @@ function ChatMessages({ messages, getMessages, hasMore }: Props) {
             );
           } else {
             // most recent message
-            return <ChatBubble key={index} node={node} />;
+            return (
+              <ChatBubble
+                key={index}
+                node={node}
+                setReplyParentMessage={setReplyParentMessage}
+              />
+            );
           }
         })}
       </InfiniteScroll>

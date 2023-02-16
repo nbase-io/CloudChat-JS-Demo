@@ -26,9 +26,10 @@ import { useDeleteMessage } from "../../api";
 
 type Props = {
   node: any;
+  setReplyParentMessage: any;
 };
 
-function ChatBubble({ node }: Props) {
+function ChatBubble({ node, setReplyParentMessage }: Props) {
   const {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
@@ -116,6 +117,7 @@ function ChatBubble({ node }: Props) {
                   variant={"ghost"}
                   icon={<VscReply />}
                   size={"sm"}
+                  onClick={() => setReplyParentMessage(node)}
                 />
               </Tooltip>
             </HStack>
@@ -159,6 +161,7 @@ function ChatBubble({ node }: Props) {
                   variant={"ghost"}
                   icon={<VscReply />}
                   size={"sm"}
+                  onClick={() => setReplyParentMessage(node)}
                 />
               </Tooltip>
               {node.message_type === "text" && (

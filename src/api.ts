@@ -163,11 +163,16 @@ export const useGetSubscriptions = (
 // sendMessage
 export const useSendMessage = (
   channel_id: string | undefined,
-  message: string
+  message: string,
+  parent_message_id: string | null
 ) => {
   return useMutation(
     async () =>
-      await nc.sendMessage(channel_id, { type: "text", message: message })
+      await nc.sendMessage(channel_id, {
+        type: "text",
+        message: message,
+        parent_message_id: parent_message_id,
+      })
   );
 };
 
