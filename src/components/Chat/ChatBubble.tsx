@@ -19,7 +19,8 @@ import {
   useClipboard,
   useToast,
 } from "@chakra-ui/react";
-import { FaReply, FaCopy, FaTrashAlt, FaCheck } from "react-icons/fa";
+// import { FaReply, FaCopy, FaTrashAlt, FaCheck } from "react-icons/fa";
+import { VscReply, VscCopy, VscTrash, VscCheck } from "react-icons/vsc";
 import Moment from "react-moment";
 import { useDeleteMessage } from "../../api";
 
@@ -52,6 +53,7 @@ function ChatBubble({ node }: Props) {
     onCopy();
     toast({
       description: `"${node.content}" has been copied to the clipboard!`,
+      status: "success",
     });
   };
 
@@ -87,12 +89,12 @@ function ChatBubble({ node }: Props) {
       >
         {isMe &&
           (isHovering ? (
-            <HStack>
+            <HStack spacing={0}>
               <Tooltip label={"Delete"}>
                 <IconButton
                   aria-label="Delete Message"
                   variant={"ghost"}
-                  icon={<FaTrashAlt />}
+                  icon={<VscTrash />}
                   size={"sm"}
                   onClick={() => deleteMessage()}
                 />
@@ -102,7 +104,7 @@ function ChatBubble({ node }: Props) {
                   <IconButton
                     aria-label="Copy Message"
                     variant={"ghost"}
-                    icon={hasCopied ? <FaCheck /> : <FaCopy />}
+                    icon={hasCopied ? <VscCheck /> : <VscCopy />}
                     size={"sm"}
                     onClick={onCopyButtonClicked}
                   />
@@ -112,7 +114,7 @@ function ChatBubble({ node }: Props) {
                 <IconButton
                   aria-label="Reply Message"
                   variant={"ghost"}
-                  icon={<FaReply />}
+                  icon={<VscReply />}
                   size={"sm"}
                 />
               </Tooltip>
@@ -150,12 +152,12 @@ function ChatBubble({ node }: Props) {
         </Box>
         {!isMe &&
           (isHovering ? (
-            <HStack>
+            <HStack spacing={0}>
               <Tooltip label={"Reply"}>
                 <IconButton
                   aria-label="Reply Message"
                   variant={"ghost"}
-                  icon={<FaReply />}
+                  icon={<VscReply />}
                   size={"sm"}
                 />
               </Tooltip>
@@ -164,7 +166,7 @@ function ChatBubble({ node }: Props) {
                   <IconButton
                     aria-label="Copy Message"
                     variant={"ghost"}
-                    icon={hasCopied ? <FaCheck /> : <FaCopy />}
+                    icon={hasCopied ? <VscCheck /> : <VscCopy />}
                     size={"sm"}
                     onClick={onCopyButtonClicked}
                   />
