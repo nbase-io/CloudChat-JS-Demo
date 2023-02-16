@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   VStack,
@@ -16,12 +16,10 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
-  Button,
-  Center,
-  Flex,
+  useClipboard,
+  useToast,
 } from "@chakra-ui/react";
-import { FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
+import { FaReply, FaCopy, FaTrashAlt, FaCheck } from "react-icons/fa";
 import Moment from "react-moment";
 
 type Props = {
@@ -39,6 +37,20 @@ function ChatBubble({ node }: Props) {
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 32;
   const topLeftRadius = isMe ? 32 : 0;
+  const { onCopy, setValue, hasCopied } = useClipboard(node.content);
+  // this is needed for copy-to-clipboard
+  useEffect(() => {
+    setValue(node.content);
+  }, [node.content]);
+  const toast = useToast({
+    position: "top",
+    description: `"${node.content}" has been copied to the clipboard!`,
+    status: "success",
+  });
+  const onCopyButtonClicked = () => {
+    onCopy();
+    toast();
+  };
 
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
@@ -68,15 +80,18 @@ function ChatBubble({ node }: Props) {
                   size={"sm"}
                 />
               </Tooltip>
-              <Tooltip label={"Copy"}>
-                <IconButton
-                  colorScheme={"black"}
-                  aria-label="Copy Message"
-                  variant={"ghost"}
-                  icon={<FaCopy />}
-                  size={"sm"}
-                />
-              </Tooltip>
+              {node.message_type === "text" && (
+                <Tooltip label={"Copy"}>
+                  <IconButton
+                    colorScheme={"black"}
+                    aria-label="Copy Message"
+                    variant={"ghost"}
+                    icon={hasCopied ? <FaCheck /> : <FaCopy />}
+                    size={"sm"}
+                    onClick={onCopyButtonClicked}
+                  />
+                </Tooltip>
+              )}
               <Tooltip label={"Reply"}>
                 <IconButton
                   colorScheme={"black"}
@@ -130,15 +145,18 @@ function ChatBubble({ node }: Props) {
                   size={"sm"}
                 />
               </Tooltip>
-              <Tooltip label={"Copy"}>
-                <IconButton
-                  colorScheme={"black"}
-                  aria-label="Copy Message"
-                  variant={"ghost"}
-                  icon={<FaCopy />}
-                  size={"sm"}
-                />
-              </Tooltip>
+              {node.message_type === "text" && (
+                <Tooltip label={"Copy"}>
+                  <IconButton
+                    colorScheme={"black"}
+                    aria-label="Copy Message"
+                    variant={"ghost"}
+                    icon={hasCopied ? <FaCheck /> : <FaCopy />}
+                    size={"sm"}
+                    onClick={onCopyButtonClicked}
+                  />
+                </Tooltip>
+              )}
             </HStack>
           ) : (
             <Text fontSize={"xs"} color={"gray"}>
