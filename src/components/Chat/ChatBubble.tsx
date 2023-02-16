@@ -9,7 +9,17 @@ import {
   Tooltip,
   Image,
   Spinner,
-  Skeleton,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Center,
+  Flex,
 } from "@chakra-ui/react";
 import { FaReply, FaCopy, FaTrashAlt } from "react-icons/fa";
 import Moment from "react-moment";
@@ -19,6 +29,11 @@ type Props = {
 };
 
 function ChatBubble({ node }: Props) {
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
   const [isHovering, setIsHovering] = useState(false);
   const isMe = node.sender.id === "guest";
   const allignment = isMe ? "flex-end" : "flex-start";
@@ -98,7 +113,7 @@ function ChatBubble({ node }: Props) {
             <Image
               src={`https://alpha-api.cloudchat.dev${node.attachment_filenames.url}`}
               alt={node.attachment_filenames.name}
-              onClick={() => console.log("haha")}
+              onClick={onModalOpen}
               fallback={<Spinner />}
             />
           )}
@@ -133,6 +148,33 @@ function ChatBubble({ node }: Props) {
             </Text>
           ))}
       </HStack>
+      <Modal
+        onClose={onModalClose}
+        size={"full"}
+        isOpen={isModalOpen}
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent bg={"blackAlpha.800"}>
+          <ModalHeader color={"white"}>
+            {node.attachment_filenames.name}
+          </ModalHeader>
+          <ModalCloseButton color={"white"} />
+          <ModalBody
+            display={"flex"}
+            justifyContent="center"
+            alignItems={"center"}
+            onClick={onModalClose}
+          >
+            <Image
+              src={`https://alpha-api.cloudchat.dev${node.attachment_filenames.url}`}
+              alt={node.attachment_filenames.name}
+              onClick={onModalOpen}
+              fallback={<Spinner />}
+            />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </VStack>
   );
 }
