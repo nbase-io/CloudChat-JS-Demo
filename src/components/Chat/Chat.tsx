@@ -42,11 +42,23 @@ function Chat({
     setIsGettingMessages(false);
   };
 
-  // once channel is set, setEventListener for the channel
+  // once channel is set, set message event listeners for the channel
   useEffect(() => {
-    nc.bind("onMessageReceived", function (channelId: string, message: any) {
+    // message received
+    nc.bind("onMessageReceived", (channelId: string, message: any) => {
       if (channel.id === channelId) {
         setArrivalMessage({ node: message });
+      }
+      console.log(channelId);
+    });
+    // message deleted
+    nc.bind("onMessageDeleted", (data: any) => {
+      if (channel.id === data.channel_id) {
+        // delete message
+        const newMessages = messages.filter(
+          (item: any, i: number) => item.node.message_id !== data.message_id
+        );
+        setMessages(newMessages);
       }
     });
   }, [channel]);

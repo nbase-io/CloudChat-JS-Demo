@@ -1,4 +1,4 @@
-import * as ncloudchat from "ncloudchat";
+import * as ncloudchat from "cloudchat";
 import {
   useInfiniteQuery,
   useMutation,
@@ -14,14 +14,14 @@ import { ISubscription } from "./lib/interfaces/ISubscription";
 
 const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
 
-// ncloudchat 초기화
+// initialize
 export const nc = new ncloudchat.Chat(true);
 nc.initialize(PROJECT_ID);
 nc.setLang("en");
 nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
 nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
 
-// ncloudchat 연결
+// connect
 export const useConnect = () =>
   useQuery<IUser>(
     ["connect"],
@@ -38,7 +38,7 @@ export const useConnect = () =>
     { suspense: true }
   );
 
-// ncloudchat 친구들 가져오기
+// getFriendships
 export const useGetFriendships = (enabled: boolean) =>
   useQuery<IFriendship[]>(
     ["friendships"],
@@ -51,7 +51,7 @@ export const useGetFriendships = (enabled: boolean) =>
     { enabled: enabled, suspense: true }
   );
 
-// ncloudchat 채널들 가져오기
+// getChannels
 export const useGetChannels = (enabled: boolean) =>
   useQuery<IChannel[]>(
     ["channels"],
@@ -64,7 +64,7 @@ export const useGetChannels = (enabled: boolean) =>
     { enabled: enabled, suspense: true }
   );
 
-// ncloudchat 특정 채널 메세지들 가져오기
+// getMessages using infitite query as an example
 // export const useGetMessages = (
 //   enabled: boolean,
 //   channel_id: string | undefined
@@ -93,7 +93,7 @@ export const useGetChannels = (enabled: boolean) =>
 //     }
 //   );
 
-// ncloudchat 특정 채널 가져오기
+// getChannel
 export const useGetChannel = (
   enabled: boolean,
   channel_id: string | undefined
@@ -110,7 +110,7 @@ export const useGetChannel = (
     }
   );
 
-// ncloudchat 안읽은 메세지 수 가져오기
+// countUnread
 export const useCountUnread = (
   enabled: boolean,
   channel_id: string | undefined
@@ -127,7 +127,7 @@ export const useCountUnread = (
     }
   );
 
-// ncloudchat 구독
+// subscribe
 export const useSubscribe = (
   enabled: boolean,
   channel_id: string | undefined
@@ -142,7 +142,7 @@ export const useSubscribe = (
     { enabled: enabled }
   );
 
-// ncloudchat 구독 모두 가져오기
+// getSubscriptions
 export const useGetSubscriptions = (
   enabled: boolean,
   channel_id: string | undefined
@@ -160,6 +160,7 @@ export const useGetSubscriptions = (
     { enabled: enabled }
   );
 
+// sendMessage
 export const useSendMessage = (
   channel_id: string | undefined,
   message: string
@@ -170,6 +171,15 @@ export const useSendMessage = (
   );
 };
 
+// sendImage
 export const useSendImage = (channel_id: string | undefined, file: any) => {
   return useMutation(async () => await nc.sendImage(channel_id, file));
+};
+
+// deleteMessage
+export const useDeleteMessage = (
+  channelId: string | undefined,
+  messageId: string | undefined
+) => {
+  return useMutation(async () => await nc.deleteMessage(channelId, messageId));
 };

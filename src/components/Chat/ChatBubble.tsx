@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { FaReply, FaCopy, FaTrashAlt, FaCheck } from "react-icons/fa";
 import Moment from "react-moment";
+import { useDeleteMessage } from "../../api";
 
 type Props = {
   node: any;
@@ -37,6 +38,10 @@ function ChatBubble({ node }: Props) {
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 32;
   const topLeftRadius = isMe ? 32 : 0;
+  const { mutate: deleteMessage } = useDeleteMessage(
+    node.channel_id,
+    node.message_id
+  );
   const { onCopy, setValue, hasCopied } = useClipboard(node.content);
   // this is needed for copy-to-clipboard
   useEffect(() => {
@@ -78,6 +83,7 @@ function ChatBubble({ node }: Props) {
                   variant={"ghost"}
                   icon={<FaTrashAlt />}
                   size={"sm"}
+                  onClick={() => deleteMessage()}
                 />
               </Tooltip>
               {node.message_type === "text" && (

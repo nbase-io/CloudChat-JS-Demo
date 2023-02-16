@@ -48,7 +48,7 @@ function ChatInput({ channel }: Props) {
       ".heic-sequence",
       ".heif",
       ".heif-sequence",
-      ".svgz",
+      ".svg+xml",
     ],
     multiple: false,
   });
