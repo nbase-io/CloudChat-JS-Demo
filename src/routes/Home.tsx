@@ -1,12 +1,5 @@
-import { useState, useEffect } from "react";
-import {
-  Center,
-  Flex,
-  HStack,
-  useDisclosure,
-  useToast,
-  Text,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { Flex, HStack, useDisclosure } from "@chakra-ui/react";
 import {
   useConnect,
   // useGetChannel,
@@ -22,7 +15,6 @@ import LeftSideBarDrawer from "../components/LeftSideBar/LeftSideBarDrawer";
 import { IChannel } from "../lib/interfaces/IChannel";
 
 function Home() {
-  const toast = useToast();
   // current channel
   const [channel, setChannel] = useState<IChannel | null>(null);
   // subscribe when channel is selected

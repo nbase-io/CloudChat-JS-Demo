@@ -27,6 +27,7 @@ function Chat({
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
+    console.log(`GETTING MESSAGES!!!: ${subscription}`);
     setIsGettingMessages(true);
     try {
       const filter = { channel_id: channel.id };
@@ -74,7 +75,7 @@ function Chat({
 
   // getMessages if messages are cleared (channel changed)
   useEffect(() => {
-    if (messages.length === 0) {
+    if (messages.length === 0 && subscription) {
       getMessages();
     }
   }, [messages]);
@@ -87,7 +88,9 @@ function Chat({
         channel={channel}
       />
       <Divider />
-      {channel && isGettingMessages && <Progress size="xs" isIndeterminate />}
+      {channel && (isGettingMessages || !subscription) && (
+        <Progress size="xs" isIndeterminate />
+      )}
       {channel && (
         <ChatMessages
           messages={messages}
