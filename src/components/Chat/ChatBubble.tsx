@@ -10,12 +10,6 @@ import {
   Image,
   Spinner,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
   useClipboard,
   useToast,
 } from "@chakra-ui/react";
@@ -23,6 +17,7 @@ import {
 import { VscReply, VscCopy, VscTrash, VscCheck } from "react-icons/vsc";
 import Moment from "react-moment";
 import { useDeleteMessage } from "../../api";
+import ImageViwer from "./ImageViewer";
 
 type Props = {
   node: any;
@@ -72,18 +67,64 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
     }
   }, [deleteMessageStatus]);
 
+  const othersBubbleName = (
+    <HStack>
+      <Tooltip label={node.sender.id}>
+        <Avatar size={"sm"} name={node.sender.name}></Avatar>
+      </Tooltip>
+      <Text ml={6} fontSize={"small"}>
+        {node.sender.name}
+      </Text>
+    </HStack>
+  );
+
+  const messageTime = (
+    <Text fontSize={"xs"} color={"gray"}>
+      <Moment local format="LT">
+        {node.created_at}
+      </Moment>
+    </Text>
+  );
+
+  const replyButton = (
+    <Tooltip label={"Reply"}>
+      <IconButton
+        aria-label="Reply Message"
+        variant={"ghost"}
+        icon={<VscReply />}
+        size={"sm"}
+        onClick={() => setReplyParentMessage(node)}
+      />
+    </Tooltip>
+  );
+
+  const copyButton = (
+    <Tooltip label={"Copy"}>
+      <IconButton
+        aria-label="Copy Message"
+        variant={"ghost"}
+        icon={hasCopied ? <VscCheck /> : <VscCopy />}
+        size={"sm"}
+        onClick={onCopyButtonClicked}
+      />
+    </Tooltip>
+  );
+
+  const deleteButton = (
+    <Tooltip label={"Delete"}>
+      <IconButton
+        aria-label="Delete Message"
+        variant={"ghost"}
+        icon={<VscTrash />}
+        size={"sm"}
+        onClick={() => deleteMessage()}
+      />
+    </Tooltip>
+  );
+
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
-      {!isMe && (
-        <HStack>
-          <Tooltip label={node.sender.id}>
-            <Avatar size={"sm"} name={node.sender.name}></Avatar>
-          </Tooltip>
-          <Text ml={6} fontSize={"small"}>
-            {node.sender.name}
-          </Text>
-        </HStack>
-      )}
+      {!isMe && othersBubbleName}
       <HStack
         alignItems={isHovering ? "center" : "flex-end"}
         onMouseLeave={() => setIsHovering(false)}
@@ -91,42 +132,12 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
         {isMe &&
           (isHovering ? (
             <HStack spacing={0}>
-              <Tooltip label={"Delete"}>
-                <IconButton
-                  aria-label="Delete Message"
-                  variant={"ghost"}
-                  icon={<VscTrash />}
-                  size={"sm"}
-                  onClick={() => deleteMessage()}
-                />
-              </Tooltip>
-              {node.message_type === "text" && (
-                <Tooltip label={"Copy"}>
-                  <IconButton
-                    aria-label="Copy Message"
-                    variant={"ghost"}
-                    icon={hasCopied ? <VscCheck /> : <VscCopy />}
-                    size={"sm"}
-                    onClick={onCopyButtonClicked}
-                  />
-                </Tooltip>
-              )}
-              <Tooltip label={"Reply"}>
-                <IconButton
-                  aria-label="Reply Message"
-                  variant={"ghost"}
-                  icon={<VscReply />}
-                  size={"sm"}
-                  onClick={() => setReplyParentMessage(node)}
-                />
-              </Tooltip>
+              {deleteButton}
+              {node.message_type === "text" && copyButton}
+              {replyButton}
             </HStack>
           ) : (
-            <Text fontSize={"xs"} color={"gray"}>
-              <Moment local format="LT">
-                {node.created_at}
-              </Moment>
-            </Text>
+            messageTime
           ))}
         <Box
           bg={isMe ? "blue.50" : "gray.100"}
@@ -155,62 +166,19 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
         {!isMe &&
           (isHovering ? (
             <HStack spacing={0}>
-              <Tooltip label={"Reply"}>
-                <IconButton
-                  aria-label="Reply Message"
-                  variant={"ghost"}
-                  icon={<VscReply />}
-                  size={"sm"}
-                  onClick={() => setReplyParentMessage(node)}
-                />
-              </Tooltip>
-              {node.message_type === "text" && (
-                <Tooltip label={"Copy"}>
-                  <IconButton
-                    aria-label="Copy Message"
-                    variant={"ghost"}
-                    icon={hasCopied ? <VscCheck /> : <VscCopy />}
-                    size={"sm"}
-                    onClick={onCopyButtonClicked}
-                  />
-                </Tooltip>
-              )}
+              {replyButton}
+              {node.message_type === "text" && copyButton}
             </HStack>
           ) : (
-            <Text fontSize={"xs"} color={"gray"}>
-              <Moment local format="LT">
-                {node.created_at}
-              </Moment>
-            </Text>
+            messageTime
           ))}
       </HStack>
-      <Modal
-        onClose={onModalClose}
-        size={"full"}
-        isOpen={isModalOpen}
-        isCentered
-      >
-        <ModalOverlay />
-        <ModalContent bg={"blackAlpha.800"}>
-          <ModalHeader color={"white"}>
-            {node.attachment_filenames.name}
-          </ModalHeader>
-          <ModalCloseButton color={"white"} />
-          <ModalBody
-            display={"flex"}
-            justifyContent="center"
-            alignItems={"center"}
-            onClick={onModalClose}
-          >
-            <Image
-              src={`https://alpha-api.cloudchat.dev${node.attachment_filenames.url}`}
-              alt={node.attachment_filenames.name}
-              onClick={onModalOpen}
-              fallback={<Spinner />}
-            />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <ImageViwer
+        node={node}
+        isModalOpen={isModalOpen}
+        onModalClose={onModalClose}
+        onModalOpen={onModalOpen}
+      />
     </VStack>
   );
 }

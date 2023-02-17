@@ -5,7 +5,6 @@ import {
   InputLeftElement,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -39,17 +38,18 @@ function LoginModal({ isOpen: isModalOpen, onClose: onModalClose }: Props) {
       closeOnOverlayClick={false}
     >
       <ModalOverlay bg={"blue.500"} />
-      <ModalContent onClick={clickHandler}>
+      <ModalContent>
         <ModalHeader>
           <Center>
             <Image
               src="./ncloudchat-logo.png"
               alt="Ncloud Chat Logo"
               height={7}
+              onClick={clickHandler}
             />
           </Center>
         </ModalHeader>
-        <ModalBody>
+        <ModalBody py={4}>
           <VStack>
             <InputGroup>
               <InputLeftElement children={<CgNametag />} />
