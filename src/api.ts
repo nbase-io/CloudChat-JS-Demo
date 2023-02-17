@@ -177,14 +177,23 @@ export const useSendMessage = (
 };
 
 // sendImage
-export const useSendImage = (channel_id: string | undefined, file: any) => {
-  return useMutation(async () => await nc.sendImage(channel_id, file));
-};
+export const useSendImage = (channel_id: string | undefined, file: any) =>
+  useMutation(async () => await nc.sendImage(channel_id, file));
 
 // deleteMessage
 export const useDeleteMessage = (
-  channelId: string | undefined,
-  messageId: string | undefined
-) => {
-  return useMutation(async () => await nc.deleteMessage(channelId, messageId));
-};
+  channel_id: string | undefined,
+  message_id: string | undefined
+) => useMutation(async () => await nc.deleteMessage(channel_id, message_id));
+
+// markRead
+export const useMarkRead = (
+  channel_id: string,
+  message_id: string,
+  user_id: string,
+  sort_id: string
+) =>
+  useMutation(async () => {
+    console.log(channel_id, message_id, user_id, sort_id);
+    return await nc.markRead(channel_id, { user_id, message_id, sort_id });
+  });

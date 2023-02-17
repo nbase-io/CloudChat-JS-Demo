@@ -3,7 +3,7 @@ import { Flex, Divider, Box, Text, Progress } from "@chakra-ui/react";
 import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { HiArrowDown } from "react-icons/hi";
-import { nc } from "../../api";
+import { nc, useMarkRead } from "../../api";
 import ChatMessages from "./ChatMessages";
 
 type Props = {
@@ -24,10 +24,16 @@ function Chat({
   const hasMore = useRef(false);
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
   const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
+  const lastMessageRef = useRef(messages[messages.length - 1]);
+  const { mutate: markRead } = useMarkRead(
+    channel.id,
+    lastMessageRef.current?.node.message_id,
+    "guest",
+    lastMessageRef.current?.node.sort_id
+  );
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
-    console.log(`GETTING MESSAGES!!!: ${subscription}`);
     setIsGettingMessages(true);
     try {
       const filter = { channel_id: channel.id };
@@ -56,7 +62,7 @@ function Chat({
     if (channel.id === data.channel_id) {
       // delete message
       const newMessages = messages.filter(
-        (item: any, i: number) => item.node.message_id !== data.message_id
+        (item: any) => item.node.message_id !== data.message_id
       );
       setMessages(newMessages);
     }
@@ -77,6 +83,11 @@ function Chat({
   useEffect(() => {
     if (messages.length === 0 && subscription) {
       getMessages();
+    }
+    // keep track of the last message
+    if (messages.length > 0 && messages[0]) {
+      lastMessageRef.current = messages[0];
+      // markRead();
     }
   }, [messages]);
 

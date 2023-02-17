@@ -14,11 +14,11 @@ function ChatRow({ channel, subscription }: Props) {
     data: mark,
     isLoading,
     refetch,
-  } = useCountUnread(!!channel, channel.id);
+  } = useCountUnread(!!subscription, channel.id);
 
-  useEffect(() => {
-    refetch();
-  }, [subscription]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [subscription]);
 
   return (
     <Flex
@@ -73,7 +73,7 @@ function ChatRow({ channel, subscription }: Props) {
             px={1}
             rounded="full"
           >
-            {mark.unread}
+            {mark.unread > 0 && mark.unread}
           </Text>
         )}
       </VStack>

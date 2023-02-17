@@ -11,7 +11,6 @@ import {
   Spinner,
   useDisclosure,
   useClipboard,
-  useToast,
 } from "@chakra-ui/react";
 // import { FaReply, FaCopy, FaTrashAlt, FaCheck } from "react-icons/fa";
 import { VscReply, VscCopy, VscTrash, VscCheck } from "react-icons/vsc";
@@ -40,6 +39,8 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
   const { mutate: deleteMessage, status: deleteMessageStatus } =
     useDeleteMessage(node.channel_id, node.message_id);
   const { onCopy, setValue, hasCopied } = useClipboard(node.content);
+
+  console.log(node.parent_message.sender);
 
   // this is needed for copy-to-clipboard
   useEffect(() => {
@@ -123,9 +124,29 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
     </Tooltip>
   );
 
+  const parentBubble = (
+    <Box
+      px={4}
+      py={2}
+      w="full"
+      borderTopLeftRadius={topLeftRadius}
+      borderTopRightRadius={32}
+      bg={isMe ? "blue.400" : "gray.400"}
+    >
+      <Text>{node.parent_message.content}</Text>
+    </Box>
+  );
+
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
       {!isMe && othersBubbleName}
+      {node.parent_message_id && (
+        <HStack fontSize={12} spacing={1}>
+          <VscReply />
+          <Text>reply to</Text>
+          <Text as="b">{node.parent_message.sender?.name}</Text>
+        </HStack>
+      )}
       <HStack
         alignItems={isHovering ? "center" : "flex-end"}
         onMouseLeave={() => setIsHovering(false)}
@@ -141,30 +162,36 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
           ) : (
             messageTime
           ))}
-        <Box
-          bg={isMe ? "blue.50" : "gray.100"}
-          px={4}
-          py={2}
+        <VStack
+          onMouseEnter={() => setIsHovering(true)}
+          spacing={0}
           maxW={80}
           minH={"40px"}
-          borderTopLeftRadius={topLeftRadius}
-          borderTopRightRadius={32}
-          borderBottomLeftRadius={32}
-          borderBottomRightRadius={bottomRightRadius}
-          _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
-          onMouseEnter={() => setIsHovering(true)}
         >
-          {node.message_type === "text" ? (
-            node.content
-          ) : (
-            <Image
-              src={`https://alpha-api.cloudchat.dev${node.attachment_filenames.url}`}
-              alt={node.attachment_filenames.name}
-              onClick={onModalOpen}
-              fallback={<Spinner />}
-            />
-          )}
-        </Box>
+          {node.parent_message_id && parentBubble}
+          <Box
+            px={4}
+            py={2}
+            w="full"
+            bg={isMe ? "blue.50" : "gray.100"}
+            borderTopLeftRadius={node.parent_message_id ? 0 : topLeftRadius}
+            borderTopRightRadius={node.parent_message_id ? 0 : 32}
+            borderBottomLeftRadius={32}
+            borderBottomRightRadius={bottomRightRadius}
+            _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
+          >
+            {node.message_type === "text" ? (
+              <Text>{node.content}</Text>
+            ) : (
+              <Image
+                src={`https://alpha-api.cloudchat.dev${node.attachment_filenames.url}`}
+                alt={node.attachment_filenames.name}
+                onClick={onModalOpen}
+                fallback={<Spinner />}
+              />
+            )}
+          </Box>
+        </VStack>
         {/* time and hover buttons */}
         {!isMe &&
           (isHovering ? (

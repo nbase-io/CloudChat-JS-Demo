@@ -83,10 +83,6 @@ function ChatInput({
   };
 
   useEffect(() => {
-    console.log(sendMessageStatus);
-  }, [sendMessageStatus]);
-
-  useEffect(() => {
     if (plainFiles.length > 0) {
       console.log(plainFiles);
       sendImage();
