@@ -1,8 +1,17 @@
-import { Box, HStack, Image, Tooltip, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Image,
+  Tooltip,
+  IconButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
+import LoginModal from "./LoginModal/LoginModal";
 
 function Root() {
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: false });
   return (
     <Box>
       <HStack
@@ -44,6 +53,7 @@ function Root() {
             </Link>
           </Tooltip>
         </HStack>
+        <LoginModal isOpen={isOpen} onClose={onClose} />
       </HStack>
       <Outlet />
     </Box>
