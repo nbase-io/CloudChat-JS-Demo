@@ -13,6 +13,8 @@ import {
   Select,
   VStack,
   Image,
+  Center,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { CgNametag } from "react-icons/cg";
 import { FaImage, FaProjectDiagram, FaUser } from "react-icons/fa";
@@ -22,22 +24,30 @@ type Props = {
   onClose: () => void;
 };
 
-function LoginModal({ isOpen, onClose }: Props) {
+function LoginModal({ isOpen: isModalOpen, onClose: onModalClose }: Props) {
+  const { isOpen: isServerSelectionOpen, onToggle } = useDisclosure();
+  const clickHandler = (event: any) => {
+    if (event.detail == 3) {
+      onToggle();
+    }
+  };
   return (
     <Modal
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={isModalOpen}
+      onClose={onModalClose}
       isCentered
       closeOnOverlayClick={false}
     >
       <ModalOverlay bg={"blue.500"} />
-      <ModalContent>
+      <ModalContent onClick={clickHandler}>
         <ModalHeader>
-          <Image
-            src="./ncloudchat-logo.png"
-            alt="Ncloud Chat Logo"
-            height={7}
-          />
+          <Center>
+            <Image
+              src="./ncloudchat-logo.png"
+              alt="Ncloud Chat Logo"
+              height={7}
+            />
+          </Center>
         </ModalHeader>
         <ModalBody>
           <VStack>
@@ -58,9 +68,9 @@ function LoginModal({ isOpen, onClose }: Props) {
             Start
           </Button>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter hidden={!isServerSelectionOpen}>
           <VStack w="full">
-            <Select placeholder="Select a server" defaultValue={"alpha"}>
+            <Select placeholder="Select a server">
               <option value="localhost">localhost</option>
               <option value="alpha">Alpha</option>
               <option value="beta">Beta</option>

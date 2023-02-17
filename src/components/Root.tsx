@@ -12,6 +12,7 @@ import LoginModal from "./LoginModal/LoginModal";
 
 function Root() {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: false });
+
   return (
     <Box>
       <HStack
