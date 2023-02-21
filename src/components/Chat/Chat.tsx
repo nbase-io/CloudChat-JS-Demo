@@ -37,7 +37,7 @@ function Chat({
     setIsGettingMessages(true);
     try {
       const filter = { channel_id: channel.id };
-      const sort = { created_at: -1 };
+      const sort = { sort_id: -1 };
       const option = { offset: messages.length, per_page: 25 };
       const response = await nc.getMessages(filter, sort, option);
       const newMessages = messages.concat(response.edges);
@@ -55,11 +55,12 @@ function Chat({
     if (channel.id === channelId) {
       setArrivalMessage({ node: message });
     }
+    console.log(message);
   });
 
   // message deleted
-  nc.bind("onMessageDeleted", (data: any) => {
-    if (channel.id === data.channel_id) {
+  nc.bind("onMessageDeleted", (channelId: string, data: any) => {
+    if (channel.id === channelId) {
       // delete message
       const newMessages = messages.filter(
         (item: any) => item.node.message_id !== data.message_id
