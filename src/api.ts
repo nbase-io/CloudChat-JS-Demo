@@ -1,4 +1,5 @@
 import * as ncloudchat from "cloudchat";
+// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
 import {
   useInfiniteQuery,
   useMutation,
@@ -147,7 +148,7 @@ export const useGetSubscriptions = (
   enabled: boolean,
   channel_id: string | undefined
 ) =>
-  useQuery<ISubscription[]>(
+  useQuery<any>(
     [`subscriptions`, { channelId: channel_id }],
     async () => {
       if (channel_id) {
@@ -162,7 +163,7 @@ export const useGetSubscriptions = (
 
 // sendMessage
 export const useSendMessage = (
-  channel_id: string | undefined,
+  channel_id: string,
   message: string,
   parent_message_id: string | null
 ) => {
@@ -177,14 +178,12 @@ export const useSendMessage = (
 };
 
 // sendImage
-export const useSendImage = (channel_id: string | undefined, file: any) =>
+export const useSendImage = (channel_id: string, file: any) =>
   useMutation(async () => await nc.sendImage(channel_id, file));
 
 // deleteMessage
-export const useDeleteMessage = (
-  channel_id: string | undefined,
-  message_id: string | undefined
-) => useMutation(async () => await nc.deleteMessage(channel_id, message_id));
+export const useDeleteMessage = (channel_id: string, message_id: string) =>
+  useMutation(async () => await nc.deleteMessage(channel_id, message_id));
 
 // markRead
 export const useMarkRead = (
