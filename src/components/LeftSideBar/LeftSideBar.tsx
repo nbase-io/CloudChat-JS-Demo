@@ -115,14 +115,14 @@ function LeftSideBar({
       <Box w="full" overflow={"auto"}>
         <List w="full" spacing={0}>
           {!isGettingChannels &&
-            channels?.map((channel: any) => (
+            channels?.edges?.map((edge: any) => (
               <ListItem
-                key={channel.id}
+                key={edge.node.id}
                 onClick={() => {
-                  setChannel(channel);
+                  setChannel(edge.node);
                 }}
               >
-                <ChatRow channel={channel} subscription={subscription} />
+                <ChatRow channel={edge.node} subscription={subscription} />
               </ListItem>
             ))}
         </List>

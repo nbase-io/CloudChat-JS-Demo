@@ -43,7 +43,7 @@ function ChatDetail({ channel, subscription }: Props) {
             <HStack spacing={1} flex={1}>
               {!subscriptions && <Skeleton>&nsbp;</Skeleton>}
               <Text fontSize={"s"} color="blue.500">
-                {subscriptions?.length}
+                {subscriptions?.edges?.length}
               </Text>
               <Text as="b">Members</Text>
             </HStack>
@@ -74,11 +74,12 @@ function ChatDetail({ channel, subscription }: Props) {
               alignItems={"flex-start"}
               spacing={3}
             >
-              {subscriptions?.map((subscription: any) => (
+              {subscriptions?.edges?.map((edge: any) => (
                 <UserAvatar
-                  user={subscription.user}
-                  key={subscription.user_id}
-                  userId={subscription.user_id}
+                  user={edge.node.user}
+                  key={edge.node.user_id}
+                  userId={edge.node.user_id}
+                  online={edge.node.online}
                 />
               ))}
             </VStack>

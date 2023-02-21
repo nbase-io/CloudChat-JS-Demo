@@ -55,11 +55,12 @@ function Chat({
     if (channel.id === channelId) {
       setArrivalMessage({ node: message });
     }
+    console.log(channelId, message);
   });
 
   // message deleted
-  nc.bind("onMessageDeleted", (data: any) => {
-    if (channel.id === data.channel_id) {
+  nc.bind("onMessageDeleted", (channelId: string, data: any) => {
+    if (channel.id === channelId) {
       // delete message
       const newMessages = messages.filter(
         (item: any) => item.node.message_id !== data.message_id

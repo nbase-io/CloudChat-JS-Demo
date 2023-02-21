@@ -12,7 +12,7 @@ import {
   useDisclosure,
   useClipboard,
 } from "@chakra-ui/react";
-// import { FaReply, FaCopy, FaTrashAlt, FaCheck } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 import { VscReply, VscCopy, VscTrash, VscCheck } from "react-icons/vsc";
 import Moment from "react-moment";
 import { useDeleteMessage } from "../../api";
@@ -34,13 +34,11 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
   const [isHovering, setIsHovering] = useState(false);
   const isMe = node.sender.id === "guest";
   const allignment = isMe ? "flex-end" : "flex-start";
-  const bottomRightRadius = isMe ? 0 : 32;
-  const topLeftRadius = isMe ? 32 : 0;
+  const bottomRightRadius = isMe ? 0 : 18;
+  const topLeftRadius = isMe ? 18 : 0;
   const { mutate: deleteMessage, status: deleteMessageStatus } =
     useDeleteMessage(node.channel_id, node.message_id);
   const { onCopy, setValue, hasCopied } = useClipboard(node.content);
-
-  console.log(node.parent_message.sender);
 
   // this is needed for copy-to-clipboard
   useEffect(() => {
@@ -124,27 +122,49 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
     </Tooltip>
   );
 
+  const parentMessage = () => {
+    if (node.parent_message) {
+      if (node.parent_message?.message_type === "text") {
+        return <Text fontSize={"sm"}>{node.parent_message?.content}</Text>;
+      } else {
+        return (
+          <Image
+            src={`https://alpha-api.cloudchat.dev${node.parent_message?.attachment_filenames.url}`}
+            alt={node.parent_message?.attachment_filenames.name}
+            onClick={onModalOpen}
+            fallback={<Spinner />}
+            color="gray"
+          />
+        );
+      }
+    } else {
+      return <Text fontSize={"sm"}>Deleted message</Text>;
+    }
+  };
+
   const parentBubble = (
-    <Box
+    <HStack
       px={4}
       py={2}
       w="full"
       borderTopLeftRadius={topLeftRadius}
-      borderTopRightRadius={32}
-      bg={isMe ? "blue.400" : "gray.400"}
+      borderTopRightRadius={18}
+      bg={isMe ? "blue.500" : "gray.500"}
+      color={node.parent_message ? "white" : "gray.100"}
     >
-      <Text>{node.parent_message.content}</Text>
-    </Box>
+      {!node.parent_message && <FaExclamationCircle />}
+      {parentMessage()}
+    </HStack>
   );
 
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
       {!isMe && othersBubbleName}
-      {node.parent_message_id && (
+      {node.parent_message && (
         <HStack fontSize={12} spacing={1}>
           <VscReply />
           <Text>reply to</Text>
-          <Text as="b">{node.parent_message.sender?.name}</Text>
+          <Text as="b">{node.parent_message?.sender?.name}</Text>
         </HStack>
       )}
       <HStack
@@ -175,8 +195,8 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
             w="full"
             bg={isMe ? "blue.50" : "gray.100"}
             borderTopLeftRadius={node.parent_message_id ? 0 : topLeftRadius}
-            borderTopRightRadius={node.parent_message_id ? 0 : 32}
-            borderBottomLeftRadius={32}
+            borderTopRightRadius={node.parent_message_id ? 0 : 18}
+            borderBottomLeftRadius={18}
             borderBottomRightRadius={bottomRightRadius}
             _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
           >
