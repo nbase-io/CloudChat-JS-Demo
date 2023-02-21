@@ -5,6 +5,7 @@ import ChatInput from "./ChatInput";
 import { HiArrowDown } from "react-icons/hi";
 import { nc, useMarkRead } from "../../api";
 import ChatMessages from "./ChatMessages";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -25,6 +26,7 @@ function Chat({
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
   const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
   const lastMessageRef = useRef(messages[messages.length - 1]);
+  const queryClient = useQueryClient();
   const { mutate: markRead } = useMarkRead(
     channel.id,
     lastMessageRef.current?.node.message_id,
@@ -37,7 +39,7 @@ function Chat({
     setIsGettingMessages(true);
     try {
       const filter = { channel_id: channel.id };
-      const sort = { created_at: -1 };
+      const sort = { sort_id: -1 };
       const option = { offset: messages.length, per_page: 25 };
       const response = await nc.getMessages(filter, sort, option);
       const newMessages = messages.concat(response.edges);
@@ -88,7 +90,7 @@ function Chat({
     // keep track of the last message
     if (messages.length > 0 && messages[0]) {
       lastMessageRef.current = messages[0];
-      // markRead();
+      markRead();
     }
   }, [messages]);
 
