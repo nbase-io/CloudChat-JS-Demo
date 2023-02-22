@@ -1,5 +1,5 @@
-// import * as ncloudchat from "cloudchat";
-import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
+import * as ncloudchat from "cloudchat";
+// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
 import {
   useInfiniteQuery,
   useMutation,
@@ -223,4 +223,8 @@ export const createChannel = async ({
   name,
   image_url,
 }: ICreateChannel) =>
-  await nc.createChannel({ type: type, name: name, imageUrl: image_url });
+  await nc.createChannel({
+    type: type,
+    name: name,
+    imageUrl: image_url,
+  });
