@@ -19,9 +19,11 @@ import {
 } from "@chakra-ui/react";
 import { CgNametag } from "react-icons/cg";
 import { FaImage } from "react-icons/fa";
-import { useCreateChannel } from "../../api";
+import { createChannel } from "../../api";
 import { useForm } from "react-hook-form";
 import { ICreateChannel } from "../../lib/interfaces/ICreateChannel";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CustomToast } from "../Toast/CustomToast";
 
 type Props = {
   isOpen: boolean;
@@ -32,15 +34,33 @@ function NewChannelModal({
   isOpen: isModalOpen,
   onClose: onModalClose,
 }: Props) {
+  const queryClient = useQueryClient();
+  const { addToast } = CustomToast();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ICreateChannel>();
+
+  const mutation = useMutation<any, any, ICreateChannel>(createChannel, {
+    onSuccess: (data) => {
+      addToast({
+        title: `New channel ${data.createChannel?.channel?.name} was created!`,
+        status: "success",
+      });
+      onModalClose();
+      queryClient.refetchQueries(["channels"]);
+    },
+    onError: (error) => {
+      addToast({ title: { error }, status: "error" });
+    },
+  });
+
   const onSubmit = (data: ICreateChannel) => {
     console.log(data);
+    mutation.mutate(data);
   };
-  // const { mutate: createChannel } = useCreateChannel();
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -99,7 +119,12 @@ function NewChannelModal({
           </VStack>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme={"blue"} w="full" type="submit">
+          <Button
+            colorScheme={"blue"}
+            w="full"
+            type="submit"
+            isLoading={mutation.isLoading}
+          >
             Create new channel
           </Button>
         </ModalFooter>

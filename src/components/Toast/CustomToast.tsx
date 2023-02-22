@@ -8,7 +8,7 @@ export const CustomToast = () => {
     toast({
       title: newRes.title,
       description: newRes.description,
-      status: newRes.type,
+      status: newRes.status,
       position: "top",
       duration: 5000,
     });

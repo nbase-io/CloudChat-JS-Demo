@@ -1,5 +1,5 @@
-import * as ncloudchat from "cloudchat";
-// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
+// import * as ncloudchat from "cloudchat";
+import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
 import {
   useInfiniteQuery,
   useMutation,
@@ -11,7 +11,7 @@ import { IFriendship } from "./lib/interfaces/IFriendship";
 import { IChannel } from "./lib/interfaces/IChannel";
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
-import { ISubscription } from "./lib/interfaces/ISubscription";
+import { ICreateChannel } from "./lib/interfaces/ICreateChannel";
 
 const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
 
@@ -198,15 +198,29 @@ export const useMarkRead = (
   });
 
 // create channel
-export const useCreateChannel = (
-  type: string,
-  name: string,
-  image_url: string
-) =>
-  useMutation(async () => {
-    return await nc.createChannel({
-      type: type,
-      name: name,
-      imageUrl: image_url,
-    });
-  });
+// export const useCreateChannel = (
+//   type: string,
+//   name: string,
+//   image_url: string
+// ) =>
+//   useMutation(
+//     async () => {
+//       console.log(type, name, image_url);
+//       return await nc.createChannel({
+//         type: type,
+//         name: name,
+//         imageUrl: image_url,
+//       });
+//     },
+//     {
+//       onMutate: () => console.log("mutating"),
+//       onSuccess: () => console.log("mutate success"),
+//       onError: () => console.log("mutate error"),
+//     }
+//   );
+export const createChannel = async ({
+  type,
+  name,
+  image_url,
+}: ICreateChannel) =>
+  await nc.createChannel({ type: type, name: name, imageUrl: image_url });
