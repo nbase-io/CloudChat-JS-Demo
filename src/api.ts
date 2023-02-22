@@ -1,5 +1,5 @@
-import * as ncloudchat from "cloudchat";
-// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
+// import * as ncloudchat from "cloudchat";
+import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
 import {
   useInfiniteQuery,
   useMutation,
@@ -195,4 +195,18 @@ export const useMarkRead = (
   useMutation(async () => {
     console.log(channel_id, message_id, user_id, sort_id);
     return await nc.markRead(channel_id, { user_id, message_id, sort_id });
+  });
+
+// create channel
+export const useCreateChannel = (
+  type: string,
+  name: string,
+  image_url: string
+) =>
+  useMutation(async () => {
+    return await nc.createChannel({
+      type: type,
+      name: name,
+      imageUrl: image_url,
+    });
   });

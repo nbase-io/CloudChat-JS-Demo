@@ -25,11 +25,11 @@ function Chat({
   const hasMore = useRef(false);
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
   const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
-  const lastMessageRef = useRef(messages[messages.length - 1]);
+  const lastMessageRef = useRef<any>();
   const queryClient = useQueryClient();
   const { mutate: markRead } = useMarkRead(
     channel.id,
-    lastMessageRef.current?.node.id,
+    lastMessageRef.current?.node.message_id,
     "guest",
     lastMessageRef.current?.node.sort_id
   );
@@ -80,6 +80,7 @@ function Chat({
   useEffect(() => {
     setMessages([]);
     hasMore.current = false;
+    lastMessageRef.current = undefined;
   }, [subscription]);
 
   // getMessages if messages are cleared (channel changed)
@@ -90,8 +91,11 @@ function Chat({
     // keep track of the last message
     if (messages.length > 0 && messages[0]) {
       lastMessageRef.current = messages[0];
-      console.log(lastMessageRef.current);
-      markRead();
+      if (lastMessageRef.current) {
+        console.log(messages.length);
+        console.log(lastMessageRef.current);
+      }
+      // markRead();
       // queryClient.invalidateQueries(["countUnread"]);
     }
   }, [messages]);

@@ -14,9 +14,11 @@ import {
   // Text,
   Tooltip,
   Input,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatRow from "./ChatRow";
+import NewChannelModal from "../NewChannel/NewChannelModal";
 // import UserAvatar from "../UserAvatar/UserAvatar";
 
 type Props = {
@@ -40,6 +42,7 @@ function LeftSideBar({
   setChannel,
   subscription,
 }: Props) {
+  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
   return (
     <VStack h="full" alignItems={"center"} w="full" spacing={6}>
       {/* <Flex
@@ -100,6 +103,7 @@ function LeftSideBar({
             size="xs"
             aria-label="Add Channel"
             _hover={{ bg: "gray" }}
+            onClick={onOpen}
           />
         </Tooltip>
       </Box>
@@ -127,6 +131,7 @@ function LeftSideBar({
             ))}
         </List>
       </Box>
+      <NewChannelModal isOpen={isOpen} onClose={onClose} />
     </VStack>
   );
 }

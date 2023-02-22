@@ -10,11 +10,12 @@ type Props = {
 };
 
 function ChatRow({ channel, subscription }: Props) {
-  const {
-    data: mark,
-    isLoading,
-    refetch,
-  } = useCountUnread(!!subscription, channel.id);
+  // const {
+  //   data: mark,
+  //   isLoading,
+  //   refetch,
+  // } = useCountUnread(!!subscription, channel.id);
+  const { data: mark, isLoading, refetch } = useCountUnread(true, channel.id);
 
   // useEffect(() => {
   //   refetch();
