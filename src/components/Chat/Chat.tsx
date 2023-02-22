@@ -79,13 +79,13 @@ function Chat({
   // clear messages when channel changed (and after subscribed)
   useEffect(() => {
     setMessages([]);
-    hasMore.current = false;
+    hasMore.current = true;
     lastMessageRef.current = undefined;
   }, [subscription]);
 
   // getMessages if messages are cleared (channel changed)
   useEffect(() => {
-    if (messages.length === 0 && subscription) {
+    if (hasMore.current && messages.length === 0 && subscription) {
       getMessages();
     }
     // keep track of the last message
