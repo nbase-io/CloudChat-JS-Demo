@@ -40,6 +40,7 @@ function NewChannelModal({
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ICreateChannel>();
 
   const mutation = useMutation<any, any, ICreateChannel>(createChannel, {
@@ -49,6 +50,7 @@ function NewChannelModal({
         status: "success",
       });
       onModalClose();
+      reset();
       queryClient.refetchQueries(["channels"]);
     },
     onError: (error) => {
