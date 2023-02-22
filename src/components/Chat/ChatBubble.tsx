@@ -160,7 +160,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
       {!isMe && othersBubbleName}
-      {node.parent_message && (
+      {node.parent_message_id && node.parent_message && (
         <HStack fontSize={12} spacing={1}>
           <VscReply />
           <Text>reply to</Text>
