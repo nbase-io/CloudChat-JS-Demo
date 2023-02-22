@@ -29,7 +29,7 @@ function Chat({
   const queryClient = useQueryClient();
   const { mutate: markRead } = useMarkRead(
     channel.id,
-    lastMessageRef.current?.node.message_id,
+    lastMessageRef.current?.node.id,
     "guest",
     lastMessageRef.current?.node.sort_id
   );
@@ -90,7 +90,9 @@ function Chat({
     // keep track of the last message
     if (messages.length > 0 && messages[0]) {
       lastMessageRef.current = messages[0];
+      console.log(lastMessageRef.current);
       markRead();
+      // queryClient.invalidateQueries(["countUnread"]);
     }
   }, [messages]);
 

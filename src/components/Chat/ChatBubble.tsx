@@ -129,8 +129,8 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
       } else {
         return (
           <Image
-            src={`https://alpha-api.cloudchat.dev${node.parent_message?.attachment_filenames.url}`}
-            alt={node.parent_message?.attachment_filenames.name}
+            src={`https://alpha-api.cloudchat.dev${node.parent_message?.attachment_filenames?.url}`}
+            alt={node.parent_message?.attachment_filenames?.name}
             onClick={onModalOpen}
             fallback={<Spinner />}
             color="gray"
@@ -204,8 +204,8 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
               <Text>{node.content}</Text>
             ) : (
               <Image
-                src={`https://alpha-api.cloudchat.dev${node.attachment_filenames.url}`}
-                alt={node.attachment_filenames.name}
+                src={`https://alpha-api.cloudchat.dev${node.attachment_filenames?.url}`}
+                alt={node.attachment_filenames?.name}
                 onClick={onModalOpen}
                 fallback={<Spinner />}
               />
