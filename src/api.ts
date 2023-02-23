@@ -1,5 +1,5 @@
-import * as ncloudchat from "cloudchat";
-// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
+// import * as ncloudchat from "cloudchat";
+import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
 import {
   useInfiniteQuery,
   useMutation,
@@ -142,6 +142,9 @@ export const useSubscribe = (
     },
     { enabled: enabled }
   );
+
+export const useUnsubscribe = (channel_id: string) =>
+  useMutation(async () => await nc.unsubscribe(channel_id));
 
 // getSubscriptions
 export const useGetSubscriptions = (

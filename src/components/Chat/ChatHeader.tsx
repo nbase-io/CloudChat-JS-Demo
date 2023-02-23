@@ -18,7 +18,7 @@ import { IoMdInformationCircleOutline, IoMdMenu } from "react-icons/io";
 import { MdOutlinePersonAddAlt, MdOutlinePersonRemove } from "react-icons/md";
 import { RxExit } from "react-icons/rx";
 import { SlOptions, SlSettings } from "react-icons/sl";
-import { useDeleteChannel } from "../../api";
+import { useDeleteChannel, useUnsubscribe } from "../../api";
 import { CustomToast } from "../Toast/CustomToast";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -39,7 +39,11 @@ export const ChatHeader = ({
   const { addToast } = CustomToast();
   const { mutate: deleteChannel, status: deleteChannelStatus } =
     useDeleteChannel(channel.id);
-  const isAdmin = channel.user_id?.id === "guest";
+  const { mutate: unsubscribe, status: unsubscribeStatus } = useUnsubscribe(
+    channel.id
+  );
+  const isAdmin = channel.user?.id === "guest";
+
   useEffect(() => {
     if (deleteChannelStatus === "success") {
       addToast({
@@ -55,6 +59,22 @@ export const ChatHeader = ({
       });
     }
   }, [deleteChannelStatus]);
+
+  useEffect(() => {
+    if (unsubscribeStatus === "success") {
+      addToast({
+        description: `You have left the channel!`,
+        status: unsubscribeStatus,
+      });
+      setChannel(null);
+      queryClient.setQueryData(["subscribe", { channelId: channel.id }], null);
+    } else if (unsubscribeStatus === "error") {
+      addToast({
+        description: `Failed to leave the channel.`,
+        status: unsubscribeStatus,
+      });
+    }
+  }, [unsubscribeStatus]);
 
   const channelMenu = (
     <Menu>
@@ -74,7 +94,9 @@ export const ChatHeader = ({
         </MenuGroup>
         <MenuDivider />
         <MenuGroup title="Channel">
-          <MenuItem icon={<RxExit />}>Leave</MenuItem>
+          <MenuItem icon={<RxExit />} onClick={() => unsubscribe()}>
+            Leave
+          </MenuItem>
           {isAdmin && <MenuItem icon={<SlSettings />}>Settings</MenuItem>}
           {isAdmin && (
             <MenuItem
