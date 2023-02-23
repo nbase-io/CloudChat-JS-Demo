@@ -30,6 +30,8 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
     !!subscription,
     channel?.id
   );
+  const isPrivate = channel.type === "PRIVATE";
+  const isAdmin = channel.user?.id === "guest";
 
   return (
     <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>
@@ -48,21 +50,23 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
               </Text>
               <Text as="b">Members</Text>
             </HStack>
-            <Box
-              // size={"xs"}
-              bg="black"
-              color="white"
-              mr="3"
-              fontWeight={"bold"}
-              fontSize={"xs"}
-              px={2}
-              py={1}
-              borderRadius={4}
-              _hover={{ bg: "gray" }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              Invite
-            </Box>
+            {/* {isPrivate && isAdmin && (
+              <Box
+                // size={"xs"}
+                bg="black"
+                color="white"
+                mr="3"
+                fontWeight={"bold"}
+                fontSize={"xs"}
+                px={2}
+                py={1}
+                borderRadius={4}
+                _hover={{ bg: "gray" }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                Invite
+              </Box>
+            )} */}
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel pb={4}>

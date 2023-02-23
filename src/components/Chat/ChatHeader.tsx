@@ -23,6 +23,7 @@ import { useDeleteChannel, useUnsubscribe } from "../../api";
 import { CustomToast } from "../Toast/CustomToast";
 import { useQueryClient } from "@tanstack/react-query";
 import EditChannelModal from "../Modal/EditChannelModal";
+import { FaLock } from "react-icons/fa";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -92,13 +93,13 @@ export const ChatHeader = ({
         />
       </Tooltip>
       <MenuList>
-        {isPrivate && (
+        {/* {isPrivate && isAdmin && (
           <MenuGroup title="Member">
             <MenuItem icon={<MdOutlinePersonAddAlt />}>Add users</MenuItem>
             <MenuItem icon={<MdOutlinePersonRemove />}>Remove users</MenuItem>
           </MenuGroup>
         )}
-        {isPrivate && <MenuDivider />}
+        {isPrivate && isAdmin && <MenuDivider />} */}
         <MenuGroup title="Channel">
           <MenuItem icon={<RxExit />} onClick={() => unsubscribe()}>
             Leave
@@ -139,6 +140,7 @@ export const ChatHeader = ({
         <HStack>
           <Avatar size="md" name={channel?.name} src={channel?.image_url} />
           <StatNumber>{channel?.name}</StatNumber>
+          {channel.type === "PRIVATE" && <FaLock size={"14"} />}
         </HStack>
       </Stat>
       <Tooltip label={"Channel information"}>
