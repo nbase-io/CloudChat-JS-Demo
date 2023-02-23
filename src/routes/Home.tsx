@@ -74,6 +74,7 @@ function Home() {
             onLeftSideBarOpen={onLeftSideBarOpen}
             onChatDetailOpen={onChatDetailOpen}
             channel={channel}
+            setChannel={setChannel}
             subscription={subscription}
           />
         )}

@@ -198,26 +198,6 @@ export const useMarkRead = (
   });
 
 // create channel
-// export const useCreateChannel = (
-//   type: string,
-//   name: string,
-//   image_url: string
-// ) =>
-//   useMutation(
-//     async () => {
-//       console.log(type, name, image_url);
-//       return await nc.createChannel({
-//         type: type,
-//         name: name,
-//         imageUrl: image_url,
-//       });
-//     },
-//     {
-//       onMutate: () => console.log("mutating"),
-//       onSuccess: () => console.log("mutate success"),
-//       onError: () => console.log("mutate error"),
-//     }
-//   );
 export const createChannel = async ({
   type,
   name,
@@ -228,3 +208,7 @@ export const createChannel = async ({
     name: name,
     imageUrl: image_url,
   });
+
+// delete channel
+export const useDeleteChannel = (channel_id: string) =>
+  useMutation(async () => await nc.deleteChannel(channel_id));

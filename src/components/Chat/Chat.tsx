@@ -11,6 +11,7 @@ type Props = {
   onLeftSideBarOpen: () => void;
   onChatDetailOpen: () => void;
   channel: any;
+  setChannel: any;
   subscription: any;
 };
 
@@ -18,6 +19,7 @@ function Chat({
   onLeftSideBarOpen,
   onChatDetailOpen,
   channel,
+  setChannel,
   subscription,
 }: Props) {
   const [messages, setMessages] = useState<any>([]);
@@ -106,6 +108,7 @@ function Chat({
         onLeftSideBarOpen={onLeftSideBarOpen}
         onChatDetailOpen={onChatDetailOpen}
         channel={channel}
+        setChannel={setChannel}
       />
       <Divider />
       {channel && (isGettingMessages || !subscription) && (

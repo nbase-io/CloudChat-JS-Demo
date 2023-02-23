@@ -59,7 +59,6 @@ function NewChannelModal({
   });
 
   const onSubmit = (data: ICreateChannel) => {
-    console.log(data);
     mutation.mutate(data);
   };
 
