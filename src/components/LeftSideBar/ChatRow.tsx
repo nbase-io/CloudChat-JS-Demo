@@ -15,7 +15,7 @@ function ChatRow({ channel, subscription }: Props) {
   //   isLoading,
   //   refetch,
   // } = useCountUnread(!!subscription, channel.id);
-  const { data: mark, isLoading, refetch } = useCountUnread(true, channel.id);
+  // const { data: mark, isLoading, refetch } = useCountUnread(true, channel.id);
 
   // useEffect(() => {
   //   refetch();
@@ -65,7 +65,7 @@ function ChatRow({ channel, subscription }: Props) {
             </Moment>
           )}
         </Text>
-        {mark && (
+        {/* {mark && (
           <Text
             fontSize={"xs"}
             color={"white"}
@@ -76,7 +76,7 @@ function ChatRow({ channel, subscription }: Props) {
           >
             {mark.unread > 0 && mark.unread}
           </Text>
-        )}
+        )} */}
       </VStack>
     </Flex>
   );
