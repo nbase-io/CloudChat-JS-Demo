@@ -15,6 +15,7 @@ type Props = {
 
 function ChatDetailHeader({ channel, setChannel }: Props) {
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+  const isAdmin = channel.user?.id === "guest";
 
   return (
     <HStack justify={"space-between"} w="full" px={8} mb={8}>
@@ -31,16 +32,18 @@ function ChatDetailHeader({ channel, setChannel }: Props) {
             aria-label="Search"
           />
         </Tooltip>
-        <Tooltip label={"Settings"}>
-          <IconButton
-            rounded={"full"}
-            variant="ghost"
-            icon={<TbSettings />}
-            size="lg"
-            aria-label="Settings"
-            onClick={onOpen}
-          />
-        </Tooltip>
+        {isAdmin && (
+          <Tooltip label={"Settings"}>
+            <IconButton
+              rounded={"full"}
+              variant="ghost"
+              icon={<TbSettings />}
+              size="lg"
+              aria-label="Settings"
+              onClick={onOpen}
+            />
+          </Tooltip>
+        )}
       </HStack>
       <EditChannelModal
         isOpen={isOpen}
