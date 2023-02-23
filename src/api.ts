@@ -8,10 +8,13 @@ import {
 } from "@tanstack/react-query";
 import { IUser } from "./lib/interfaces/IUser";
 import { IFriendship } from "./lib/interfaces/IFriendship";
-import { IChannel } from "./lib/interfaces/IChannel";
+import {
+  IChannel,
+  ICreateChannel,
+  IUpdateChannel,
+} from "./lib/interfaces/IChannel";
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
-import { ICreateChannel } from "./lib/interfaces/ICreateChannel";
 
 const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
 
@@ -215,3 +218,18 @@ export const createChannel = async ({
 // delete channel
 export const useDeleteChannel = (channel_id: string) =>
   useMutation(async () => await nc.deleteChannel(channel_id));
+
+// update channel
+export const updateChannel = async ({
+  channel_id,
+  type,
+  name,
+  image_url,
+}: IUpdateChannel) => {
+  console.log(channel_id, type, name, image_url);
+  return await nc.updateChannel(channel_id, {
+    type: type,
+    name: name,
+    imageUrl: image_url,
+  });
+};

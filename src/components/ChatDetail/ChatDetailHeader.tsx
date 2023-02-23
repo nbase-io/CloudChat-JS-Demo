@@ -1,11 +1,20 @@
-import { HStack, IconButton, Tooltip, Text } from "@chakra-ui/react";
+import {
+  HStack,
+  IconButton,
+  Tooltip,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { TbSearch, TbX, TbSettings } from "react-icons/tb";
+import EditChannelModal from "../Modal/EditChannelModal";
 
 type Props = {
   channel: any;
+  setChannel: any;
 };
 
-function ChatDetailHeader({ channel }: Props) {
+function ChatDetailHeader({ channel, setChannel }: Props) {
+  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
   return (
     <HStack justify={"space-between"} w="full" px={8} mb={8}>
       <Text fontSize={"xl"} as="b">
@@ -28,9 +37,16 @@ function ChatDetailHeader({ channel }: Props) {
             icon={<TbSettings />}
             size="lg"
             aria-label="Settings"
+            onClick={onOpen}
           />
         </Tooltip>
       </HStack>
+      <EditChannelModal
+        isOpen={isOpen}
+        onClose={onClose}
+        channel={channel}
+        setChannel={setChannel}
+      />
     </HStack>
   );
 }

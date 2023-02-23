@@ -93,7 +93,11 @@ function Home() {
           maxW={{ base: "xs", xl: "sm" }}
           display={{ base: "none", lg: "flex" }}
         >
-          <ChatDetail channel={channel} subscription={subscription} />
+          <ChatDetail
+            channel={channel}
+            subscription={subscription}
+            setChannel={setChannel}
+          />
         </Flex>
       )}
       <LeftSideBarDrawer

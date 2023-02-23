@@ -12,6 +12,7 @@ import {
   Stat,
   StatNumber,
   Tooltip,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoMdInformationCircleOutline, IoMdMenu } from "react-icons/io";
@@ -21,6 +22,7 @@ import { SlOptions, SlSettings } from "react-icons/sl";
 import { useDeleteChannel, useUnsubscribe } from "../../api";
 import { CustomToast } from "../Toast/CustomToast";
 import { useQueryClient } from "@tanstack/react-query";
+import EditChannelModal from "../Modal/EditChannelModal";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -35,6 +37,7 @@ export const ChatHeader = ({
   channel,
   setChannel,
 }: Props) => {
+  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
   const queryClient = useQueryClient();
   const { addToast } = CustomToast();
   const { mutate: deleteChannel, status: deleteChannelStatus } =
@@ -97,7 +100,11 @@ export const ChatHeader = ({
           <MenuItem icon={<RxExit />} onClick={() => unsubscribe()}>
             Leave
           </MenuItem>
-          {isAdmin && <MenuItem icon={<SlSettings />}>Settings</MenuItem>}
+          {isAdmin && (
+            <MenuItem icon={<SlSettings />} onClick={onOpen}>
+              Settings
+            </MenuItem>
+          )}
           {isAdmin && (
             <MenuItem
               icon={<AiOutlineDelete />}
@@ -111,6 +118,7 @@ export const ChatHeader = ({
       </MenuList>
     </Menu>
   );
+
   return (
     <HStack px={4} py={4} borderBottomColor="gray.100">
       <Tooltip label={"Channels"}>
@@ -142,6 +150,12 @@ export const ChatHeader = ({
         />
       </Tooltip>
       {channel && channelMenu}
+      <EditChannelModal
+        isOpen={isOpen}
+        onClose={onClose}
+        channel={channel}
+        setChannel={setChannel}
+      />
     </HStack>
   );
 };

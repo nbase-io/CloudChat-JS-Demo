@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatRow from "./ChatRow";
-import NewChannelModal from "../NewChannel/NewChannelModal";
+import NewChannelModal from "../Modal/NewChannelModal";
 // import UserAvatar from "../UserAvatar/UserAvatar";
 
 type Props = {

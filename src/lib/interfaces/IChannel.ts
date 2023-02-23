@@ -18,3 +18,16 @@ export interface IChannel {
   updated_at: string;
   last_message: IMessage;
 }
+
+export interface ICreateChannel {
+  type: string;
+  name: string;
+  image_url: string;
+}
+
+export interface IUpdateChannel {
+  channel_id: string;
+  type: string;
+  name: string;
+  image_url: string;
+}

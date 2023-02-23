@@ -21,9 +21,10 @@ import ChatDetailHeader from "./ChatDetailHeader";
 type Props = {
   channel: any;
   subscription: any;
+  setChannel: any;
 };
 
-function ChatDetail({ channel, subscription }: Props) {
+function ChatDetail({ channel, subscription, setChannel }: Props) {
   // getSubscriptions after subscribe
   const { data: subscriptions } = useGetSubscriptions(
     !!subscription,
@@ -32,7 +33,7 @@ function ChatDetail({ channel, subscription }: Props) {
 
   return (
     <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>
-      <ChatDetailHeader channel={channel} />
+      <ChatDetailHeader channel={channel} setChannel={setChannel} />
       <Avatar size="xl" name={channel?.name} src={channel?.image_url}></Avatar>
       <Heading size={"md"} mt={3}>
         {channel?.name}

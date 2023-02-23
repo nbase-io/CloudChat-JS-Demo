@@ -12,27 +12,30 @@ import {
   ModalOverlay,
   Select,
   VStack,
-  Image,
   ModalCloseButton,
   Text,
-  Box,
 } from "@chakra-ui/react";
 import { CgNametag } from "react-icons/cg";
 import { FaImage } from "react-icons/fa";
-import { createChannel } from "../../api";
+import { updateChannel } from "../../api";
 import { useForm } from "react-hook-form";
-import { ICreateChannel } from "../../lib/interfaces/ICreateChannel";
+import { IUpdateChannel } from "../../lib/interfaces/IChannel";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CustomToast } from "../Toast/CustomToast";
+import { useEffect } from "react";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  channel: any;
+  setChannel: any;
 };
 
-function NewChannelModal({
+function EditChannelModal({
   isOpen: isModalOpen,
   onClose: onModalClose,
+  channel,
+  setChannel,
 }: Props) {
   const queryClient = useQueryClient();
   const { addToast } = CustomToast();
@@ -41,14 +44,17 @@ function NewChannelModal({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ICreateChannel>();
+    setValue,
+  } = useForm<IUpdateChannel>();
 
-  const mutation = useMutation<any, any, ICreateChannel>(createChannel, {
+  const mutation = useMutation<any, any, IUpdateChannel>(updateChannel, {
     onSuccess: (data) => {
+      console.log(data);
       addToast({
-        title: `New channel ${data.createChannel?.channel?.name} was created!`,
+        title: `A channel ${data?.name} was edited!`,
         status: "success",
       });
+      setChannel(null);
       onModalClose();
       reset();
       queryClient.refetchQueries(["channels"]);
@@ -58,9 +64,16 @@ function NewChannelModal({
     },
   });
 
-  const onSubmit = (data: ICreateChannel) => {
+  const onSubmit = (data: IUpdateChannel) => {
     mutation.mutate(data);
   };
+
+  useEffect(() => {
+    setValue("channel_id", channel.id);
+    setValue("name", channel.name);
+    setValue("type", channel.type);
+    setValue("image_url", channel.image_url);
+  }, [channel]);
 
   return (
     <Modal
@@ -73,7 +86,7 @@ function NewChannelModal({
       <ModalContent as={"form"} onSubmit={handleSubmit(onSubmit)}>
         <ModalHeader>
           <Center>
-            <Text>New Channel</Text>
+            <Text>Edit Channel</Text>
           </Center>
         </ModalHeader>
         <ModalCloseButton />
@@ -83,7 +96,6 @@ function NewChannelModal({
               <Select
                 isInvalid={Boolean(errors.type?.message)}
                 placeholder="Choose a channel type"
-                defaultValue={"PUBLIC"}
                 {...register("type", {
                   required: "Please choose a channel type.",
                 })}
@@ -126,7 +138,7 @@ function NewChannelModal({
             type="submit"
             isLoading={mutation.isLoading}
           >
-            Create new channel
+            Edit channel
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -134,4 +146,4 @@ function NewChannelModal({
   );
 }
 
-export default NewChannelModal;
+export default EditChannelModal;

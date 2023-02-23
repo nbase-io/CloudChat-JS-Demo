@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
-import LoginModal from "./LoginModal/LoginModal";
+import LoginModal from "./Modal/LoginModal";
 
 function Root() {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: false });
