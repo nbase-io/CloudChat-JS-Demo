@@ -15,6 +15,7 @@ type Props = {
 
 function ChatDetailHeader({ channel, setChannel }: Props) {
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+
   return (
     <HStack justify={"space-between"} w="full" px={8} mb={8}>
       <Text fontSize={"xl"} as="b">

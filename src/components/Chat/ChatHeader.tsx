@@ -46,6 +46,7 @@ export const ChatHeader = ({
     channel.id
   );
   const isAdmin = channel.user?.id === "guest";
+  const isPrivate = channel.type === "PRIVATE";
 
   useEffect(() => {
     if (deleteChannelStatus === "success") {
@@ -91,11 +92,13 @@ export const ChatHeader = ({
         />
       </Tooltip>
       <MenuList>
-        <MenuGroup title="Member">
-          <MenuItem icon={<MdOutlinePersonAddAlt />}>Add users</MenuItem>
-          <MenuItem icon={<MdOutlinePersonRemove />}>Remove users</MenuItem>
-        </MenuGroup>
-        <MenuDivider />
+        {isPrivate && (
+          <MenuGroup title="Member">
+            <MenuItem icon={<MdOutlinePersonAddAlt />}>Add users</MenuItem>
+            <MenuItem icon={<MdOutlinePersonRemove />}>Remove users</MenuItem>
+          </MenuGroup>
+        )}
+        {isPrivate && <MenuDivider />}
         <MenuGroup title="Channel">
           <MenuItem icon={<RxExit />} onClick={() => unsubscribe()}>
             Leave
