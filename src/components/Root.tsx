@@ -5,6 +5,9 @@ import {
   Tooltip,
   IconButton,
   useDisclosure,
+  Tabs,
+  TabList,
+  Tab,
 } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
@@ -30,6 +33,19 @@ function Root() {
             />
           </Link>
         </Box>
+        <Tabs size={"sm"}>
+          <TabList>
+            <Tab as="b">
+              <Link to={"/"}>Standard Chat</Link>
+            </Tab>
+            <Tab as="b">
+              <Link to={"/live-stream"}>Live Stream</Link>
+            </Tab>
+            <Tab as="b" isDisabled>
+              Chatbot
+            </Tab>
+          </TabList>
+        </Tabs>
         <HStack spacing={2}>
           <Tooltip label={"Go to Github"}>
             <Link to={"https://github.com/nbase-io/CloudChat-JS-Demo"}>

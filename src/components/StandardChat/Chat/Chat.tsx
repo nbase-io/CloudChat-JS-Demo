@@ -3,7 +3,7 @@ import { Flex, Divider, Box, Text, Progress } from "@chakra-ui/react";
 import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { HiArrowDown } from "react-icons/hi";
-import { nc, useMarkRead } from "../../api";
+import { nc, useMarkRead } from "../../../api";
 import ChatMessages from "./ChatMessages";
 import { useQueryClient } from "@tanstack/react-query";
 

@@ -15,9 +15,9 @@ import {
 import { FaExclamationCircle } from "react-icons/fa";
 import { VscReply, VscCopy, VscTrash, VscCheck } from "react-icons/vsc";
 import Moment from "react-moment";
-import { useDeleteMessage } from "../../api";
+import { useDeleteMessage } from "../../../api";
 import ImageViwer from "./ImageViewer";
-import { CustomToast } from "../Toast/CustomToast";
+import { CustomToast } from "../../Toast/CustomToast";
 
 type Props = {
   node: any;

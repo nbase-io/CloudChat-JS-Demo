@@ -9,15 +9,15 @@ import {
   useSubscribe,
   nc,
 } from "../api";
-import Chat from "../components/Chat/Chat";
-import ChatDetail from "../components/ChatDetail/ChatDetail";
-import ChatDetailDrawer from "../components/ChatDetail/ChatDetailDrawer";
-import LeftSideBar from "../components/LeftSideBar/LeftSideBar";
-import LeftSideBarDrawer from "../components/LeftSideBar/LeftSideBarDrawer";
+import Chat from "../components/StandardChat/Chat/Chat";
+import ChatDetail from "../components/StandardChat/ChatDetail/ChatDetail";
+import ChatDetailDrawer from "../components/StandardChat/ChatDetail/ChatDetailDrawer";
+import LeftSideBar from "../components/StandardChat/LeftSideBar/LeftSideBar";
+import LeftSideBarDrawer from "../components/StandardChat/LeftSideBar/LeftSideBarDrawer";
 import { IChannel } from "../lib/interfaces/IChannel";
 import { useQueryClient } from "@tanstack/react-query";
 
-function Home() {
+function StandardChat() {
   // current channel
   const [channel, setChannel] = useState<any>(null);
   // subscribe when channel is selected
@@ -122,4 +122,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default StandardChat;

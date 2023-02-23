@@ -19,10 +19,10 @@ import { IoMdInformationCircleOutline, IoMdMenu } from "react-icons/io";
 import { MdOutlinePersonAddAlt, MdOutlinePersonRemove } from "react-icons/md";
 import { RxExit } from "react-icons/rx";
 import { SlOptions, SlSettings } from "react-icons/sl";
-import { useDeleteChannel, useUnsubscribe } from "../../api";
-import { CustomToast } from "../Toast/CustomToast";
+import { useDeleteChannel, useUnsubscribe } from "../../../api";
+import { CustomToast } from "../../Toast/CustomToast";
 import { useQueryClient } from "@tanstack/react-query";
-import EditChannelModal from "../Modal/EditChannelModal";
+import EditChannelModal from "../../Modal/EditChannelModal";
 import { FaLock } from "react-icons/fa";
 
 type Props = {

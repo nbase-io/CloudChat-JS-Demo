@@ -6,7 +6,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { TbSearch, TbX, TbSettings } from "react-icons/tb";
-import EditChannelModal from "../Modal/EditChannelModal";
+import EditChannelModal from "../../Modal/EditChannelModal";
 
 type Props = {
   channel: any;
@@ -23,7 +23,7 @@ function ChatDetailHeader({ channel, setChannel }: Props) {
         Channel Info.
       </Text>
       <HStack>
-        <Tooltip label={"Search"}>
+        {/* <Tooltip label={"Search"}>
           <IconButton
             rounded={"full"}
             variant="ghost"
@@ -31,7 +31,7 @@ function ChatDetailHeader({ channel, setChannel }: Props) {
             size="lg"
             aria-label="Search"
           />
-        </Tooltip>
+        </Tooltip> */}
         {isAdmin && (
           <Tooltip label={"Settings"}>
             <IconButton

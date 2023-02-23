@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./components/Root";
-import Home from "./routes/Home";
+import StandardChat from "./routes/StandardChat";
 import NotFound from "./routes/NotFound";
+import LiveStream from "./routes/LiveStream";
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />,
+        element: <StandardChat />,
+      },
+      {
+        path: "live-stream",
+        element: <LiveStream />,
       },
     ],
   },

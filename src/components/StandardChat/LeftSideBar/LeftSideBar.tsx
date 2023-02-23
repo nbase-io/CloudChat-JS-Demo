@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatRow from "./ChatRow";
-import NewChannelModal from "../Modal/NewChannelModal";
+import NewChannelModal from "../../Modal/NewChannelModal";
 // import UserAvatar from "../UserAvatar/UserAvatar";
 
 type Props = {
@@ -107,7 +107,7 @@ function LeftSideBar({
           />
         </Tooltip>
       </Box>
-      <InputGroup size={"md"} px={8}>
+      {/* <InputGroup size={"md"} px={8}>
         <Input
           placeholder="Search by channel name"
           mt={2}
@@ -115,7 +115,7 @@ function LeftSideBar({
           w="full"
           minH={10}
         />
-      </InputGroup>
+      </InputGroup> */}
       <Box w="full" overflow={"auto"}>
         <List w="full" spacing={0}>
           {!isGettingChannels &&

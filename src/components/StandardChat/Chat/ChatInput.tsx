@@ -27,7 +27,7 @@ import {
 import { useFilePicker } from "use-file-picker";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import { useSendImage, useSendMessage } from "../../api";
+import { useSendImage, useSendMessage } from "../../../api";
 
 type Props = {
   channel: any;

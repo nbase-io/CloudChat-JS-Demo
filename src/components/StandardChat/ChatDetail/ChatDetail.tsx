@@ -14,8 +14,8 @@ import {
   Spinner,
   Skeleton,
 } from "@chakra-ui/react";
-import { useGetSubscriptions } from "../../api";
-import UserAvatar from "../UserAvatar/UserAvatar";
+import { useGetSubscriptions } from "../../../api";
+import UserAvatar from "../../UserAvatar/UserAvatar";
 import ChatDetailHeader from "./ChatDetailHeader";
 
 type Props = {
