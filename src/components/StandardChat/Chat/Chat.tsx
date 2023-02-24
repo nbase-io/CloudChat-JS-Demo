@@ -6,6 +6,7 @@ import { HiArrowDown } from "react-icons/hi";
 import { nc, useMarkRead } from "../../../api";
 import ChatMessages from "./ChatMessages";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUser } from "../../Root";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -22,6 +23,7 @@ function Chat({
   setChannel,
   subscription,
 }: Props) {
+  const { user } = useUser();
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const hasMore = useRef(false);
@@ -32,7 +34,7 @@ function Chat({
   const { mutate: markRead } = useMarkRead(
     channel.id,
     lastMessageRef.current?.node.message_id,
-    "guest",
+    user!.id,
     lastMessageRef.current?.node.sort_id
   );
 

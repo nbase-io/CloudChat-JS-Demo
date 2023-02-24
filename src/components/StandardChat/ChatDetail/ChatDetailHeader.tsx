@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { TbSearch, TbX, TbSettings } from "react-icons/tb";
 import EditChannelModal from "../../Modal/EditChannelModal";
+import { useUser } from "../../Root";
 
 type Props = {
   channel: any;
@@ -14,8 +15,9 @@ type Props = {
 };
 
 function ChatDetailHeader({ channel, setChannel }: Props) {
+  const { user } = useUser();
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
-  const isAdmin = channel.user?.id === "guest";
+  const isAdmin = channel.user?.id === user!.id;
 
   return (
     <HStack justify={"space-between"} w="full" px={8} mb={8}>

@@ -9,7 +9,6 @@ import LeftSideBar from "./LeftSideBar";
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  isConnecting: boolean;
   user: any;
   // isGettingFriendships: boolean;
   isGettingChannels: boolean;
@@ -22,7 +21,6 @@ type Props = {
 function LeftSideBarDrawer({
   isOpen,
   onClose,
-  isConnecting,
   user,
   // isGettingFriendships,
   isGettingChannels,
@@ -37,7 +35,6 @@ function LeftSideBarDrawer({
         <DrawerContent pt={8}>
           <DrawerCloseButton />
           <LeftSideBar
-            isConnecting={isConnecting}
             user={user}
             // isGettingFriendships={isGettingFriendships}
             isGettingChannels={isGettingChannels}

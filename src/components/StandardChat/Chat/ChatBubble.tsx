@@ -18,6 +18,7 @@ import Moment from "react-moment";
 import { useDeleteMessage } from "../../../api";
 import ImageViwer from "./ImageViewer";
 import { CustomToast } from "../../Toast/CustomToast";
+import { useUser } from "../../Root";
 
 type Props = {
   node: any;
@@ -25,6 +26,7 @@ type Props = {
 };
 
 function ChatBubble({ node, setReplyParentMessage }: Props) {
+  const { user } = useUser();
   const { addToast } = CustomToast();
   const {
     isOpen: isModalOpen,
@@ -32,7 +34,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
     onClose: onModalClose,
   } = useDisclosure();
   const [isHovering, setIsHovering] = useState(false);
-  const isMe = node.sender.id === "guest";
+  const isMe = node.sender.id === user!.id;
   const allignment = isMe ? "flex-end" : "flex-start";
   const bottomRightRadius = isMe ? 0 : 18;
   const topLeftRadius = isMe ? 18 : 0;

@@ -22,7 +22,6 @@ import NewChannelModal from "../../Modal/NewChannelModal";
 // import UserAvatar from "../UserAvatar/UserAvatar";
 
 type Props = {
-  isConnecting: boolean;
   user: any;
   // isGettingFriendships: boolean;
   isGettingChannels: boolean;
@@ -33,7 +32,6 @@ type Props = {
 };
 
 function LeftSideBar({
-  // isConnecting,
   // user,
   // isGettingFriendships,
   isGettingChannels,

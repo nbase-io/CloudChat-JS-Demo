@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Button,
   Input,
@@ -21,64 +20,50 @@ import { CgNametag } from "react-icons/cg";
 import { FaImage, FaProjectDiagram, FaUser } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { ILogin } from "../../lib/interfaces/ILogin";
-import { useConnect } from "../../api";
+import { connect } from "../../api";
+import { useMutation } from "@tanstack/react-query";
+import { CustomToast } from "../Toast/CustomToast";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  setUser: any;
 };
 
-function LoginModal({ isOpen: isModalOpen, onClose: onModalClose }: Props) {
-  const [readyToConnect, setReadyToConnect] = useState(false);
-  const [loginValues, setLoginValues] = useState({
-    name: "",
-    id: "",
-    profile: "",
-    server: "",
-    projectId: "",
-  });
+function LoginModal({
+  isOpen: isModalOpen,
+  onClose: onModalClose,
+  setUser,
+}: Props) {
+  const { addToast } = CustomToast();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<ILogin>();
-  // 1. connect
-  const { data: user } = useConnect(
-    readyToConnect,
-    loginValues.name,
-    loginValues.id,
-    loginValues.profile,
-    loginValues.server,
-    loginValues.projectId
-  );
   const { isOpen: isServerSelectionOpen, onToggle } = useDisclosure();
   const clickHandler = (event: any) => {
     if (event.detail == 3) {
       onToggle();
     }
   };
-  const onSubmit = (data: any) => {
+  // 1. connect
+  const mutation = useMutation<any, any, ILogin>(connect, {
+    onSuccess: (data) => {
+      console.log(data);
+      setUser(data);
+      reset();
+      onModalClose();
+    },
+    onError: (error) => {
+      addToast({ title: "Login failed", status: "error" });
+    },
+  });
+  const onSubmit = (data: ILogin) => {
     console.log(data);
-    setLoginValues({
-      name: data.name,
-      id: data.id,
-      profile: data.profile,
-      server: data.server,
-      projectId: data.projectId,
-    });
-    reset();
+    mutation.mutate(data);
   };
-  useEffect(() => {
-    if (
-      loginValues.name !== "" ||
-      loginValues.id !== "" ||
-      loginValues.server !== "" ||
-      loginValues.projectId !== ""
-    ) {
-      console.log(loginValues);
-    }
-  }, [loginValues]);
 
   return (
     <Modal

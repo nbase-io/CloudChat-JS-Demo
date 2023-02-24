@@ -4,17 +4,16 @@ import {
   Text,
   Avatar,
   Heading,
-  Box,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
   VStack,
-  Spinner,
   Skeleton,
 } from "@chakra-ui/react";
 import { useGetSubscriptions } from "../../../api";
+import { useUser } from "../../Root";
 import UserAvatar from "../../UserAvatar/UserAvatar";
 import ChatDetailHeader from "./ChatDetailHeader";
 
@@ -25,13 +24,14 @@ type Props = {
 };
 
 function ChatDetail({ channel, subscription, setChannel }: Props) {
+  const { user } = useUser();
   // getSubscriptions after subscribe
   const { data: subscriptions } = useGetSubscriptions(
     !!subscription,
     channel?.id
   );
   const isPrivate = channel.type === "PRIVATE";
-  const isAdmin = channel.user?.id === "guest";
+  const isAdmin = channel.user?.id === user!.id;
 
   return (
     <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>

@@ -1,12 +1,11 @@
 import { Box, Center, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import ReactPlayer from "react-player";
-import { useConnect } from "../../../api";
 import UserAvatar from "../../UserAvatar/UserAvatar";
 import { AiOutlineEye } from "react-icons/ai";
+import { useUser } from "../../Root";
 
 function StreamView() {
-  //   const { data: user } = useConnect();
-
+  const { user } = useUser();
   return (
     <VStack w="full" spacing={0}>
       <HStack
@@ -32,7 +31,7 @@ function StreamView() {
           </Text>
         </HStack>
         <HStack spacing={6} color="white">
-          {/* <UserAvatar user={user} color="white" /> */}
+          <UserAvatar user={user} color="white" />
           <HStack spacing={1}>
             <AiOutlineEye />
             <Text fontSize={"sm"}>14</Text>

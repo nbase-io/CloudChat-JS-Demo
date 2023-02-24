@@ -24,6 +24,7 @@ import { CustomToast } from "../../Toast/CustomToast";
 import { useQueryClient } from "@tanstack/react-query";
 import EditChannelModal from "../../Modal/EditChannelModal";
 import { FaLock } from "react-icons/fa";
+import { useUser } from "../../Root";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -38,6 +39,7 @@ export const ChatHeader = ({
   channel,
   setChannel,
 }: Props) => {
+  const { user } = useUser();
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
   const queryClient = useQueryClient();
   const { addToast } = CustomToast();
@@ -46,7 +48,7 @@ export const ChatHeader = ({
   const { mutate: unsubscribe, status: unsubscribeStatus } = useUnsubscribe(
     channel.id
   );
-  const isAdmin = channel.user?.id === "guest";
+  const isAdmin = channel.user?.id === user!.id;
   const isPrivate = channel.type === "PRIVATE";
 
   useEffect(() => {

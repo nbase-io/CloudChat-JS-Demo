@@ -1,34 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Flex, HStack, useDisclosure } from "@chakra-ui/react";
-import {
-  useConnect,
-  // useGetChannel,
-  useGetChannels,
-  useMarkRead,
-  // useGetFriendships,
-  useSubscribe,
-  nc,
-} from "../api";
+import { useGetChannels, useMarkRead, useSubscribe, nc } from "../api";
 import Chat from "../components/StandardChat/Chat/Chat";
 import ChatDetail from "../components/StandardChat/ChatDetail/ChatDetail";
 import ChatDetailDrawer from "../components/StandardChat/ChatDetail/ChatDetailDrawer";
 import LeftSideBar from "../components/StandardChat/LeftSideBar/LeftSideBar";
 import LeftSideBarDrawer from "../components/StandardChat/LeftSideBar/LeftSideBarDrawer";
-import { IChannel } from "../lib/interfaces/IChannel";
-import { useQueryClient } from "@tanstack/react-query";
+import { useUser } from "../components/Root";
 
 function StandardChat() {
   // current channel
   const [channel, setChannel] = useState<any>(null);
   // subscribe when channel is selected
   const { data: subscription } = useSubscribe(!!channel, channel?.id);
-  // 1. connect
-  const { data: user, isLoading: isConnecting } = useConnect(
-    false,
-    "Guest",
-    "guest",
-    ""
-  );
+  const { user } = useUser();
   const userId = user?.id;
   // 2. getChannels after connect
   const { data: channels, isLoading: isGettingChannels } = useGetChannels(
@@ -63,7 +48,6 @@ function StandardChat() {
         borderRightWidth={1}
       >
         <LeftSideBar
-          isConnecting={isConnecting}
           user={user}
           // isGettingFriendships={isGettingFriendships}
           isGettingChannels={isGettingChannels}
@@ -83,12 +67,6 @@ function StandardChat() {
             subscription={subscription}
           />
         )}
-        {/* <Chat
-          onLeftSideBarOpen={onLeftSideBarOpen}
-          onChatDetailOpen={onChatDetailOpen}
-          channel={channel}
-          subscription={subscription}
-        /> */}
       </Flex>
       {channel && (
         <Flex
@@ -108,7 +86,6 @@ function StandardChat() {
       <LeftSideBarDrawer
         isOpen={isLeftSideBarOpen}
         onClose={onLeftSideBarClose}
-        isConnecting={isConnecting}
         user={user}
         // isGettingFriendships={isGettingFriendships}
         isGettingChannels={isGettingChannels}

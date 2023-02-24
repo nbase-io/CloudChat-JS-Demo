@@ -1,5 +1,5 @@
-import * as ncloudchat from "cloudchat";
-// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
+// import * as ncloudchat from "cloudchat";
+import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
 import {
   useInfiniteQuery,
   useMutation,
@@ -15,65 +15,104 @@ import {
 } from "./lib/interfaces/IChannel";
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
+import { ILogin } from "./lib/interfaces/ILogin";
 
-const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
+// const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
 
 // initialize
 export const nc = new ncloudchat.Chat(true);
-nc.initialize(PROJECT_ID);
-nc.setLang("en");
-nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
-nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
+// nc.initialize(PROJECT_ID);
+// nc.setLang("en");
+// nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
+// nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
 
 // connect
-export const useConnect = (
-  enabled: boolean,
-  name: string,
-  id: string,
-  profile: string,
-  server: string,
-  projectId: string
-) =>
-  useQuery<IUser>(
-    ["connect"],
-    async () => {
-      console.log(enabled, name, id, profile, server, projectId);
-      nc.initialize(projectId);
-      nc.setLang("en");
-      switch (server) {
-        case "localhost":
-          nc.setServerUrl("http://localhost:4000");
-          nc.setSocketUrl("http://localhost:3001");
-          break;
-        case "alpha":
-          nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
-          nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
-          break;
-        case "beta":
-          nc.setServerUrl("https://dashboard-api.beta-ncloudchat.naverncp.com");
-          nc.setSocketUrl("https://soc.beta-ncloudchat.ntruss.com");
-          break;
-        case "real":
-          nc.setServerUrl("https://ncloudchat.apigw.ntruss.com/gpapps/v1");
-          nc.setSocketUrl("https://soc.ncloudchat.ntruss.com");
-          break;
-        default:
-          nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
-          nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
-      }
+export const connect = async ({
+  name,
+  id,
+  profile,
+  server,
+  projectId,
+}: ILogin) => {
+  console.log(name, id, profile, server, projectId);
+  nc.initialize(projectId);
+  nc.setLang("en");
+  switch (server) {
+    case "localhost":
+      nc.setServerUrl("http://localhost:4000");
+      nc.setSocketUrl("http://localhost:3001");
+      break;
+    case "alpha":
+      nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
+      nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
+      break;
+    case "beta":
+      nc.setServerUrl("https://dashboard-api.beta-ncloudchat.naverncp.com");
+      nc.setSocketUrl("https://soc.beta-ncloudchat.ntruss.com");
+      break;
+    case "real":
+      nc.setServerUrl("https://ncloudchat.apigw.ntruss.com/gpapps/v1");
+      nc.setSocketUrl("https://soc.ncloudchat.ntruss.com");
+      break;
+    default:
+      nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
+      nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
+  }
+  return await nc.connect({
+    id: id,
+    name: name,
+    profile: profile,
+    customField: "",
+  });
+};
+// export const useConnect = (
+//   enabled: boolean,
+//   name: string,
+//   id: string,
+//   profile: string,
+//   server: string,
+//   projectId: string
+// ) =>
+//   useQuery<IUser>(
+//     ["connect"],
+//     async () => {
+//       console.log(enabled, name, id, profile, server, projectId);
+//       nc.initialize(projectId);
+//       nc.setLang("en");
+//       switch (server) {
+//         case "localhost":
+//           nc.setServerUrl("http://localhost:4000");
+//           nc.setSocketUrl("http://localhost:3001");
+//           break;
+//         case "alpha":
+//           nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
+//           nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
+//           break;
+//         case "beta":
+//           nc.setServerUrl("https://dashboard-api.beta-ncloudchat.naverncp.com");
+//           nc.setSocketUrl("https://soc.beta-ncloudchat.ntruss.com");
+//           break;
+//         case "real":
+//           nc.setServerUrl("https://ncloudchat.apigw.ntruss.com/gpapps/v1");
+//           nc.setSocketUrl("https://soc.ncloudchat.ntruss.com");
+//           break;
+//         default:
+//           nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
+//           nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
+//       }
 
-      return await nc.connect(
-        {
-          id: id,
-          name: name,
-          profile: profile,
-          customField: "",
-        },
-        ""
-      );
-    },
-    { enabled: enabled, suspense: true }
-  );
+//       return await nc.connect(
+//         {
+//           id: id,
+//           name: name,
+//           profile: profile,
+//           customField: "",
+//         },
+//         ""
+//       );
+//     },
+//     { enabled: enabled, suspense: true }
+//   );
 
 // getFriendships
 export const useGetFriendships = (enabled: boolean) =>

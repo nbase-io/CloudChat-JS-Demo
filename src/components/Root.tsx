@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Box,
   HStack,
@@ -9,11 +10,15 @@ import {
   TabList,
   Tab,
 } from "@chakra-ui/react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useOutletContext } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
+import { IUser } from "../lib/interfaces/IUser";
+
+type ContextType = { user: IUser | null };
 
 function Root() {
+  const [user, setUser] = useState<IUser | null>(null);
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   return (
@@ -70,11 +75,15 @@ function Root() {
             </Link>
           </Tooltip>
         </HStack>
-        <LoginModal isOpen={isOpen} onClose={onClose} />
+        <LoginModal isOpen={isOpen} onClose={onClose} setUser={setUser} />
       </HStack>
-      <Outlet />
+      <Outlet context={{ user }} />
     </Box>
   );
 }
 
 export default Root;
+
+export function useUser() {
+  return useOutletContext<ContextType>();
+}
