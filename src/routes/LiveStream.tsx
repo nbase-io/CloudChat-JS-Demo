@@ -10,12 +10,6 @@ function LiveStream() {
     onOpen: onLiveStreamChatDrawerOpen,
     onClose: onLiveStreamChatDrawerClose,
   } = useDisclosure();
-  // chat
-  const {
-    isOpen: isLiveStreamChatOpen,
-    onOpen: onLiveStreamChatOpen,
-    onClose: onLiveStreamChatClose,
-  } = useDisclosure({ defaultIsOpen: true });
 
   return (
     <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>

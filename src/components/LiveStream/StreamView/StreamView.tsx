@@ -1,4 +1,13 @@
-import { Box, Center, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Heading,
+  HStack,
+  IconButton,
+  Text,
+  Tooltip,
+  VStack,
+} from "@chakra-ui/react";
 import ReactPlayer from "react-player";
 import UserAvatar from "../../UserAvatar/UserAvatar";
 import { AiOutlineEye } from "react-icons/ai";
@@ -36,6 +45,17 @@ function StreamView() {
             <AiOutlineEye />
             <Text fontSize={"sm"}>14</Text>
           </HStack>
+          {/* <Tooltip label={"Channel information"}>
+            <IconButton
+              rounded={"full"}
+              onClick={onChatDetailOpen}
+              display={{ base: "inherit", lg: "none" }}
+              variant="ghost"
+              icon={<IoMdInformationCircleOutline />}
+              size="lg"
+              aria-label="Toggle Chat Detail Drawer"
+            />
+          </Tooltip> */}
         </HStack>
       </HStack>
       <VStack justifyContent={"center"} h="100%" w="full" bg="black">

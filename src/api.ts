@@ -1,5 +1,5 @@
-// import * as ncloudchat from "cloudchat";
-import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
+import * as ncloudchat from "cloudchat";
+// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
 import {
   useInfiniteQuery,
   useMutation,
@@ -28,7 +28,6 @@ export const connect = async ({
   server,
   projectId,
 }: ILogin) => {
-  console.log(name, id, profile, server, projectId);
   nc.initialize(projectId);
   nc.setLang("en");
   switch (server) {
