@@ -19,7 +19,7 @@ function ChatDetailDrawer({ isOpen, onClose, channel, subscription }: Props) {
       <DrawerOverlay>
         <DrawerContent pt={8}>
           <DrawerCloseButton />
-          <ChatDetail channel={channel} subscription={subscription} />
+          <ChatDetail channel={channel} subscription={subscription} setChannel={null}/>
         </DrawerContent>
       </DrawerOverlay>
     </Drawer>
