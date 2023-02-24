@@ -17,14 +17,8 @@ import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ILogin } from "./lib/interfaces/ILogin";
 
-// const PROJECT_ID = "339c2b1c-d35b-47f2-828d-5f02a130146a";
-
 // initialize
 export const nc = new ncloudchat.Chat(true);
-// nc.initialize(PROJECT_ID);
-// nc.setLang("en");
-// nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
-// nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
 
 // connect
 export const connect = async ({

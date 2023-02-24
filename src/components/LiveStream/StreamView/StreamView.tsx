@@ -10,7 +10,7 @@ function StreamView() {
     <VStack w="full" spacing={0}>
       <HStack
         bg="gray.800"
-        h={"16"}
+        h={"64px"}
         px={6}
         w="full"
         justifyContent={"space-between"}

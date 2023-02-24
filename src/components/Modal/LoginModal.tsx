@@ -51,7 +51,6 @@ function LoginModal({
   // 1. connect
   const mutation = useMutation<any, any, ILogin>(connect, {
     onSuccess: (data) => {
-      console.log(data);
       setUser(data);
       reset();
       onModalClose();
@@ -61,7 +60,6 @@ function LoginModal({
     },
   });
   const onSubmit = (data: ILogin) => {
-    console.log(data);
     mutation.mutate(data);
   };
 
@@ -71,7 +69,7 @@ function LoginModal({
       onClose={onModalClose}
       isCentered
       closeOnOverlayClick={false}
-      motionPreset="none"
+      // motionPreset="none"
     >
       <ModalOverlay bg={"blue.500"} />
       <ModalContent as={"form"} onSubmit={handleSubmit(onSubmit)}>

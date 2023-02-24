@@ -4,11 +4,18 @@ import ChatDrawer from "../components/LiveStream/Chat/ChatDrawer";
 import StreamView from "../components/LiveStream/StreamView/StreamView";
 
 function LiveStream() {
+  // drawer
+  const {
+    isOpen: isLiveStreamChatDrawerOpen,
+    onOpen: onLiveStreamChatDrawerOpen,
+    onClose: onLiveStreamChatDrawerClose,
+  } = useDisclosure();
+  // chat
   const {
     isOpen: isLiveStreamChatOpen,
     onOpen: onLiveStreamChatOpen,
     onClose: onLiveStreamChatClose,
-  } = useDisclosure();
+  } = useDisclosure({ defaultIsOpen: true });
 
   return (
     <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>
@@ -25,8 +32,8 @@ function LiveStream() {
         <Chat />
       </Flex>
       <ChatDrawer
-        isOpen={isLiveStreamChatOpen}
-        onClose={onLiveStreamChatClose}
+        isOpen={isLiveStreamChatDrawerOpen}
+        onClose={onLiveStreamChatDrawerClose}
       />
     </HStack>
   );
