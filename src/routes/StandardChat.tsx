@@ -122,6 +122,7 @@ function StandardChat() {
         onClose={onChatDetailClose}
         channel={channel}
         subscription={subscription}
+        setChannel={setChannel}
       />
     </HStack>
   );

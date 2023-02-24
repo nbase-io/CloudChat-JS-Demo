@@ -32,7 +32,7 @@ function StreamView() {
           </Text>
         </HStack>
         <HStack spacing={6} color="white">
-          <UserAvatar user={user} color="white" />
+          {/* <UserAvatar user={user} color="white" /> */}
           <HStack spacing={1}>
             <AiOutlineEye />
             <Text fontSize={"sm"}>14</Text>
