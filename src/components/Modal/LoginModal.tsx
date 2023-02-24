@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Button,
   Input,
@@ -20,6 +21,7 @@ import { CgNametag } from "react-icons/cg";
 import { FaImage, FaProjectDiagram, FaUser } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { ILogin } from "../../lib/interfaces/ILogin";
+import { useConnect } from "../../api";
 
 type Props = {
   isOpen: boolean;
@@ -27,20 +29,56 @@ type Props = {
 };
 
 function LoginModal({ isOpen: isModalOpen, onClose: onModalClose }: Props) {
+  const [readyToConnect, setReadyToConnect] = useState(false);
+  const [loginValues, setLoginValues] = useState({
+    name: "",
+    id: "",
+    profile: "",
+    server: "",
+    projectId: "",
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ILogin>();
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  // 1. connect
+  const { data: user } = useConnect(
+    readyToConnect,
+    loginValues.name,
+    loginValues.id,
+    loginValues.profile,
+    loginValues.server,
+    loginValues.projectId
+  );
   const { isOpen: isServerSelectionOpen, onToggle } = useDisclosure();
   const clickHandler = (event: any) => {
     if (event.detail == 3) {
       onToggle();
     }
   };
+  const onSubmit = (data: any) => {
+    console.log(data);
+    setLoginValues({
+      name: data.name,
+      id: data.id,
+      profile: data.profile,
+      server: data.server,
+      projectId: data.projectId,
+    });
+    reset();
+  };
+  useEffect(() => {
+    if (
+      loginValues.name !== "" ||
+      loginValues.id !== "" ||
+      loginValues.server !== "" ||
+      loginValues.projectId !== ""
+    ) {
+      console.log(loginValues);
+    }
+  }, [loginValues]);
 
   return (
     <Modal
@@ -48,6 +86,7 @@ function LoginModal({ isOpen: isModalOpen, onClose: onModalClose }: Props) {
       onClose={onModalClose}
       isCentered
       closeOnOverlayClick={false}
+      motionPreset="none"
     >
       <ModalOverlay bg={"blue.500"} />
       <ModalContent as={"form"} onSubmit={handleSubmit(onSubmit)}>
