@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start" : "",
+    "start" : "vite serve",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate": "vite-ssg build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
