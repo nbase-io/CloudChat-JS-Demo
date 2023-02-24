@@ -14,7 +14,7 @@ import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 
 function Root() {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: false });
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   return (
     <Box>
@@ -35,12 +35,12 @@ function Root() {
         </Box>
         <Tabs size={"sm"}>
           <TabList>
-            <Tab as="b">
-              <Link to={"/"}>Standard Chat</Link>
-            </Tab>
-            <Tab as="b">
-              <Link to={"/live-stream"}>Live Stream</Link>
-            </Tab>
+            <Link to={"/"}>
+              <Tab as="b">Standard Chat</Tab>
+            </Link>
+            <Link to={"/live-stream"}>
+              <Tab as="b">Live Stream</Tab>
+            </Link>
             <Tab as="b" isDisabled>
               Chatbot
             </Tab>

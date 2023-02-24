@@ -83,7 +83,6 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
                 <UserAvatar
                   user={edge.node.user}
                   key={edge.node.user_id}
-                  userId={edge.node.user_id}
                   online={edge.node.online}
                 />
               ))}

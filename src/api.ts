@@ -1,5 +1,5 @@
-// import * as ncloudchat from "cloudchat";
-import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
+import * as ncloudchat from "cloudchat";
+// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
 import {
   useInfiniteQuery,
   useMutation,
@@ -26,20 +26,25 @@ nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
 nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
 
 // connect
-export const useConnect = () =>
+export const useConnect = (
+  enabled: boolean,
+  name: string,
+  id: string,
+  profile: string
+) =>
   useQuery<IUser>(
     ["connect"],
     async () =>
       await nc.connect(
         {
-          id: "guest",
-          name: "Guest",
-          profile: "",
+          id: id,
+          name: name,
+          profile: profile,
           customField: "",
         },
         ""
       ),
-    { suspense: true }
+    { enabled: enabled, suspense: true }
   );
 
 // getFriendships

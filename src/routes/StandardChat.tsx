@@ -23,7 +23,12 @@ function StandardChat() {
   // subscribe when channel is selected
   const { data: subscription } = useSubscribe(!!channel, channel?.id);
   // 1. connect
-  const { data: user, isLoading: isConnecting } = useConnect();
+  const { data: user, isLoading: isConnecting } = useConnect(
+    false,
+    "Guest",
+    "guest",
+    ""
+  );
   const userId = user?.id;
   // 2. getChannels after connect
   const { data: channels, isLoading: isGettingChannels } = useGetChannels(
