@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Box,
   Flex,
@@ -40,6 +40,7 @@ function ChatInput({
   replyParentMessage,
   setReplyParentMessage,
 }: Props) {
+  const inputRef = useRef<any>(null);
   const [input, setInput] = useState<any>("");
   const { mutate: sendMessage, status: sendMessageStatus } = useSendMessage(
     channel.id,
@@ -77,9 +78,14 @@ function ChatInput({
     setReplyParentMessage(null); // clear parent message
   };
 
+  const focus = () => {
+    inputRef.current?.focus();
+  };
+
   const emojiSelected = (e: any) => {
     setInput(input + e.native);
     onToggle(); // close popover
+    focus();
   };
 
   useEffect(() => {
@@ -149,6 +155,7 @@ function ChatInput({
             autoComplete="off"
             onChange={(e) => setInput(e.target.value)}
             value={input}
+            ref={inputRef}
           />
         </InputGroup>
         <Tooltip label={"Send image or video"}>
