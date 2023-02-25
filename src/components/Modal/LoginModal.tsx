@@ -69,7 +69,6 @@ function LoginModal({
       onClose={onModalClose}
       isCentered
       closeOnOverlayClick={false}
-      // motionPreset="none"
     >
       <ModalOverlay bg={"blue.500"} />
       <ModalContent as={"form"} onSubmit={handleSubmit(onSubmit)}>
@@ -115,7 +114,11 @@ function LoginModal({
             </VStack>
             <InputGroup>
               <InputLeftElement children={<FaImage />} />
-              <Input placeholder="Profile URL" {...register("profile")} />
+              <Input
+                placeholder="Profile URL"
+                {...register("profile")}
+                defaultValue="https://picsum.photos/seed/picsum/200/300"
+              />
             </InputGroup>
           </VStack>
           <Button mt={6} colorScheme={"blue"} w="full" type="submit">

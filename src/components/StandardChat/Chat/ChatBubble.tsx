@@ -82,7 +82,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
 
   const messageTime = (
     <Text fontSize={"xs"} color={"gray"}>
-      <Moment local format="LT">
+      <Moment local format="LTS">
         {node.created_at}
       </Moment>
     </Text>

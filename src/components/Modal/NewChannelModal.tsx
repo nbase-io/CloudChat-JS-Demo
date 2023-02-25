@@ -113,6 +113,7 @@ function NewChannelModal({
               <Input
                 placeholder="Channel Image URL"
                 {...register("image_url")}
+                defaultValue="https://picsum.photos/seed/picsum/200/300"
               />
             </InputGroup>
           </VStack>

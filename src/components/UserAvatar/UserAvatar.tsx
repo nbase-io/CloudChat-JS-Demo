@@ -10,7 +10,7 @@ function UserAvatar({ user, online = false, color = "black" }: Props) {
   return (
     <HStack>
       <Tooltip label={user?.id}>
-        <Avatar name={user?.name} size="sm">
+        <Avatar name={user?.name} size="sm" src={user.profile}>
           {online && <AvatarBadge boxSize={3} bg="green.500" />}
         </Avatar>
       </Tooltip>
