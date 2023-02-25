@@ -1,5 +1,7 @@
-import * as ncloudchat from "cloudchat";
 // import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
+import * as ncloudchat from "cloudchat";
+  
+
 import {
   useInfiniteQuery,
   useMutation,
