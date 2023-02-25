@@ -117,7 +117,7 @@ function LoginModal({
               <Input
                 placeholder="Profile URL"
                 {...register("profile")}
-                defaultValue="https://picsum.photos/seed/picsum/200/300"
+                defaultValue="https://loremflickr.com/640/360"
               />
             </InputGroup>
           </VStack>

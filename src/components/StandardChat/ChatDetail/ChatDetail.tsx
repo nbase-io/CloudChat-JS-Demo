@@ -77,7 +77,7 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
               w="full"
               justifyContent={"flex-start"}
               alignItems={"flex-start"}
-              spacing={3}
+              spacing={2}
             >
               {subscriptions?.edges?.map((edge: any) => (
                 <UserAvatar
