@@ -38,6 +38,7 @@ function LoginModal({
   setUser,
   user,
 }: Props) {
+  const ramdomUser = `guest-${Math.floor(Math.random() * 9999)}`;
   const { addToast } = CustomToast();
   const {
     register,
@@ -97,6 +98,7 @@ function LoginModal({
                 <InputLeftElement children={<CgNametag />} />
                 <Input
                   isInvalid={Boolean(errors.name?.message)}
+                  defaultValue={ramdomUser.toUpperCase()}
                   placeholder="Name"
                   {...register("name", {
                     required: "Please input a name.",
@@ -112,6 +114,7 @@ function LoginModal({
                 <InputLeftElement children={<FaUser />} />
                 <Input
                   isInvalid={Boolean(errors.id?.message)}
+                  defaultValue={ramdomUser.toLowerCase()}
                   placeholder="ID"
                   {...register("id", { required: "Please input an id." })}
                 />
