@@ -69,6 +69,7 @@ function LoginModal({
       onClose={onModalClose}
       isCentered
       closeOnOverlayClick={false}
+      motionPreset="none"
     >
       <ModalOverlay bg={"blue.500"} />
       <ModalContent as={"form"} onSubmit={handleSubmit(onSubmit)}>
