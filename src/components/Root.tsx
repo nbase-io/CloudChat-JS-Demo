@@ -82,7 +82,12 @@ function Root() {
           </HStack>
         </HStack>
       )}
-      <LoginModal isOpen={isOpen} onClose={onClose} setUser={setUser} />
+      <LoginModal
+        isOpen={isOpen}
+        onClose={onClose}
+        setUser={setUser}
+        user={user}
+      />
       {user && <Outlet context={{ user }} />}
     </Box>
   );
