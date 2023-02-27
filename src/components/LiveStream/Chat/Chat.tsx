@@ -43,12 +43,40 @@ function Chat({ subscription, isDarkMode }: Props) {
     setIsGettingMessages(false);
   };
 
+  // message received
+  nc.bind("onMessageReceived", (channelId: string, message: any) => {
+    if (subscription?.channel_id === channelId) {
+      setArrivalMessage({ node: message });
+    }
+    console.log(subscription?.channel_id === channelId);
+  });
+
+  // message deleted
+  nc.bind("onMessageDeleted", (channelId: string, data: any) => {
+    if (subscription?.channel_id === channelId) {
+      // delete message
+      const newMessages = messages.filter(
+        (item: any) => item.node.message_id !== data.message_id
+      );
+      setMessages(newMessages);
+    }
+  });
+
   // get messages after subscribe
   useEffect(() => {
     if (hasMore.current && messages.length === 0 && subscription) {
       getMessages();
     }
   }, [subscription]);
+
+  // receive message
+  useEffect(() => {
+    if (subscription) {
+      setMessages((prev: any) => [arrivalMessage, ...prev]);
+    }
+  }, [arrivalMessage]);
+
+  useEffect(() => console.log(messages), [messages]);
 
   return (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
@@ -75,7 +103,7 @@ function Chat({ subscription, isDarkMode }: Props) {
         getMessages={getMessages}
         hasMore={hasMore.current}
         setReplyParentMessage={setReplyParentMessage}
-        isDarkMode={true}
+        isDarkMode={isDarkMode}
       />
       <ChatInput
         channel={{ id: "c80e0fb6-c07a-4a80-b4c0-1a483f477fea" }}

@@ -36,11 +36,13 @@ function LiveStream() {
         maxW={{ base: "xs", xl: "sm" }}
         display={{ base: "none", lg: "flex" }}
       >
-        <Chat subscription={subscription} />
+        <Chat subscription={subscription} isDarkMode={true} />
       </Flex>
       <ChatDrawer
         isOpen={isLiveStreamChatDrawerOpen}
         onClose={onLiveStreamChatDrawerClose}
+        subscription={subscription}
+        isDarkMode={true}
       />
     </HStack>
   );
