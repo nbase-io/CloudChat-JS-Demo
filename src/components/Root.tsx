@@ -45,15 +45,13 @@ function Root() {
           </Box>
           <Tabs size={"sm"}>
             <TabList>
-              <Link to={"/"}>
-                <Tab as="b">Standard Chat</Tab>
-              </Link>
-              <Link to={"/live-stream"}>
-                <Tab as="b">Live Stream</Tab>
-              </Link>
-              <Tab as="b" isDisabled>
-                Chatbot
+              <Tab as={Link} to={"/"}>
+                Standard Chat
               </Tab>
+              <Tab as={Link} to={"/live-stream"}>
+                Live Stream
+              </Tab>
+              <Tab isDisabled>Chatbot</Tab>
             </TabList>
           </Tabs>
           <HStack spacing={2}>

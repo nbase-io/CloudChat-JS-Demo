@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Flex, Divider, Box, Text, Progress } from "@chakra-ui/react";
 import { ChatHeader } from "./ChatHeader";
-import ChatInput from "./ChatInput";
-import { HiArrowDown } from "react-icons/hi";
+import ChatInput from "../../Chat/ChatInput";
 import { nc, useMarkRead } from "../../../api";
-import ChatMessages from "./ChatMessages";
-import { useQueryClient } from "@tanstack/react-query";
+import ChatMessages from "../../Chat/ChatMessages";
+// import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "../../Root";
 
 type Props = {
@@ -30,7 +29,6 @@ function Chat({
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
   const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
   const lastMessageRef = useRef<any>();
-  const queryClient = useQueryClient();
   const { mutate: markRead } = useMarkRead(
     channel.id,
     lastMessageRef.current?.node.message_id,

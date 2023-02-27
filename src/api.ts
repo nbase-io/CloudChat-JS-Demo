@@ -58,6 +58,8 @@ export const connect = async ({
     customField: "",
   });
 };
+
+// connect using useQuery example
 // export const useConnect = (
 //   enabled: boolean,
 //   name: string,

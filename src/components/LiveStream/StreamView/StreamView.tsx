@@ -13,7 +13,12 @@ import UserAvatar from "../../UserAvatar/UserAvatar";
 import { AiOutlineEye } from "react-icons/ai";
 import { useUser } from "../../Root";
 
-function StreamView() {
+type Props = {
+  subscriptions: any;
+  subscription: any;
+};
+
+function StreamView({ subscriptions, subscription }: Props) {
   const { user } = useUser();
   return (
     <VStack w="full" spacing={0}>
@@ -26,7 +31,7 @@ function StreamView() {
       >
         <HStack>
           <Heading size="md" color={"white"}>
-            Battle ground final match live stream
+            {subscription?.channel.name}
           </Heading>
           <Text
             color={"white"}
@@ -43,7 +48,7 @@ function StreamView() {
           <UserAvatar user={user} color="white" />
           <HStack spacing={1}>
             <AiOutlineEye />
-            <Text fontSize={"sm"}>14</Text>
+            <Text fontSize={"sm"}>{subscriptions?.edges.length}</Text>
           </HStack>
           {/* <Tooltip label={"Channel information"}>
             <IconButton

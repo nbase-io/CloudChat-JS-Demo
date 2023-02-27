@@ -15,17 +15,18 @@ import {
 import { FaExclamationCircle } from "react-icons/fa";
 import { VscReply, VscCopy, VscTrash, VscCheck } from "react-icons/vsc";
 import Moment from "react-moment";
-import { useDeleteMessage } from "../../../api";
-import ImageViwer from "./ImageViewer";
-import { CustomToast } from "../../Toast/CustomToast";
-import { useUser } from "../../Root";
+import { useDeleteMessage } from "../../api";
+import ImageViwer from "../StandardChat/Chat/ImageViewer";
+import { CustomToast } from "../Toast/CustomToast";
+import { useUser } from "../Root";
 
 type Props = {
   node: any;
   setReplyParentMessage: any;
+  isDarkMode?: boolean;
 };
 
-function ChatBubble({ node, setReplyParentMessage }: Props) {
+function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
   const { user } = useUser();
   const { addToast } = CustomToast();
   const {
@@ -69,6 +70,22 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
     }
   }, [deleteMessageStatus]);
 
+  const backgoundColor = () => {
+    if (isDarkMode) {
+      return isMe ? "blue.900" : "gray.800";
+    } else {
+      return isMe ? "blue.50" : "gray.100";
+    }
+  };
+
+  const hoverColor = () => {
+    if (isDarkMode) {
+      return isMe ? "blue.700" : "gray.700";
+    } else {
+      return isMe ? "blue.300" : "gray.400";
+    }
+  };
+
   const othersBubbleName = (
     <HStack>
       <Tooltip label={node.sender.id}>
@@ -96,6 +113,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
         icon={<VscReply />}
         size={"sm"}
         onClick={() => setReplyParentMessage(node)}
+        _hover={{ bg: isDarkMode ? "gray.700" : "gray.100" }}
       />
     </Tooltip>
   );
@@ -108,6 +126,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
         icon={hasCopied ? <VscCheck /> : <VscCopy />}
         size={"sm"}
         onClick={onCopyButtonClicked}
+        _hover={{ bg: isDarkMode ? "gray.700" : "gray.100" }}
       />
     </Tooltip>
   );
@@ -120,6 +139,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
         icon={<VscTrash />}
         size={"sm"}
         onClick={() => deleteMessage()}
+        _hover={{ bg: isDarkMode ? "gray.700" : "gray.100" }}
       />
     </Tooltip>
   );
@@ -195,12 +215,12 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
             px={4}
             py={2}
             w="full"
-            bg={isMe ? "blue.50" : "gray.100"}
+            bg={backgoundColor()}
             borderTopLeftRadius={node.parent_message_id ? 0 : topLeftRadius}
             borderTopRightRadius={node.parent_message_id ? 0 : 18}
             borderBottomLeftRadius={18}
             borderBottomRightRadius={bottomRightRadius}
-            _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
+            _hover={{ bg: hoverColor() }}
           >
             {node.message_type === "text" ? (
               <Text>{node.content}</Text>

@@ -8,6 +8,7 @@ type Props = {
   getMessages: () => void;
   hasMore: boolean;
   setReplyParentMessage: any;
+  isDarkMode?: boolean;
 };
 
 function ChatMessages({
@@ -15,6 +16,7 @@ function ChatMessages({
   getMessages,
   hasMore,
   setReplyParentMessage,
+  isDarkMode,
 }: Props) {
   return (
     <Flex
@@ -24,6 +26,7 @@ function ChatMessages({
       flex={1}
       pb={4}
       id="scrollableDiv"
+      w="full"
     >
       <InfiniteScroll
         dataLength={messages.length}
@@ -85,6 +88,7 @@ function ChatMessages({
                   key={index}
                   node={node}
                   setReplyParentMessage={setReplyParentMessage}
+                  isDarkMode={isDarkMode}
                 />
                 {currentMessageDate != pastMessageDate && (
                   <Flex align="center" mt={6}>
@@ -112,6 +116,7 @@ function ChatMessages({
                 key={index}
                 node={node}
                 setReplyParentMessage={setReplyParentMessage}
+                isDarkMode={isDarkMode}
               />
             );
           }

@@ -9,10 +9,6 @@ import LeftSideBarDrawer from "../components/StandardChat/LeftSideBar/LeftSideBa
 import { useUser } from "../components/Root";
 
 function StandardChat() {
-  // current channel
-  const [channel, setChannel] = useState<any>(null);
-  // subscribe when channel is selected
-  const { data: subscription } = useSubscribe(!!channel, channel?.id);
   const { user } = useUser();
   const userId = user?.id;
   // 2. getChannels after connect
@@ -22,6 +18,10 @@ function StandardChat() {
   // 2. getFriendships after connect
   // const { data: friendships, isLoading: isGettingFriendships } =
   //   useGetFriendships(!!userId);
+  // current channel
+  const [channel, setChannel] = useState<any>(null);
+  // subscribe when channel is selected
+  const { data: subscription } = useSubscribe(!!channel, channel?.id);
 
   // left side bar drawers
   const {
