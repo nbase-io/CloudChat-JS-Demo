@@ -6,12 +6,16 @@ import {
   Tooltip,
   IconButton,
   useDisclosure,
+  Button,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Link, Outlet, useOutletContext } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
 import Loading from "./Loading/Loading";
+import { RiLiveLine } from "react-icons/ri";
 
 type GlobalContextType = {
   user: IUser | null;
@@ -47,6 +51,12 @@ function Root() {
               />
             </Link>
           </Box>
+          <ChakraLink
+            href="https://cloudchat-livestream.vercel.app/"
+            isExternal
+          >
+            Live Stream <ExternalLinkIcon mx="2px" />
+          </ChakraLink>
           <HStack spacing={2}>
             <Tooltip label={"Go to Github"}>
               <Link to={"https://github.com/nbase-io/CloudChat-JS-Demo"}>
