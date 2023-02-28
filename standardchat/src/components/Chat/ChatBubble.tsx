@@ -78,7 +78,11 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
   const othersBubbleName = (
     <HStack>
       <Tooltip label={node.sender.id}>
-        <Avatar size={"sm"} name={node.sender.name}></Avatar>
+        <Avatar
+          size={"sm"}
+          name={node.sender.name}
+          src={node.sender.profile}
+        ></Avatar>
       </Tooltip>
       <Text ml={6} fontSize={"small"}>
         {node.sender.name}
