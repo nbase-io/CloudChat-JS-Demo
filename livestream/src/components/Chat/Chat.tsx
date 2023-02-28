@@ -6,6 +6,7 @@ import {
   IconButton,
   Box,
   Progress,
+  Spacer,
 } from "@chakra-ui/react";
 import { TbLayoutSidebarLeftExpand } from "react-icons/tb";
 import { RiGroupLine } from "react-icons/ri";
@@ -78,21 +79,23 @@ function Chat({ subscription }: Props) {
   return (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
       <HStack w="full" h={"60px"} justifyContent="space-between">
-        <IconButton
+        {/* <IconButton
           icon={<TbLayoutSidebarLeftExpand />}
           variant={"ghost"}
           aria-label={"Close Chat"}
           size="lg"
           _hover={{ bgColor: "gray.700" }}
-        />
+        /> */}
+        <Spacer />
         <Text as="b">Live Chat</Text>
-        <IconButton
+        <Spacer />
+        {/* <IconButton
           icon={<RiGroupLine />}
           variant={"ghost"}
           aria-label={"Attendance"}
           size="lg"
           _hover={{ bgColor: "gray.700" }}
-        />
+        /> */}
       </HStack>
       <Divider borderColor={"gray"} />
       {isGettingMessages && <Progress size="xs" isIndeterminate w="full" />}
