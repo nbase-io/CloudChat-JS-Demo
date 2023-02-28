@@ -18,7 +18,7 @@ import Moment from "react-moment";
 import { useDeleteMessage } from "../../api";
 import ImageViwer from "./ImageViewer";
 import { CustomToast } from "../Toast/CustomToast";
-import { useUser } from "../Root";
+import { useGlobal } from "../Root";
 
 type Props = {
   node: any;
@@ -26,7 +26,7 @@ type Props = {
 };
 
 function ChatBubble({ node, setReplyParentMessage }: Props) {
-  const { user } = useUser();
+  const { user } = useGlobal();
   const { addToast } = CustomToast();
 
   const {

@@ -11,7 +11,7 @@ import {
 import ReactPlayer from "react-player";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import { AiOutlineEye } from "react-icons/ai";
-import { useUser } from "../Root";
+import { useGlobal } from "../Root";
 
 type Props = {
   subscriptions: any;
@@ -19,7 +19,7 @@ type Props = {
 };
 
 function StreamView({ subscriptions, subscription }: Props) {
-  const { user } = useUser();
+  const { user } = useGlobal();
   return (
     <VStack w="full" spacing={0}>
       <HStack

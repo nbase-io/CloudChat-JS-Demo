@@ -23,13 +23,13 @@ import { ILogin } from "../../lib/interfaces/ILogin";
 import { connect } from "../../api";
 import { useMutation } from "@tanstack/react-query";
 import { CustomToast } from "../Toast/CustomToast";
-import Loading from "../Loading/Loading";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
   setUser: any;
   user: any;
+  setIsLoading: (value: boolean) => void;
 };
 
 function LoginModal({
@@ -37,6 +37,7 @@ function LoginModal({
   onClose: onModalClose,
   setUser,
   user,
+  setIsLoading,
 }: Props) {
   const ramdomUser = `guest-${Math.floor(Math.random() * 9999)}`;
   const { addToast } = CustomToast();
@@ -61,16 +62,14 @@ function LoginModal({
     },
     onError: (error) => {
       addToast({ title: "Login failed", status: "error" });
+      setIsLoading(false);
     },
     mutationKey: ["connect"],
   });
   const onSubmit = (data: ILogin) => {
+    setIsLoading(true);
     mutation.mutate(data);
   };
-
-  // if (mutation.isLoading && !user) {
-  //   return <Loading />;
-  // }
 
   return (
     <Modal

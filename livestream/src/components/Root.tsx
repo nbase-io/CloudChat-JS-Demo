@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   HStack,
@@ -11,7 +11,6 @@ import { Link, Outlet, useOutletContext } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
-import { useIsMutating } from "@tanstack/react-query";
 import Loading from "./Loading/Loading";
 
 type GlobalContextType = {

@@ -13,7 +13,7 @@ import {
   Skeleton,
 } from "@chakra-ui/react";
 import { useGetSubscriptions } from "../../api";
-import { useUser } from "../Root";
+import { useGlobal } from "../Root";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import ChatDetailHeader from "./ChatDetailHeader";
 
@@ -24,7 +24,7 @@ type Props = {
 };
 
 function ChatDetail({ channel, subscription, setChannel }: Props) {
-  const { user } = useUser();
+  const { user } = useGlobal();
   // getSubscriptions after subscribe
   const { data: subscriptions } = useGetSubscriptions(
     !!subscription,

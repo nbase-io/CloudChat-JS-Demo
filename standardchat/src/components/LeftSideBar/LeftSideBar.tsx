@@ -7,13 +7,11 @@ import {
   Heading,
   // HStack,
   IconButton,
-  InputGroup,
   List,
   ListItem,
   VStack,
   // Text,
   Tooltip,
-  Input,
   useDisclosure,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   HStack,
@@ -11,27 +11,26 @@ import { Link, Outlet, useOutletContext } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
-import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import Loading from "./Loading/Loading";
 
-type ContextType = { user: IUser | null };
+type GlobalContextType = {
+  user: IUser | null;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
+};
 
-export function useUser() {
-  return useOutletContext<ContextType>();
+export function useGlobal() {
+  return useOutletContext<GlobalContextType>();
 }
 
 function Root() {
   const [user, setUser] = useState<IUser | null>(null);
-  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: true });
-  const isFetchingChannels = useIsFetching(["channels"]);
-  const isMutatingConnect = useIsMutating(["connect"]);
-
-  if (isFetchingChannels || isMutatingConnect) {
-    return <Loading />;
-  }
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   return (
     <Box>
+      {isLoading && <Loading />}
       {user && (
         <HStack
           justifyContent={"space-between"}
@@ -79,8 +78,9 @@ function Root() {
         onClose={onClose}
         setUser={setUser}
         user={user}
+        setIsLoading={setIsLoading}
       />
-      {user && <Outlet context={{ user }} />}
+      {user && <Outlet context={{ user, isLoading, setIsLoading }} />}
     </Box>
   );
 }

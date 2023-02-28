@@ -5,7 +5,7 @@ import ChatInput from "./ChatInput";
 import { nc, useMarkRead } from "../../api";
 import ChatMessages from "./ChatMessages";
 // import { useQueryClient } from "@tanstack/react-query";
-import { useUser } from "../Root";
+import { useGlobal } from "../Root";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -22,7 +22,7 @@ function Chat({
   setChannel,
   subscription,
 }: Props) {
-  const { user } = useUser();
+  const { user } = useGlobal();
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const hasMore = useRef(false);

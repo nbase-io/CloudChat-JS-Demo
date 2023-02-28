@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Flex, HStack, useDisclosure } from "@chakra-ui/react";
 import { useGetChannels, useMarkRead, useSubscribe, nc } from "../api";
 import Chat from "../components/Chat/Chat";
@@ -6,15 +6,17 @@ import ChatDetail from "../components/ChatDetail/ChatDetail";
 import ChatDetailDrawer from "../components/ChatDetail/ChatDetailDrawer";
 import LeftSideBar from "../components/LeftSideBar/LeftSideBar";
 import LeftSideBarDrawer from "../components/LeftSideBar/LeftSideBarDrawer";
-import { useUser } from "../components/Root";
+import { useGlobal } from "../components/Root";
 
 function StandardChat() {
-  const { user } = useUser();
+  const { user, setIsLoading } = useGlobal();
   const userId = user?.id;
   // 2. getChannels after connect
-  const { data: channels, isLoading: isGettingChannels } = useGetChannels(
-    !!userId
-  );
+  const {
+    data: channels,
+    isLoading: isGettingChannels,
+    status: getChannelsStatus,
+  } = useGetChannels(!!userId);
   // 2. getFriendships after connect
   // const { data: friendships, isLoading: isGettingFriendships } =
   //   useGetFriendships(!!userId);
@@ -36,6 +38,12 @@ function StandardChat() {
     onOpen: onChatDetailOpen,
     onClose: onChatDetailClose,
   } = useDisclosure();
+
+  useEffect(() => {
+    if (getChannelsStatus === "error" || getChannelsStatus === "success") {
+      setIsLoading(false);
+    }
+  }, [getChannelsStatus]);
 
   return (
     <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>
