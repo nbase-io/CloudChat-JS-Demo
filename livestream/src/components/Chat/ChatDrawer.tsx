@@ -10,15 +10,16 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   subscription: any;
+  subscriptions: any;
 };
 
-function ChatDrawer({ isOpen, onClose, subscription }: Props) {
+function ChatDrawer({ isOpen, onClose, subscription, subscriptions }: Props) {
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay>
         <DrawerContent pt={8}>
           <DrawerCloseButton />
-          <Chat subscription={subscription} />
+          <Chat subscription={subscription} subscriptions={subscriptions} />
         </DrawerContent>
       </DrawerOverlay>
     </Drawer>

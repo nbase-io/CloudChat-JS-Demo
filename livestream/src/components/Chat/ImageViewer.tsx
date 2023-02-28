@@ -22,7 +22,7 @@ function ImageViwer({ node, isModalOpen, onModalClose, onModalOpen }: Props) {
       <ModalOverlay />
       <ModalContent bg={"blackAlpha.800"}>
         <ModalHeader color={"white"}>
-          {node.attachment_filenames.name}
+          {node.attachment_filenames?.name}
         </ModalHeader>
         <ModalCloseButton color={"white"} />
         <ModalBody
@@ -32,8 +32,8 @@ function ImageViwer({ node, isModalOpen, onModalClose, onModalOpen }: Props) {
           onClick={onModalClose}
         >
           <Image
-            src={`https://alpha-api.cloudchat.dev${node.attachment_filenames.url}`}
-            alt={node.attachment_filenames.name}
+            src={`https://alpha-api.cloudchat.dev${node.attachment_filenames?.url}`}
+            alt={node.attachment_filenames?.name}
             onClick={onModalOpen}
             fallback={<Spinner />}
           />

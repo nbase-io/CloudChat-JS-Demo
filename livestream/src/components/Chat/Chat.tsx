@@ -7,6 +7,7 @@ import {
   Box,
   Progress,
   Spacer,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { TbLayoutSidebarLeftExpand } from "react-icons/tb";
 import { RiGroupLine } from "react-icons/ri";
@@ -14,17 +15,20 @@ import { useEffect, useRef, useState } from "react";
 import { nc } from "../../api";
 import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
+import UserListModal from "../Modal/UserListModal";
 
 type Props = {
   subscription: any;
+  subscriptions: any;
 };
 
-function Chat({ subscription }: Props) {
+function Chat({ subscription, subscriptions }: Props) {
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const hasMore = useRef(true);
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
   const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
+  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
@@ -78,6 +82,13 @@ function Chat({ subscription }: Props) {
 
   return (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
+      {subscriptions && (
+        <UserListModal
+          isOpen={isOpen}
+          onClose={onClose}
+          subscriptions={subscriptions}
+        />
+      )}
       <HStack w="full" h={"60px"} justifyContent="space-between">
         {/* <IconButton
           icon={<TbLayoutSidebarLeftExpand />}
@@ -86,16 +97,16 @@ function Chat({ subscription }: Props) {
           size="lg"
           _hover={{ bgColor: "gray.700" }}
         /> */}
-        <Spacer />
+        <Text></Text>
         <Text as="b">Live Chat</Text>
-        <Spacer />
-        {/* <IconButton
+        <IconButton
           icon={<RiGroupLine />}
           variant={"ghost"}
           aria-label={"Attendance"}
           size="lg"
           _hover={{ bgColor: "gray.700" }}
-        /> */}
+          onClick={onOpen}
+        />
       </HStack>
       <Divider borderColor={"gray"} />
       {isGettingMessages && <Progress size="xs" isIndeterminate w="full" />}
