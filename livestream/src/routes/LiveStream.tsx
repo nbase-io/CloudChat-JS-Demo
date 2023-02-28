@@ -4,10 +4,10 @@ import { nc, useGetSubscriptions, useSubscribe } from "../api";
 import Chat from "../components/Chat/Chat";
 import ChatDrawer from "../components/Chat/ChatDrawer";
 import StreamView from "../components/StreamView/StreamView";
-import { useUser } from "../components/Root";
+import { useGlobal } from "../components/Root";
 
 function LiveStream() {
-  const { setIsLoading } = useUser();
+  const { setIsLoading } = useGlobal();
   const [isSubscribable, setIsSubscribable] = useState(false);
   // subscribe after connect
   const { data: subscription, isLoading: isSubscribing } = useSubscribe(

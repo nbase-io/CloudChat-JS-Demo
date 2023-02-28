@@ -14,14 +14,14 @@ import { IUser } from "../lib/interfaces/IUser";
 import { useIsMutating } from "@tanstack/react-query";
 import Loading from "./Loading/Loading";
 
-type UserContextType = {
+type GlobalContextType = {
   user: IUser | null;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
 };
 
-export function useUser() {
-  return useOutletContext<UserContextType>();
+export function useGlobal() {
+  return useOutletContext<GlobalContextType>();
 }
 
 function Root() {
