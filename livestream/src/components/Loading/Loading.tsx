@@ -1,10 +1,8 @@
 import {
   Box,
   Center,
-  Container,
   keyframes,
   Modal,
-  ModalBody,
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/react";
