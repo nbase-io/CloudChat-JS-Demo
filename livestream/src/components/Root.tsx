@@ -12,15 +12,15 @@ import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
 
-type ContextType = { user: IUser | null };
+type UserContextType = { user: IUser | null };
 
 export function useUser() {
-  return useOutletContext<ContextType>();
+  return useOutletContext<UserContextType>();
 }
 
 function Root() {
   const [user, setUser] = useState<IUser | null>(null);
-  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   useEffect(() => {
     console.log(user);

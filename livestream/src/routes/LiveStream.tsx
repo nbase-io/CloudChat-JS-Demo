@@ -1,6 +1,6 @@
 import { Flex, HStack, useDisclosure } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { useGetSubscriptions, useSubscribe } from "../api";
+import { useEffect, useState } from "react";
+import { nc, useGetSubscriptions, useSubscribe } from "../api";
 import Chat from "../components/Chat/Chat";
 import ChatDrawer from "../components/Chat/ChatDrawer";
 import StreamView from "../components/StreamView/StreamView";
@@ -8,14 +8,20 @@ import { useUser } from "../components/Root";
 
 function LiveStream() {
   const { user } = useUser();
+  const [isSubscribable, setIsSubscribable] = useState(false);
   // subscribe after connect
   const { data: subscription, isLoading: isSubscribing } = useSubscribe(
-    !!user?.id,
+    isSubscribable,
     "c80e0fb6-c07a-4a80-b4c0-1a483f477fea"
   );
   // get subscriptions after subscribe
   const { data: subscriptions, isLoading: isGettingSubscriptions } =
     useGetSubscriptions(!!subscription, "c80e0fb6-c07a-4a80-b4c0-1a483f477fea");
+
+  // WARNING: subscribe AFTER socket connection
+  nc.bind("onConnected", (payload: string) => {
+    setIsSubscribable(true);
+  });
 
   // drawer
   const {
