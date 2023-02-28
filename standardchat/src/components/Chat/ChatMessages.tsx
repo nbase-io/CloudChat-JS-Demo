@@ -8,7 +8,6 @@ type Props = {
   getMessages: () => void;
   hasMore: boolean;
   setReplyParentMessage: any;
-  isDarkMode?: boolean;
 };
 
 function ChatMessages({
@@ -16,7 +15,6 @@ function ChatMessages({
   getMessages,
   hasMore,
   setReplyParentMessage,
-  isDarkMode,
 }: Props) {
   return (
     <Flex
@@ -88,7 +86,6 @@ function ChatMessages({
                   key={index}
                   node={node}
                   setReplyParentMessage={setReplyParentMessage}
-                  isDarkMode={isDarkMode}
                 />
                 {currentMessageDate != pastMessageDate && (
                   <Flex align="center" mt={6}>
@@ -116,7 +113,6 @@ function ChatMessages({
                 key={index}
                 node={node}
                 setReplyParentMessage={setReplyParentMessage}
-                isDarkMode={isDarkMode}
               />
             );
           }
