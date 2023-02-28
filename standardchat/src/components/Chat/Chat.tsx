@@ -94,8 +94,6 @@ function Chat({
     if (messages.length > 0 && messages[0]) {
       lastMessageRef.current = messages[0];
       if (lastMessageRef.current) {
-        console.log(messages.length);
-        console.log(lastMessageRef.current);
       }
       // markRead();
       // queryClient.invalidateQueries(["countUnread"]);
@@ -111,9 +109,7 @@ function Chat({
         setChannel={setChannel}
       />
       <Divider />
-      {channel && (isGettingMessages || !subscription) && (
-        <Progress size="xs" isIndeterminate />
-      )}
+      {channel && isGettingMessages && <Progress size="xs" isIndeterminate />}
       {channel && (
         <ChatMessages
           messages={messages}

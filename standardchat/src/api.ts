@@ -210,7 +210,9 @@ export const useSubscribe = (
         return await nc.subscribe(channel_id);
       }
     },
-    { enabled: enabled }
+    {
+      enabled: enabled,
+    }
   );
 
 export const useUnsubscribe = (channel_id: string) =>

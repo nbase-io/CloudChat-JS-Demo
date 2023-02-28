@@ -7,9 +7,11 @@ import ChatDetailDrawer from "../components/ChatDetail/ChatDetailDrawer";
 import LeftSideBar from "../components/LeftSideBar/LeftSideBar";
 import LeftSideBarDrawer from "../components/LeftSideBar/LeftSideBarDrawer";
 import { useGlobal } from "../components/Root";
+import { CustomToast } from "../components/Toast/CustomToast";
 
 function StandardChat() {
   const { user, setIsLoading } = useGlobal();
+  const { addToast } = CustomToast();
   const userId = user?.id;
   // 2. getChannels after connect
   const {
@@ -23,7 +25,10 @@ function StandardChat() {
   // current channel
   const [channel, setChannel] = useState<any>(null);
   // subscribe when channel is selected
-  const { data: subscription } = useSubscribe(!!channel, channel?.id);
+  const { data: subscription, error: subscribeError } = useSubscribe(
+    !!channel,
+    channel?.id
+  );
 
   // left side bar drawers
   const {
@@ -44,6 +49,18 @@ function StandardChat() {
       setIsLoading(false);
     }
   }, [getChannelsStatus]);
+
+  // private channel subscribe error
+  useEffect(() => {
+    if (subscribeError) {
+      setChannel(null);
+      addToast({
+        title: `Failed to subscribe ${channel.name}`,
+        description: subscribeError.message,
+        status: "error",
+      });
+    }
+  }, [subscribeError]);
 
   return (
     <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>
