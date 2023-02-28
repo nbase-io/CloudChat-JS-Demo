@@ -203,7 +203,7 @@ export const useSubscribe = (
   enabled: boolean,
   channel_id: string | undefined
 ) =>
-  useQuery<ICreateSubscription>(
+  useQuery<ICreateSubscription, any>(
     [`subscribe`, { channelId: channel_id }],
     async () => {
       if (channel_id) {
