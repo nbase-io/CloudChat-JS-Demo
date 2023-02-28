@@ -88,7 +88,6 @@ function ChatMessages({
                   key={index}
                   node={node}
                   setReplyParentMessage={setReplyParentMessage}
-                  isDarkMode={isDarkMode}
                 />
                 {currentMessageDate != pastMessageDate && (
                   <Flex align="center" mt={6}>
@@ -116,7 +115,6 @@ function ChatMessages({
                 key={index}
                 node={node}
                 setReplyParentMessage={setReplyParentMessage}
-                isDarkMode={isDarkMode}
               />
             );
           }

@@ -23,16 +23,20 @@ import { useUser } from "../Root";
 type Props = {
   node: any;
   setReplyParentMessage: any;
-  isDarkMode?: boolean;
 };
 
-function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
+function ChatBubble({ node, setReplyParentMessage }: Props) {
   const { user } = useUser();
   const { addToast } = CustomToast();
   const {
-    isOpen: isModalOpen,
-    onOpen: onModalOpen,
-    onClose: onModalClose,
+    isOpen: isImageModalOpen,
+    onOpen: onImageModalOpen,
+    onClose: onImageModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isParentImageModalOpen,
+    onOpen: onParentImageModalOpen,
+    onClose: onParentImageModalClose,
   } = useDisclosure();
   const [isHovering, setIsHovering] = useState(false);
   const isMe = node.sender.id === user!.id;
@@ -70,22 +74,6 @@ function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
     }
   }, [deleteMessageStatus]);
 
-  const backgoundColor = () => {
-    if (isDarkMode) {
-      return isMe ? "blue.900" : "gray.800";
-    } else {
-      return isMe ? "blue.50" : "gray.100";
-    }
-  };
-
-  const hoverColor = () => {
-    if (isDarkMode) {
-      return isMe ? "blue.700" : "gray.700";
-    } else {
-      return isMe ? "blue.300" : "gray.400";
-    }
-  };
-
   const othersBubbleName = (
     <HStack>
       <Tooltip label={node.sender.id}>
@@ -113,7 +101,7 @@ function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
         icon={<VscReply />}
         size={"sm"}
         onClick={() => setReplyParentMessage(node)}
-        _hover={{ bg: isDarkMode ? "gray.700" : "gray.100" }}
+        _hover={{ bg: "gray.700" }}
       />
     </Tooltip>
   );
@@ -126,7 +114,7 @@ function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
         icon={hasCopied ? <VscCheck /> : <VscCopy />}
         size={"sm"}
         onClick={onCopyButtonClicked}
-        _hover={{ bg: isDarkMode ? "gray.700" : "gray.100" }}
+        _hover={{ bg: "gray.700" }}
       />
     </Tooltip>
   );
@@ -139,7 +127,7 @@ function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
         icon={<VscTrash />}
         size={"sm"}
         onClick={() => deleteMessage()}
-        _hover={{ bg: isDarkMode ? "gray.700" : "gray.100" }}
+        _hover={{ bg: "gray.700" }}
       />
     </Tooltip>
   );
@@ -153,9 +141,9 @@ function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
           <Image
             src={`https://alpha-api.cloudchat.dev${node.parent_message?.attachment_filenames?.url}`}
             alt={node.parent_message?.attachment_filenames?.name}
-            onClick={onModalOpen}
+            onClick={onParentImageModalOpen}
             fallback={<Spinner />}
-            color="gray"
+            color="thiw"
           />
         );
       }
@@ -215,12 +203,12 @@ function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
             px={4}
             py={2}
             w="full"
-            bg={backgoundColor()}
+            bg={isMe ? "blue.900" : "gray.800"}
             borderTopLeftRadius={node.parent_message_id ? 0 : topLeftRadius}
             borderTopRightRadius={node.parent_message_id ? 0 : 18}
             borderBottomLeftRadius={18}
             borderBottomRightRadius={bottomRightRadius}
-            _hover={{ bg: hoverColor() }}
+            _hover={{ bg: isMe ? "blue.700" : "gray.700" }}
           >
             {node.message_type === "text" ? (
               <Text>{node.content}</Text>
@@ -228,7 +216,7 @@ function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
               <Image
                 src={`https://alpha-api.cloudchat.dev${node.attachment_filenames?.url}`}
                 alt={node.attachment_filenames?.name}
-                onClick={onModalOpen}
+                onClick={onImageModalOpen}
                 fallback={<Spinner />}
               />
             )}
@@ -247,10 +235,18 @@ function ChatBubble({ node, setReplyParentMessage, isDarkMode }: Props) {
       </HStack>
       <ImageViwer
         node={node}
-        isModalOpen={isModalOpen}
-        onModalClose={onModalClose}
-        onModalOpen={onModalOpen}
+        isModalOpen={isImageModalOpen}
+        onModalClose={onImageModalClose}
+        onModalOpen={onImageModalOpen}
       />
+      {node.parent_message && (
+        <ImageViwer
+          node={node.parent_message}
+          isModalOpen={isParentImageModalOpen}
+          onModalClose={onParentImageModalClose}
+          onModalOpen={onParentImageModalOpen}
+        />
+      )}
     </VStack>
   );
 }
