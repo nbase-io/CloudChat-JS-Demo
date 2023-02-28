@@ -1,4 +1,13 @@
-import { Box, Container, keyframes } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Container,
+  keyframes,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+} from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 const animationKeyframes = keyframes`
@@ -13,23 +22,29 @@ const animation = `${animationKeyframes} 2s ease-in-out infinite`;
 
 export default function Loading() {
   return (
-    <Container
-      h="100vh"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
+    <Modal
+      isOpen={true}
+      onClose={() => {}}
+      isCentered
+      closeOnOverlayClick={false}
+      motionPreset="none"
     >
-      <Box
-        as={motion.div}
-        animation={animation}
-        // not work: transition={{ ... }}
-        padding="2"
-        // @ts-ignore - "Does not exist" Type Error against Motion
-        bgGradient="linear(to-l, #7928CA, #20b2da)"
-        width="12"
-        height="12"
-        display="flex"
-      />
-    </Container>
+      <ModalOverlay bg="white" />
+      <ModalContent boxShadow={"none"}>
+        <Center>
+          <Box
+            as={motion.div}
+            animation={animation}
+            // not work: transition={{ ... }}
+            padding="2"
+            // @ts-ignore - "Does not exist" Type Error against Motion
+            bgGradient="linear(to-l, #7928CA, #20b2da)"
+            width="12"
+            height="12"
+            display="flex"
+          />
+        </Center>
+      </ModalContent>
+    </Modal>
   );
 }

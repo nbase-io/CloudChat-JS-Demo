@@ -11,8 +11,14 @@ import { Link, Outlet, useOutletContext } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
+import { useIsMutating } from "@tanstack/react-query";
+import Loading from "./Loading/Loading";
 
-type UserContextType = { user: IUser | null };
+type UserContextType = {
+  user: IUser | null;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
+};
 
 export function useUser() {
   return useOutletContext<UserContextType>();
@@ -20,14 +26,12 @@ export function useUser() {
 
 function Root() {
   const [user, setUser] = useState<IUser | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <Box>
+      {isLoading && <Loading />}
       {user && (
         <HStack
           justifyContent={"space-between"}
@@ -75,8 +79,9 @@ function Root() {
         onClose={onClose}
         setUser={setUser}
         user={user}
+        setIsLoading={setIsLoading}
       />
-      {user && <Outlet context={{ user }} />}
+      {user && <Outlet context={{ user, isLoading, setIsLoading }} />}
     </Box>
   );
 }

@@ -11,6 +11,8 @@ import { Link, Outlet, useOutletContext } from "react-router-dom";
 import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
+import { useIsFetching, useIsMutating } from "@tanstack/react-query";
+import Loading from "./Loading/Loading";
 
 type ContextType = { user: IUser | null };
 
@@ -21,10 +23,12 @@ export function useUser() {
 function Root() {
   const [user, setUser] = useState<IUser | null>(null);
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: true });
+  const isFetchingChannels = useIsFetching(["channels"]);
+  const isMutatingConnect = useIsMutating(["connect"]);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  if (isFetchingChannels || isMutatingConnect) {
+    return <Loading />;
+  }
 
   return (
     <Box>

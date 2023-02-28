@@ -62,14 +62,15 @@ function LoginModal({
     onError: (error) => {
       addToast({ title: "Login failed", status: "error" });
     },
+    mutationKey: ["connect"],
   });
   const onSubmit = (data: ILogin) => {
     mutation.mutate(data);
   };
 
-  if (mutation.isLoading && !user) {
-    return <Loading />;
-  }
+  // if (mutation.isLoading && !user) {
+  //   return <Loading />;
+  // }
 
   return (
     <Modal

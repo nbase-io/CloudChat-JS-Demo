@@ -15,10 +15,9 @@ import ChatInput from "./ChatInput";
 
 type Props = {
   subscription: any;
-  isDarkMode: boolean;
 };
 
-function Chat({ subscription, isDarkMode }: Props) {
+function Chat({ subscription }: Props) {
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const hasMore = useRef(true);
@@ -48,7 +47,6 @@ function Chat({ subscription, isDarkMode }: Props) {
     if (subscription?.channel_id === channelId) {
       setArrivalMessage({ node: message });
     }
-    console.log(subscription?.channel_id === channelId);
   });
 
   // message deleted
@@ -76,8 +74,6 @@ function Chat({ subscription, isDarkMode }: Props) {
     }
   }, [arrivalMessage]);
 
-  useEffect(() => console.log(messages), [messages]);
-
   return (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
       <HStack w="full" h={"60px"} justifyContent="space-between">
@@ -103,7 +99,6 @@ function Chat({ subscription, isDarkMode }: Props) {
         getMessages={getMessages}
         hasMore={hasMore.current}
         setReplyParentMessage={setReplyParentMessage}
-        isDarkMode={isDarkMode}
       />
       <ChatInput
         channel={{ id: "c80e0fb6-c07a-4a80-b4c0-1a483f477fea" }}

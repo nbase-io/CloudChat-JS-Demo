@@ -8,7 +8,6 @@ type Props = {
   getMessages: () => void;
   hasMore: boolean;
   setReplyParentMessage: any;
-  isDarkMode?: boolean;
 };
 
 function ChatMessages({
@@ -16,7 +15,6 @@ function ChatMessages({
   getMessages,
   hasMore,
   setReplyParentMessage,
-  isDarkMode,
 }: Props) {
   return (
     <Flex
@@ -55,7 +53,7 @@ function ChatMessages({
           </Flex>
         }
       >
-        {messages.map(({ node }: any, index: number, array: any[]) => {
+        {messages?.map(({ node }: any, index: number, array: any[]) => {
           // all messages except the most recent message
           if (index > 0) {
             const currentMessageDate = new Date(node.created_at).getDate();

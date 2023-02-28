@@ -7,7 +7,7 @@ import StreamView from "../components/StreamView/StreamView";
 import { useUser } from "../components/Root";
 
 function LiveStream() {
-  const { user } = useUser();
+  const { setIsLoading } = useUser();
   const [isSubscribable, setIsSubscribable] = useState(false);
   // subscribe after connect
   const { data: subscription, isLoading: isSubscribing } = useSubscribe(
@@ -15,13 +15,19 @@ function LiveStream() {
     "c80e0fb6-c07a-4a80-b4c0-1a483f477fea"
   );
   // get subscriptions after subscribe
-  const { data: subscriptions, isLoading: isGettingSubscriptions } =
+  const { data: subscriptions, status: subscriptionStatus } =
     useGetSubscriptions(!!subscription, "c80e0fb6-c07a-4a80-b4c0-1a483f477fea");
 
   // WARNING: subscribe AFTER socket connection
   nc.bind("onConnected", (payload: string) => {
     setIsSubscribable(true);
   });
+
+  useEffect(() => {
+    if (subscriptionStatus === "error" || subscriptionStatus === "success") {
+      setIsLoading(false);
+    }
+  }, [subscriptionStatus]);
 
   // drawer
   const {
@@ -42,13 +48,12 @@ function LiveStream() {
         maxW={{ base: "xs", xl: "sm" }}
         display={{ base: "none", lg: "flex" }}
       >
-        <Chat subscription={subscription} isDarkMode={true} />
+        <Chat subscription={subscription} />
       </Flex>
       <ChatDrawer
         isOpen={isLiveStreamChatDrawerOpen}
         onClose={onLiveStreamChatDrawerClose}
         subscription={subscription}
-        isDarkMode={true}
       />
     </HStack>
   );
