@@ -5,6 +5,7 @@ import {
   Divider,
   IconButton,
   Box,
+  Progress,
 } from "@chakra-ui/react";
 import { TbLayoutSidebarLeftExpand } from "react-icons/tb";
 import { RiGroupLine } from "react-icons/ri";
@@ -94,6 +95,7 @@ function Chat({ subscription }: Props) {
         />
       </HStack>
       <Divider borderColor={"gray"} />
+      {isGettingMessages && <Progress size="xs" isIndeterminate w="full" />}
       <ChatMessages
         messages={messages}
         getMessages={getMessages}
