@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { nc } from "../../api";
 import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
-import UserListModal from "../Modal/UserListModal";
+import UserList from "./UserList";
 
 type Props = {
   subscription: any;
@@ -80,23 +80,18 @@ function Chat({ subscription, subscriptions }: Props) {
     }
   }, [arrivalMessage]);
 
-  return (
+  return isOpen ? (
+    <UserList onClose={onClose} subscriptions={subscriptions} />
+  ) : (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
-      {subscriptions && (
-        <UserListModal
-          isOpen={isOpen}
-          onClose={onClose}
-          subscriptions={subscriptions}
-        />
-      )}
       <HStack w="full" h={"60px"} justifyContent="space-between">
         {/* <IconButton
-          icon={<TbLayoutSidebarLeftExpand />}
-          variant={"ghost"}
-          aria-label={"Close Chat"}
-          size="lg"
-          _hover={{ bgColor: "gray.700" }}
-        /> */}
+        icon={<TbLayoutSidebarLeftExpand />}
+        variant={"ghost"}
+        aria-label={"Close Chat"}
+        size="lg"
+        _hover={{ bgColor: "gray.700" }}
+      /> */}
         <Text></Text>
         <Text as="b">Live Chat</Text>
         <IconButton
