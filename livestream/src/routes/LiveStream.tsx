@@ -2,7 +2,6 @@ import { Flex, HStack, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { nc, useGetSubscriptions, useSubscribe } from "../api";
 import Chat from "../components/Chat/Chat";
-import ChatDrawer from "../components/Chat/ChatDrawer";
 import StreamView from "../components/StreamView/StreamView";
 import { useGlobal } from "../components/Root";
 
@@ -29,13 +28,6 @@ function LiveStream() {
     }
   }, [subscriptionStatus]);
 
-  // drawer
-  const {
-    isOpen: isLiveStreamChatDrawerOpen,
-    onOpen: onLiveStreamChatDrawerOpen,
-    onClose: onLiveStreamChatDrawerClose,
-  } = useDisclosure();
-
   return (
     <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>
       <Flex as="main" h={"full"} flex={1}>
@@ -50,12 +42,6 @@ function LiveStream() {
       >
         <Chat subscription={subscription} subscriptions={subscriptions} />
       </Flex>
-      <ChatDrawer
-        isOpen={isLiveStreamChatDrawerOpen}
-        onClose={onLiveStreamChatDrawerClose}
-        subscription={subscription}
-        subscriptions={subscriptions}
-      />
     </HStack>
   );
 }

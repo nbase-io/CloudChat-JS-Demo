@@ -1,13 +1,4 @@
-import {
-  Box,
-  Center,
-  Heading,
-  HStack,
-  IconButton,
-  Text,
-  Tooltip,
-  VStack,
-} from "@chakra-ui/react";
+import { Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import ReactPlayer from "react-player";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import { AiOutlineEye } from "react-icons/ai";
@@ -29,7 +20,7 @@ function StreamView({ subscriptions, subscription }: Props) {
         w="full"
         justifyContent={"space-between"}
       >
-        <HStack>
+        <HStack h={"64px"}>
           <Heading size="md" color={"white"}>
             {subscription?.channel.name}
           </Heading>
@@ -50,17 +41,6 @@ function StreamView({ subscriptions, subscription }: Props) {
             <AiOutlineEye />
             <Text fontSize={"sm"}>{subscriptions?.edges.length}</Text>
           </HStack>
-          {/* <Tooltip label={"Channel information"}>
-            <IconButton
-              rounded={"full"}
-              onClick={onChatDetailOpen}
-              display={{ base: "inherit", lg: "none" }}
-              variant="ghost"
-              icon={<IoMdInformationCircleOutline />}
-              size="lg"
-              aria-label="Toggle Chat Detail Drawer"
-            />
-          </Tooltip> */}
         </HStack>
       </HStack>
       <VStack justifyContent={"center"} h="100%" w="full" bg="black">
