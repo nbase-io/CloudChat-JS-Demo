@@ -18,6 +18,13 @@ import {
   CloseButton,
   Image,
   Spinner,
+  Button,
+  Portal,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverBody,
+  PopoverFooter,
 } from "@chakra-ui/react";
 import {
   RiSendPlaneLine,
@@ -96,6 +103,29 @@ function ChatInput({
     }
   }, [plainFiles]);
 
+  const replyMessageView = () => (
+    <HStack px={4} py={2} justifyContent={"space-between"}>
+      <VStack alignItems={"flex-start"}>
+        <Text fontSize={"2xs"} as="b">
+          {`Reply to ${replyParentMessage.sender.name}`}
+        </Text>
+        {replyParentMessage.message_type === "text" ? (
+          <Text fontSize={"xs"} noOfLines={1} color={"gray"}>
+            {replyParentMessage.content}
+          </Text>
+        ) : (
+          <Image
+            src={`https://alpha-api.cloudchat.dev${replyParentMessage.attachment_filenames.url}`}
+            alt={replyParentMessage.attachment_filenames.name}
+            fallback={<Spinner />}
+            maxW={"3xs"}
+          />
+        )}
+      </VStack>
+      <CloseButton onClick={() => setReplyParentMessage(null)} />
+    </HStack>
+  );
+
   return (
     <FormControl
       as={"form"}
@@ -103,28 +133,7 @@ function ChatInput({
       borderTopColor="gray.100"
       borderTopWidth={1}
     >
-      {replyParentMessage !== null && (
-        <HStack px={4} py={2} justifyContent={"space-between"}>
-          <VStack alignItems={"flex-start"}>
-            <Text fontSize={"2xs"} as="b">
-              {`Reply to ${replyParentMessage.sender.name}`}
-            </Text>
-            {replyParentMessage.message_type === "text" ? (
-              <Text fontSize={"xs"} noOfLines={1} color={"gray"}>
-                {replyParentMessage.content}
-              </Text>
-            ) : (
-              <Image
-                src={`https://alpha-api.cloudchat.dev${replyParentMessage.attachment_filenames.url}`}
-                alt={replyParentMessage.attachment_filenames.name}
-                fallback={<Spinner />}
-                maxW={"3xs"}
-              />
-            )}
-          </VStack>
-          <CloseButton onClick={() => setReplyParentMessage(null)} />
-        </HStack>
-      )}
+      {replyParentMessage !== null && replyMessageView()}
       <Flex pl={4} py={2}>
         <InputGroup>
           <InputLeftElement>

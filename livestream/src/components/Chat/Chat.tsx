@@ -4,9 +4,7 @@ import {
   Text,
   Divider,
   IconButton,
-  Box,
   Progress,
-  Spacer,
   useDisclosure,
 } from "@chakra-ui/react";
 import { TbLayoutSidebarLeftExpand } from "react-icons/tb";
@@ -16,6 +14,7 @@ import { nc } from "../../api";
 import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
 import UserList from "./UserList";
+import { CustomToast } from "../Toast/CustomToast";
 
 type Props = {
   subscription: any;
@@ -29,6 +28,7 @@ function Chat({ subscription, subscriptions }: Props) {
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
   const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+  const { addToast } = CustomToast();
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
@@ -65,6 +65,28 @@ function Chat({ subscription, subscriptions }: Props) {
       setMessages(newMessages);
     }
   });
+
+  // user joined
+  // nc.bind("onMemberJoined", (data: any) => {
+  //   if (subscription.channel_id === data.channel_id) {
+  //     addToast({
+  //       title: data.user_id,
+  //       description: `joined ${data.channel.name}`,
+  //       status: "info",
+  //     });
+  //   }
+  // });
+
+  // user leave
+  // nc.bind("OnMemberLeaved", (data: any) => {
+  //   if (subscription.channel_id === data.channel_id) {
+  //     addToast({
+  //       title: data.user_id,
+  //       description: `left ${data.channel.name}`,
+  //       status: "info",
+  //     });
+  //   }
+  // });
 
   // get messages after subscribe
   useEffect(() => {

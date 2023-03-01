@@ -6,6 +6,7 @@ import { nc, useMarkRead } from "../../api";
 import ChatMessages from "./ChatMessages";
 // import { useQueryClient } from "@tanstack/react-query";
 import { useGlobal } from "../Root";
+import { CustomToast } from "../Toast/CustomToast";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -35,6 +36,7 @@ function Chat({
     user!.id,
     lastMessageRef.current?.node.sort_id
   );
+  const { addToast } = CustomToast();
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
@@ -70,6 +72,28 @@ function Chat({
         (item: any) => item.node.message_id !== data.message_id
       );
       setMessages(newMessages);
+    }
+  });
+
+  // user joined
+  nc.bind("onMemberJoined", (data: any) => {
+    if (channel.id === data.channel_id) {
+      addToast({
+        title: data.user_id,
+        description: `joined ${channel.name}`,
+        status: "info",
+      });
+    }
+  });
+
+  // user leave
+  nc.bind("OnMemberLeaved", (data: any) => {
+    if (channel.id === data.channel_id) {
+      addToast({
+        title: data.user_id,
+        description: `left ${channel.name}`,
+        status: "info",
+      });
     }
   });
 
