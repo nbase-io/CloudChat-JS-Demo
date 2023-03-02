@@ -25,6 +25,7 @@ import {
   PopoverCloseButton,
   PopoverBody,
   PopoverFooter,
+  Center,
 } from "@chakra-ui/react";
 import {
   RiSendPlaneLine,
@@ -54,7 +55,14 @@ function ChatInput({
     input,
     replyParentMessage?.message_id
   );
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  const {
+    isOpen: isEmojiOpen,
+    onToggle: onEmojiToggle,
+    onClose: onEmojiClose,
+  } = useDisclosure();
+  const { isOpen: isAlertOpen, onClose: onAlertClose } = useDisclosure({
+    defaultIsOpen: true,
+  });
   const [
     openFileSelector,
     { filesContent, loading: filePickerLoading, plainFiles, clear },
@@ -91,7 +99,7 @@ function ChatInput({
 
   const emojiSelected = (e: any) => {
     setInput(input + e.native);
-    onToggle(); // close popover
+    onEmojiToggle(); // close popover
     focus();
   };
 
@@ -135,38 +143,60 @@ function ChatInput({
     >
       {replyParentMessage !== null && replyMessageView()}
       <Flex pl={4} py={2}>
-        <InputGroup>
-          <InputLeftElement>
-            <Popover isLazy isOpen={isOpen} onClose={onClose}>
-              <PopoverTrigger>
-                <Box>
-                  <Tooltip label={"Add emoji"}>
-                    <IconButton
-                      colorScheme={"black"}
-                      aria-label="Emoji"
-                      variant={"ghost"}
-                      icon={<RiEmotionHappyLine />}
-                      onClick={onToggle}
-                      ml={2}
-                    />
-                  </Tooltip>
-                </Box>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Picker data={data} onEmojiSelect={emojiSelected} />
-              </PopoverContent>
-            </Popover>
-          </InputLeftElement>
-          <Input
-            borderRadius={120}
-            variant={"outline"}
-            placeholder="Type your message"
-            autoComplete="off"
-            onChange={(e) => setInput(e.target.value)}
-            value={input}
-            ref={inputRef}
-          />
-        </InputGroup>
+        <Popover isOpen={isAlertOpen}>
+          <PopoverTrigger>
+            <InputGroup>
+              <InputLeftElement>
+                <Popover isLazy isOpen={isEmojiOpen} onClose={onEmojiClose}>
+                  <PopoverTrigger>
+                    <Box>
+                      <Tooltip label={"Add emoji"}>
+                        <IconButton
+                          colorScheme={"black"}
+                          aria-label="Emoji"
+                          variant={"ghost"}
+                          icon={<RiEmotionHappyLine />}
+                          onClick={onEmojiToggle}
+                          ml={2}
+                        />
+                      </Tooltip>
+                    </Box>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <Picker data={data} onEmojiSelect={emojiSelected} />
+                  </PopoverContent>
+                </Popover>
+              </InputLeftElement>
+              <Input
+                borderRadius={120}
+                variant={"outline"}
+                placeholder="Type your message"
+                autoComplete="off"
+                onChange={(e) => setInput(e.target.value)}
+                value={input}
+                ref={inputRef}
+              />
+            </InputGroup>
+          </PopoverTrigger>
+          <Portal>
+            <PopoverContent bg="gray.900" borderColor="gray.600" color="white">
+              <PopoverArrow bg="gray.900" />
+              <PopoverHeader as="b" borderBottom={0}>
+                Live Chat
+              </PopoverHeader>
+              <PopoverBody color="gray.300">
+                Please have a good manner to each other to make the live broad
+                casting the best experience possible, thank you!
+              </PopoverBody>
+              <PopoverFooter borderColor={"gray.600"}>
+                <Button colorScheme="blue" onClick={onAlertClose} w="full">
+                  Okay
+                </Button>
+              </PopoverFooter>
+            </PopoverContent>
+          </Portal>
+        </Popover>
+
         <Tooltip label={"Send image or video"}>
           <IconButton
             colorScheme={"black"}
