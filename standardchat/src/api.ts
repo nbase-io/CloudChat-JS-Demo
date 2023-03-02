@@ -14,14 +14,12 @@ import {
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ILogin } from "./lib/interfaces/ILogin";
-
 let ncloudchat;
-if(process.env.NODE_ENV === "production") {
-  ncloudchat = await import("cloudchat");  
-} else {
+if(import.meta.env.VITE_NODE_ENV === "local") {
   ncloudchat = await import("../../../cloudchat-sdk-javascript/src");  
+} else {  
+  // ncloudchat = await import("cloudchat");  
 }
-
 // initialize
 export const nc = new ncloudchat.Chat(true);
 
