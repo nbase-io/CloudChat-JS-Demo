@@ -39,7 +39,7 @@ function StreamView({ subscriptions, subscription }: Props) {
           <UserAvatar user={user} color="white" />
           <HStack spacing={1}>
             <AiOutlineEye />
-            <Text fontSize={"sm"}>{subscriptions?.edges.length}</Text>
+            <Text fontSize={"sm"}>{subscriptions?.totalCount}</Text>
           </HStack>
         </HStack>
       </HStack>

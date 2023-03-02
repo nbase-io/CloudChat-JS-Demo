@@ -15,6 +15,7 @@ import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
 import UserList from "./UserList";
 import { CustomToast } from "../Toast/CustomToast";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   subscription: any;
@@ -22,6 +23,7 @@ type Props = {
 };
 
 function Chat({ subscription, subscriptions }: Props) {
+  const queryClient = useQueryClient();
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const hasMore = useRef(true);
@@ -68,23 +70,33 @@ function Chat({ subscription, subscriptions }: Props) {
 
   // user joined
   nc.bind("onMemberJoined", (data: any) => {
+    console.log(data);
     if (subscription?.channel_id === data.channel_id) {
       addToast({
         title: data.user_id,
         description: `joined ${subscription?.channel.name}`,
         status: "info",
       });
+      queryClient.invalidateQueries([
+        "subscriptions",
+        { channelId: subscription?.channel_id },
+      ]);
     }
   });
 
   // user leave
-  nc.bind("onMemberLeft", (data: any) => {
+  nc.bind("onMemberLeaved", (data: any) => {
+    console.log(data);
     if (subscription?.channel_id === data.channel_id) {
       addToast({
         title: data.user_id,
         description: `left ${subscription?.channel.name}`,
         status: "info",
       });
+      queryClient.invalidateQueries([
+        "subscriptions",
+        { channelId: subscription?.channel_id },
+      ]);
     }
   });
 

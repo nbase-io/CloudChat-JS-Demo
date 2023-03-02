@@ -4,7 +4,7 @@ import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { nc, useMarkRead } from "../../api";
 import ChatMessages from "./ChatMessages";
-// import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useGlobal } from "../Root";
 import { CustomToast } from "../Toast/CustomToast";
 
@@ -23,6 +23,7 @@ function Chat({
   setChannel,
   subscription,
 }: Props) {
+  const queryClient = useQueryClient();
   const { user } = useGlobal();
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
@@ -83,17 +84,25 @@ function Chat({
         description: `joined ${channel.name}`,
         status: "info",
       });
+      queryClient.invalidateQueries([
+        "subscriptions",
+        { channelId: channel.id },
+      ]);
     }
   });
 
   // user leave
-  nc.bind("onMemberLeft", (data: any) => {
+  nc.bind("onMemberLeaved", (data: any) => {
     if (channel.id === data.channel_id) {
       addToast({
         title: data.user_id,
         description: `left ${channel.name}`,
         status: "info",
       });
+      queryClient.invalidateQueries([
+        "subscriptions",
+        { channelId: channel.id },
+      ]);
     }
   });
 

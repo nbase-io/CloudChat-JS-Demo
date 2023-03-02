@@ -151,7 +151,7 @@ export const useGetSubscriptions = (
       if (channel_id) {
         const filter = { channel_id: channel_id };
         const sort = { created_at: -1 };
-        const option = { offset: 0, per_page: 100 };
+        const option = { offset: 0, per_page: 1000 };
         return await nc.getSubscriptions(filter, sort, option);
       }
     },
