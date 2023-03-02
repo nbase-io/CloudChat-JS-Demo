@@ -19,7 +19,7 @@ let ncloudchat;
 if(process.env.NODE_ENV === "production") {
   ncloudchat = await import("cloudchat");  
 } else {
-  ncloudchat = await import("../../cloudchat-sdk-javascript/src");  
+  ncloudchat = await import("../../../cloudchat-sdk-javascript/src");  
 }
 
 // initialize
