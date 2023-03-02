@@ -29,20 +29,42 @@ function LiveStream() {
   }, [subscriptionStatus]);
 
   return (
-    <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>
-      <Flex as="main" h={"full"} flex={1}>
+    // <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>
+    //   <Flex as="main" h={"full"} flex={1}>
+    //     <StreamView subscriptions={subscriptions} subscription={subscription} />
+    //   </Flex>
+    //   <Flex
+    //     as="aside"
+    //     h={"full"}
+    //     w={"full"}
+    //     maxW={{ base: "xs", xl: "sm" }}
+    //     display={{ base: "none", lg: "flex" }}
+    //   >
+    //     <Chat subscription={subscription} subscriptions={subscriptions} />
+    //   </Flex>
+    // </HStack>
+    <Flex
+      w="full"
+      h="-webkit-calc(100vh - 65px)"
+      bg={"grey.100"}
+      flexDirection={{ base: "column", lg: "row" }}
+    >
+      <Flex
+        as="main"
+        h={{ base: "-webkit-calc(50vh - 32px)", lg: "full" }}
+        flex={1}
+      >
         <StreamView subscriptions={subscriptions} subscription={subscription} />
       </Flex>
       <Flex
         as="aside"
-        h={"full"}
+        h={{ base: "-webkit-calc(50vh - 32px)", lg: "full" }}
         w={"full"}
-        maxW={{ base: "xs", xl: "sm" }}
-        display={{ base: "none", lg: "flex" }}
+        maxW={{ base: "full", lg: "sm" }}
       >
         <Chat subscription={subscription} subscriptions={subscriptions} />
       </Flex>
-    </HStack>
+    </Flex>
   );
 }
 

@@ -49,7 +49,11 @@ function Root() {
               />
             </Link>
           </Box>
-          <ChakraLink href="https://ncloudchat-staging.vercel.app/" isExternal>
+          <ChakraLink
+            href="https://ncloudchat-staging.vercel.app/"
+            isExternal
+            fontSize={{ base: "xs", lg: "sm" }}
+          >
             Standard Chat <ExternalLinkIcon mx="2px" />
           </ChakraLink>
           <HStack spacing={2}>

@@ -54,6 +54,7 @@ function Root() {
           <ChakraLink
             href="https://cloudchat-livestream.vercel.app/"
             isExternal
+            fontSize={{ base: "xs", lg: "sm" }}
           >
             Live Stream <ExternalLinkIcon mx="2px" />
           </ChakraLink>

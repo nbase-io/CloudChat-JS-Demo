@@ -32,7 +32,7 @@ function UserList({ onClose, subscriptions }: Props) {
         alignItems={"flex-start"}
         spacing={3}
       >
-        {subscriptions?.edges?.map((edge: any) => (
+        {subscriptions?.edges?.map((edge: any, index: number) => (
           <UserAvatar
             user={edge.node.user}
             key={edge.node.user_id}

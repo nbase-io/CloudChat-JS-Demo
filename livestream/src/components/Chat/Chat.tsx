@@ -6,6 +6,7 @@ import {
   IconButton,
   Progress,
   useDisclosure,
+  Tooltip,
 } from "@chakra-ui/react";
 import { TbLayoutSidebarLeftExpand } from "react-icons/tb";
 import { RiGroupLine } from "react-icons/ri";
@@ -118,7 +119,7 @@ function Chat({ subscription, subscriptions }: Props) {
     <UserList onClose={onClose} subscriptions={subscriptions} />
   ) : (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
-      <HStack w="full" h={"60px"} justifyContent="space-between">
+      <HStack w="full" h={"60px"} justifyContent="space-between" px={2}>
         {/* <IconButton
         icon={<TbLayoutSidebarLeftExpand />}
         variant={"ghost"}
@@ -128,14 +129,16 @@ function Chat({ subscription, subscriptions }: Props) {
       /> */}
         <Text></Text>
         <Text as="b">Live Chat</Text>
-        <IconButton
-          icon={<RiGroupLine />}
-          variant={"ghost"}
-          aria-label={"Attendance"}
-          size="lg"
-          _hover={{ bgColor: "gray.700" }}
-          onClick={onOpen}
-        />
+        <Tooltip label="Members">
+          <IconButton
+            icon={<RiGroupLine />}
+            variant={"ghost"}
+            aria-label={"Attendance"}
+            size="lg"
+            _hover={{ bgColor: "gray.700" }}
+            onClick={onOpen}
+          />
+        </Tooltip>
       </HStack>
       <Divider borderColor={"gray"} />
       {isGettingMessages && <Progress size="xs" isIndeterminate w="full" />}
