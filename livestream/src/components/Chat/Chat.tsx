@@ -67,26 +67,26 @@ function Chat({ subscription, subscriptions }: Props) {
   });
 
   // user joined
-  // nc.bind("onMemberJoined", (data: any) => {
-  //   if (subscription.channel_id === data.channel_id) {
-  //     addToast({
-  //       title: data.user_id,
-  //       description: `joined ${data.channel.name}`,
-  //       status: "info",
-  //     });
-  //   }
-  // });
+  nc.bind("onMemberJoined", (data: any) => {
+    if (subscription?.channel_id === data.channel_id) {
+      addToast({
+        title: data.user_id,
+        description: `joined ${subscription?.channel.name}`,
+        status: "info",
+      });
+    }
+  });
 
   // user leave
-  // nc.bind("OnMemberLeaved", (data: any) => {
-  //   if (subscription.channel_id === data.channel_id) {
-  //     addToast({
-  //       title: data.user_id,
-  //       description: `left ${data.channel.name}`,
-  //       status: "info",
-  //     });
-  //   }
-  // });
+  nc.bind("onMemberLeft", (data: any) => {
+    if (subscription?.channel_id === data.channel_id) {
+      addToast({
+        title: data.user_id,
+        description: `left ${subscription?.channel.name}`,
+        status: "info",
+      });
+    }
+  });
 
   // get messages after subscribe
   useEffect(() => {

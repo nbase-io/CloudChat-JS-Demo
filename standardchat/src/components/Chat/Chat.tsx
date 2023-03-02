@@ -87,7 +87,7 @@ function Chat({
   });
 
   // user leave
-  nc.bind("OnMemberLeaved", (data: any) => {
+  nc.bind("onMemberLeft", (data: any) => {
     if (channel.id === data.channel_id) {
       addToast({
         title: data.user_id,

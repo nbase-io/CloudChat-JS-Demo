@@ -10,7 +10,7 @@ export const CustomToast = () => {
       description: newRes.description,
       status: newRes.status,
       position: "top",
-      duration: 5000,
+      duration: 3000,
     });
   };
 
