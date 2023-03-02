@@ -21,12 +21,16 @@ function StreamView({ subscriptions, subscription }: Props) {
         justifyContent={"space-between"}
       >
         <HStack h={"64px"}>
-          <Heading size="md" color={"white"}>
+          <Heading
+            size="md"
+            color={"white"}
+            fontSize={{ base: "xs", md: "md", lg: "lg" }}
+          >
             {subscription?.channel.name}
           </Heading>
           <Text
             color={"white"}
-            fontSize="xs"
+            fontSize="2xs"
             as="b"
             bg="red"
             px={2}
@@ -39,7 +43,9 @@ function StreamView({ subscriptions, subscription }: Props) {
           <UserAvatar user={user} color="white" />
           <HStack spacing={1}>
             <AiOutlineEye />
-            <Text fontSize={"sm"}>{subscriptions?.totalCount}</Text>
+            <Text fontSize={{ base: "xs", lg: "sm" }}>
+              {subscriptions?.totalCount}
+            </Text>
           </HStack>
         </HStack>
       </HStack>
