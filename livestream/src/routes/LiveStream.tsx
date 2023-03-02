@@ -51,14 +51,14 @@ function LiveStream() {
     >
       <Flex
         as="main"
-        h={{ base: "-webkit-calc(50vh - 32px)", lg: "full" }}
+        h={{ base: "-webkit-calc(50vh - 33px)", lg: "full" }}
         flex={1}
       >
         <StreamView subscriptions={subscriptions} subscription={subscription} />
       </Flex>
       <Flex
         as="aside"
-        h={{ base: "-webkit-calc(50vh - 32px)", lg: "full" }}
+        h={{ base: "-webkit-calc(50vh - 33px)", lg: "full" }}
         w={"full"}
         maxW={{ base: "full", lg: "sm" }}
       >
