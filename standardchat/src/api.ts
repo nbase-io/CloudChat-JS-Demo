@@ -1,9 +1,13 @@
+import * as ncloudchat from "cloudchat";
+// import ncloudchat * as ncloudchat from "../../../cloudchat-sdk-javascript/src";
+
 import {
   useInfiniteQuery,
   useMutation,
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+
 import { IUser } from "./lib/interfaces/IUser";
 import { IFriendship } from "./lib/interfaces/IFriendship";
 import {
@@ -14,12 +18,7 @@ import {
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ILogin } from "./lib/interfaces/ILogin";
-let ncloudchat;
-if(import.meta.env.VITE_NODE_ENV === "local") {
-  ncloudchat = await import("../../../cloudchat-sdk-javascript/src");  
-} else {  
-  ncloudchat = await import("cloudchat");  
-}
+
 // initialize
 export const nc = new ncloudchat.Chat(true);
 
