@@ -18,7 +18,7 @@ let ncloudchat;
 if(import.meta.env.VITE_NODE_ENV === "local") {
   ncloudchat = await import("../../../cloudchat-sdk-javascript/src");  
 } else {  
-  // ncloudchat = await import("cloudchat");  
+  ncloudchat = await import("cloudchat");  
 }
 // initialize
 export const nc = new ncloudchat.Chat(true);
