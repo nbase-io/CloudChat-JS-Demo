@@ -6,6 +6,7 @@ import StreamView from "../components/StreamView/StreamView";
 import { useGlobal } from "../components/Root";
 
 function LiveStream() {
+  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: true });
   const { setIsLoading } = useGlobal();
   const [isSubscribable, setIsSubscribable] = useState(false);
   // subscribe after connect
@@ -52,17 +53,28 @@ function LiveStream() {
       <Flex
         as="main"
         h={{ base: "-webkit-calc(50vh - 33px)", lg: "full" }}
+        w={"full"}
         flex={1}
       >
-        <StreamView subscriptions={subscriptions} subscription={subscription} />
+        <StreamView
+          subscriptions={subscriptions}
+          subscription={subscription}
+          isChatOpen={isOpen}
+          onChatOpen={onOpen}
+        />
       </Flex>
       <Flex
         as="aside"
         h={{ base: "-webkit-calc(50vh - 33px)", lg: "full" }}
         w={"full"}
         maxW={{ base: "full", lg: "sm" }}
+        hidden={!isOpen}
       >
-        <Chat subscription={subscription} subscriptions={subscriptions} />
+        <Chat
+          subscription={subscription}
+          subscriptions={subscriptions}
+          onChatClose={onClose}
+        />
       </Flex>
     </Flex>
   );

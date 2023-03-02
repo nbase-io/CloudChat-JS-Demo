@@ -8,7 +8,7 @@ import {
   useDisclosure,
   Tooltip,
 } from "@chakra-ui/react";
-import { TbLayoutSidebarLeftExpand } from "react-icons/tb";
+import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import { RiGroupLine } from "react-icons/ri";
 import { useEffect, useRef, useState } from "react";
 import { nc } from "../../api";
@@ -21,9 +21,10 @@ import { useQueryClient } from "@tanstack/react-query";
 type Props = {
   subscription: any;
   subscriptions: any;
+  onChatClose: any;
 };
 
-function Chat({ subscription, subscriptions }: Props) {
+function Chat({ subscription, subscriptions, onChatClose }: Props) {
   const queryClient = useQueryClient();
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
@@ -120,14 +121,16 @@ function Chat({ subscription, subscriptions }: Props) {
   ) : (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
       <HStack w="full" h={"60px"} justifyContent="space-between" px={2}>
-        {/* <IconButton
-        icon={<TbLayoutSidebarLeftExpand />}
-        variant={"ghost"}
-        aria-label={"Close Chat"}
-        size="lg"
-        _hover={{ bgColor: "gray.700" }}
-      /> */}
-        <Text></Text>
+        <Tooltip label={"Close Chat"}>
+          <IconButton
+            icon={<TbLayoutSidebarLeftCollapse />}
+            variant={"ghost"}
+            aria-label={"Collapse Chat"}
+            size="lg"
+            _hover={{ bgColor: "gray.700" }}
+            onClick={onChatClose}
+          />
+        </Tooltip>
         <Text as="b">Live Chat</Text>
         <Tooltip label="Members">
           <IconButton

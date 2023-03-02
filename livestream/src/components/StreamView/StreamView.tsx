@@ -1,15 +1,30 @@
-import { Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Heading,
+  HStack,
+  IconButton,
+  Text,
+  Tooltip,
+  VStack,
+} from "@chakra-ui/react";
 import ReactPlayer from "react-player";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import { AiOutlineEye } from "react-icons/ai";
 import { useGlobal } from "../Root";
+import { TbLayoutSidebarLeftExpand } from "react-icons/tb";
 
 type Props = {
   subscriptions: any;
   subscription: any;
+  isChatOpen: boolean;
+  onChatOpen: any;
 };
 
-function StreamView({ subscriptions, subscription }: Props) {
+function StreamView({
+  subscriptions,
+  subscription,
+  isChatOpen,
+  onChatOpen,
+}: Props) {
   const { user } = useGlobal();
   return (
     <VStack w="full" spacing={0}>
@@ -47,6 +62,17 @@ function StreamView({ subscriptions, subscription }: Props) {
               {subscriptions?.totalCount}
             </Text>
           </HStack>
+          <Tooltip label="Expand Chat">
+            <IconButton
+              icon={<TbLayoutSidebarLeftExpand />}
+              variant={"ghost"}
+              aria-label={"Expand Chat"}
+              size="lg"
+              _hover={{ bgColor: "gray.700" }}
+              onClick={onChatOpen}
+              hidden={isChatOpen}
+            />
+          </Tooltip>
         </HStack>
       </HStack>
       <VStack justifyContent={"center"} h="100%" w="full" bg="black">
