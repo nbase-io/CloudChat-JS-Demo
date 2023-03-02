@@ -26,6 +26,7 @@ import {
   PopoverBody,
   PopoverFooter,
   Center,
+  PopoverAnchor,
 } from "@chakra-ui/react";
 import {
   RiSendPlaneLine,
@@ -139,60 +140,62 @@ function ChatInput({
       borderTopWidth={1}
     >
       {replyParentMessage !== null && replyMessageView()}
-      <Flex pl={4} py={2}>
-        <InputGroup>
-          <InputLeftElement>
-            <Popover isLazy isOpen={isEmojiOpen} onClose={onEmojiClose}>
-              <PopoverTrigger>
-                <Box>
-                  <Tooltip label={"Add emoji"}>
-                    <IconButton
-                      colorScheme={"black"}
-                      aria-label="Emoji"
-                      variant={"ghost"}
-                      icon={<RiEmotionHappyLine />}
-                      onClick={onEmojiToggle}
-                      ml={2}
-                    />
-                  </Tooltip>
-                </Box>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Picker data={data} onEmojiSelect={emojiSelected} />
-              </PopoverContent>
-            </Popover>
-          </InputLeftElement>
-          <Input
-            borderRadius={120}
-            variant={"outline"}
-            placeholder="Type your message"
-            autoComplete="off"
-            onChange={(e) => setInput(e.target.value)}
-            value={input}
-            ref={inputRef}
-          />
-        </InputGroup>
-        <Tooltip label={"Send image or video"}>
-          <IconButton
-            colorScheme={"black"}
-            aria-label="Send Image"
-            variant={"ghost"}
-            icon={<RiImageLine />}
-            ml={2}
-            onClick={() => openFileSelector()}
-          />
-        </Tooltip>
-        <Tooltip label={"Send message"}>
-          <IconButton
-            colorScheme={"black"}
-            aria-label="Send Message"
-            variant={"ghost"}
-            icon={<RiSendPlaneLine />}
-            mr={2}
-            type={"submit"}
-          />
-        </Tooltip>
-      </Flex>
+      <PopoverAnchor>
+        <Flex pl={4} py={2}>
+          <InputGroup>
+            <InputLeftElement>
+              <Popover isLazy isOpen={isEmojiOpen} onClose={onEmojiClose}>
+                <PopoverTrigger>
+                  <Box>
+                    <Tooltip label={"Add emoji"}>
+                      <IconButton
+                        colorScheme={"black"}
+                        aria-label="Emoji"
+                        variant={"ghost"}
+                        icon={<RiEmotionHappyLine />}
+                        onClick={onEmojiToggle}
+                        ml={2}
+                      />
+                    </Tooltip>
+                  </Box>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <Picker data={data} onEmojiSelect={emojiSelected} />
+                </PopoverContent>
+              </Popover>
+            </InputLeftElement>
+            <Input
+              borderRadius={120}
+              variant={"outline"}
+              placeholder="Type your message"
+              autoComplete="off"
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
+              ref={inputRef}
+            />
+          </InputGroup>
+          <Tooltip label={"Send image or video"}>
+            <IconButton
+              colorScheme={"black"}
+              aria-label="Send Image"
+              variant={"ghost"}
+              icon={<RiImageLine />}
+              ml={2}
+              onClick={() => openFileSelector()}
+            />
+          </Tooltip>
+          <Tooltip label={"Send message"}>
+            <IconButton
+              colorScheme={"black"}
+              aria-label="Send Message"
+              variant={"ghost"}
+              icon={<RiSendPlaneLine />}
+              mr={2}
+              type={"submit"}
+            />
+          </Tooltip>
+        </Flex>
+      </PopoverAnchor>
     </FormControl>
   );
 }
