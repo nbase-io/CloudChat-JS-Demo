@@ -1,7 +1,3 @@
-// import * as ncloudchat from "../../cloudchat-sdk-javascript/src";
-import * as ncloudchat from "cloudchat";
-  
-
 import {
   useInfiniteQuery,
   useMutation,
@@ -18,6 +14,13 @@ import {
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ILogin } from "./lib/interfaces/ILogin";
+
+let ncloudchat;
+if(process.env.NODE_ENV === "production") {
+  ncloudchat = await import("cloudchat");  
+} else {
+  ncloudchat = await import("../../cloudchat-sdk-javascript/src");  
+}
 
 // initialize
 export const nc = new ncloudchat.Chat(true);
