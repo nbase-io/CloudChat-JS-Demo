@@ -2,7 +2,6 @@
 ## Standard Chat ([demo](https://ncloudchat-staging.vercel.app/))
 ## Live Stream ([demo](https://cloudchat-livestream.vercel.app/))
 
----
 ## Updates
 ### 01-22-2023 
 1. add live stream
@@ -20,7 +19,6 @@
 2. clean up codes
 3. add comments
    
----
 ## Backgound
 Standard Chat and Live Stream demo. apps are developed to show how to use the 
 Ncloud Chat JS SDK [^1] with React in TypeScript. 
@@ -54,7 +52,6 @@ With the Ncloud Chat service of NAVER Cloud Platform, you don't have to develop 
  - Reply Message
  - Reply Image
  - Copy Message
----
 ## Implementation (TypeScript)
 React query was mainly used to take care of most of the API calls. getMessages did not use react-query for educational purpose but there are one that is commented to show how to implement getMessages using react-query.
 
@@ -432,6 +429,5 @@ nc.bind("onMemberLeaved", (data: any) => {
   }
 });
 ```
----
 ## Getting Help
 Please see our [official document guide](https://guide.ncloud-docs.com/docs/bizapp-ncloudchat-javascriptsdk) for more information about the NcloudChat JS SDK.
