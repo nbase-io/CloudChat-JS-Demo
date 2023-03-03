@@ -1,6 +1,6 @@
 # Ncloud Chat Demo
-## Standard Chat ([demo](https://ncloudchat-staging.vercel.app/))
-## Live Stream ([demo](https://cloudchat-livestream.vercel.app/))
+### Standard Chat ([demo](https://ncloudchat-staging.vercel.app/))
+### Live Stream ([demo](https://cloudchat-livestream.vercel.app/))
 
 ## Updates
 ### 01-22-2023 
@@ -20,19 +20,19 @@
 3. add comments
    
 ## Backgound
-Standard Chat and Live Stream demo. apps are developed to show how to use the 
-Ncloud Chat [^1] JS SDK  with React in TypeScript. 
+[Standard Chat](https://ncloudchat-staging.vercel.app/) and [Live Stream](https://cloudchat-livestream.vercel.app/) demo. apps are developed to show how to use the 
+Ncloud Chat [^1] JS SDK  with React in [TypeScript](https://www.typescriptlang.org/). 
 
 [^1]: Ncloud Chat is a service where you can implement real-time chats, message system, and multi-user chat channels. Various SDKs and APIs are provided, so you can build a chat service easily and simply.
 With the Ncloud Chat service of NAVER Cloud Platform, you don't have to develop log-in environment or operation tools, and there's no need to build a separate system for infrastructure and user management. You can analyze statistics and run and manage your service from the intuitive and convenient Ncloud Chat dashboard. Linkage with various services in NAVER Cloud Platform allows you to build a robust chat environment.
 
 ## Technologies
- - Vite
- - React
- - TypeScript
- - React Query
- - Chakra UI
- - Ncloud Chat
+ - [Vite](https://vitejs.dev/guide/)
+ - [React](https://reactjs.org/docs/getting-started.html)
+ - [TypeScript](https://www.typescriptlang.org/)
+ - [React Query](https://react-query-v3.tanstack.com/overview)
+ - [Chakra UI](https://chakra-ui.com/getting-started)
+ - [Ncloud Chat](https://guide.ncloud-docs.com/docs/bizapp-ncloudchat-javascriptsdk)
 
 ## Features
 ### Standard Chat
@@ -52,7 +52,8 @@ With the Ncloud Chat service of NAVER Cloud Platform, you don't have to develop 
  - Reply Message
  - Reply Image
  - Copy Message
-## Implementation (TypeScript)
+  
+## Implementation ([TypeScript](https://www.typescriptlang.org/))
 React query was mainly used to take care of most of the API calls. getMessages did not use react-query for educational purpose but there are one that is commented to show how to implement getMessages using react-query.
 
 ### **initialize**
