@@ -87,7 +87,7 @@ function Chat({
   });
 
   // user leave
-  nc.bind("onMemberLeaved", (data: any) => {
+  nc.bind("onMemberLeft", (data: any) => {
     if (channel.id === data.channel_id) {
       toast(`${data.user_id} left ${channel.name}`);
       queryClient.invalidateQueries([
