@@ -120,7 +120,7 @@ export const useGetFriendships = (enabled: boolean) =>
       const option = { offset: 0, per_page: 100 };
       return await nc.getFriendships(filter, sort, option);
     },
-    { enabled: enabled, suspense: false }
+    { enabled: enabled }
   );
 
 // getChannels
@@ -133,7 +133,7 @@ export const useGetChannels = (enabled: boolean) =>
       const option = { offset: 0, per_page: 100 };
       return await nc.getChannels(filter, sort, option);
     },
-    { enabled: enabled, suspense: false }
+    { enabled: enabled }
   );
 
 // getMessages using infitite query as an example
@@ -296,7 +296,6 @@ export const updateChannel = async ({
   name,
   image_url,
 }: IUpdateChannel) => {
-  console.log(channel_id, type, name, image_url);
   return await nc.updateChannel(channel_id, {
     type: type,
     name: name,

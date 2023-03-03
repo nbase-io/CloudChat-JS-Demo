@@ -5,7 +5,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ILogin } from "./lib/interfaces/ILogin";
 
-// initialize
 export const nc = new ncloudchat.Chat(true);
 
 // connect
@@ -16,8 +15,15 @@ export const connect = async ({
   server,
   projectId,
 }: ILogin) => {
+  // initialize
   nc.initialize(projectId);
   nc.setLang("en");
+  // below is the default url that can be used in South Korea only
+  // nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
+  // nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
+
+  /* This part is only for internal use, please ignore this part */
+  /* ----------------------------------------------------------- */
   switch (server) {
     case "localhost":
       nc.setServerUrl("http://localhost:4000");
@@ -39,6 +45,8 @@ export const connect = async ({
       nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
       nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
   }
+  /* ----------------------------------------------------------- */
+
   return await nc.connect({
     id: id,
     name: name,

@@ -52,7 +52,7 @@ function LoginModal({
       onToggle();
     }
   };
-  // 1. connect
+  // connect
   const mutation = useMutation<any, any, ILogin>(connect, {
     onSuccess: (data) => {
       toast.success(`Hello, ${data?.name}`);
@@ -67,7 +67,7 @@ function LoginModal({
   });
   const onSubmit = (data: ILogin) => {
     setIsLoading(true);
-    mutation.mutate(data);
+    mutation.mutate(data); // trigger connect
   };
 
   const nameField = (

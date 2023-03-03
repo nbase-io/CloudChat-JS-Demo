@@ -10,16 +10,15 @@ import { useGlobal } from "../components/Root";
 
 function StandardChat() {
   const { user, setIsLoading } = useGlobal();
-  const userId = user?.id;
   // 2. getChannels after connect
   const {
     data: channels,
     isLoading: isGettingChannels,
     status: getChannelsStatus,
-  } = useGetChannels(!!userId);
+  } = useGetChannels(!!user?.id);
   // 2. getFriendships after connect
   // const { data: friendships, isLoading: isGettingFriendships } =
-  //   useGetFriendships(!!userId);
+  //   useGetFriendships(!!user?.id);
   // current channel
   const [channel, setChannel] = useState<any>(null);
   // subscribe when channel is selected

@@ -63,8 +63,6 @@ export const ChatHeader = ({
       toast.success(`You have left the channel!`);
       setChannel(null);
       queryClient.setQueryData(["subscribe", { channelId: channel.id }], null);
-    } else if (unsubscribeStatus === "error") {
-      toast.error(`Failed to leave the channel ${channel.name}.`);
     }
   }, [unsubscribeStatus]);
 
