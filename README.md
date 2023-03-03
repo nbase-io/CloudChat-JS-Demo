@@ -18,6 +18,7 @@
 1. add global error handling
 2. clean up codes
 3. add comments
+4. add MIT license
    
 ## Backgound
 [Standard Chat](https://ncloudchat-staging.vercel.app/) and [Live Stream](https://cloudchat-livestream.vercel.app/) demo. apps are developed to show how to use the 

@@ -90,13 +90,12 @@ function ChatInput({
   const emojiSelected = (e: any) => {
     setInput(input + e.native);
     onEmojiToggle(); // close popover
-    focus();
+    focus(); // focus chat input after emoji selected
   };
 
   useEffect(() => {
     if (plainFiles.length > 0) {
-      console.log(plainFiles);
-      sendImage();
+      sendImage(); // send image after file is selected
       clear();
     }
   }, [plainFiles]);

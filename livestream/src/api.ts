@@ -55,56 +55,6 @@ export const connect = async ({
   });
 };
 
-// connect using useQuery example
-// export const useConnect = (
-//   enabled: boolean,
-//   name: string,
-//   id: string,
-//   profile: string,
-//   server: string,
-//   projectId: string
-// ) =>
-//   useQuery<IUser>(
-//     ["connect"],
-//     async () => {
-//       console.log(enabled, name, id, profile, server, projectId);
-//       nc.initialize(projectId);
-//       nc.setLang("en");
-//       switch (server) {
-//         case "localhost":
-//           nc.setServerUrl("http://localhost:4000");
-//           nc.setSocketUrl("http://localhost:3001");
-//           break;
-//         case "alpha":
-//           nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
-//           nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
-//           break;
-//         case "beta":
-//           nc.setServerUrl("https://dashboard-api.beta-ncloudchat.naverncp.com");
-//           nc.setSocketUrl("https://soc.beta-ncloudchat.ntruss.com");
-//           break;
-//         case "real":
-//           nc.setServerUrl("https://ncloudchat.apigw.ntruss.com/gpapps/v1");
-//           nc.setSocketUrl("https://soc.ncloudchat.ntruss.com");
-//           break;
-//         default:
-//           nc.setServerUrl("https://alpha-dashboard-api.cloudchat.dev");
-//           nc.setSocketUrl("https://alpha-soc.cloudchat.dev:3000");
-//       }
-
-//       return await nc.connect(
-//         {
-//           id: id,
-//           name: name,
-//           profile: profile,
-//           customField: "",
-//         },
-//         ""
-//       );
-//     },
-//     { enabled: enabled, suspense: true }
-//   );
-
 // getMessages using infitite query as an example
 // export const useGetMessages = (
 //   enabled: boolean,

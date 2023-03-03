@@ -53,8 +53,6 @@ export const ChatHeader = ({
       toast.success(`A channel has been deleted!`);
       setChannel(null);
       queryClient.refetchQueries(["channels"]);
-    } else if (deleteChannelStatus === "error") {
-      toast.error(`Failed to delete the channel ${channel.name}.`);
     }
   }, [deleteChannelStatus]);
 

@@ -219,6 +219,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
             messageTime
           ))}
       </HStack>
+      {/* 2 imageViewers. 1 for message and 1 for parrent message */}
       <ImageViwer
         node={node}
         isModalOpen={isImageModalOpen}

@@ -6,7 +6,6 @@ import {
   Tooltip,
   IconButton,
   useDisclosure,
-  Button,
   Link as ChakraLink,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
@@ -15,7 +14,6 @@ import { FaSketch, FaGithub } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
 import Loading from "./Loading/Loading";
-import { RiLiveLine } from "react-icons/ri";
 
 type GlobalContextType = {
   user: IUser | null;

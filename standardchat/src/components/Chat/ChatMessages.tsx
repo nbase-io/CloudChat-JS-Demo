@@ -65,45 +65,47 @@ function ChatMessages({
             if (index === array.length - 1) {
               isLastMessageDate = true;
             }
+            const dateMarker = (
+              <Flex align="center" mt={6}>
+                <Divider />
+                <Text
+                  my={4}
+                  fontSize={10}
+                  minW={"40"}
+                  color={"gray"}
+                  align="center"
+                >
+                  <Moment calendar>{array[index - 1].node.created_at}</Moment>
+                </Text>
+                <Divider />
+              </Flex>
+            );
+
+            const lastMessageDateMarker = (
+              <Flex align="center" mt={6}>
+                <Divider />
+                <Text
+                  my={4}
+                  fontSize={10}
+                  minW={"40"}
+                  color={"gray"}
+                  align="center"
+                >
+                  <Moment calendar>{node.created_at}</Moment>
+                </Text>
+                <Divider />
+              </Flex>
+            );
+
             return (
               <Box key={index}>
-                {isLastMessageDate && (
-                  <Flex align="center" mt={6}>
-                    <Divider />
-                    <Text
-                      my={4}
-                      fontSize={10}
-                      minW={"40"}
-                      color={"gray"}
-                      align="center"
-                    >
-                      <Moment calendar>{node.created_at}</Moment>
-                    </Text>
-                    <Divider />
-                  </Flex>
-                )}
+                {isLastMessageDate && lastMessageDateMarker}
                 <ChatBubble
                   key={index}
                   node={node}
                   setReplyParentMessage={setReplyParentMessage}
                 />
-                {currentMessageDate != pastMessageDate && (
-                  <Flex align="center" mt={6}>
-                    <Divider />
-                    <Text
-                      my={4}
-                      fontSize={10}
-                      minW={"40"}
-                      color={"gray"}
-                      align="center"
-                    >
-                      <Moment calendar>
-                        {array[index - 1].node.created_at}
-                      </Moment>
-                    </Text>
-                    <Divider />
-                  </Flex>
-                )}
+                {currentMessageDate != pastMessageDate && dateMarker}
               </Box>
             );
           } else {

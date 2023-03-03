@@ -12,12 +12,14 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import toast, { Toaster } from "react-hot-toast";
 
+// global error handling
 const mutationCache = new MutationCache({
   onError(error: any) {
     toast.error(`Something went wrong: ${error.message}`);
   },
 });
 
+// global error handling
 const queryCache = new QueryCache({
   onError(error: any) {
     toast.error(`Something went wrong: ${error.message}`);

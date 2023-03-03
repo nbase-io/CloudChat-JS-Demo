@@ -7,23 +7,21 @@ type Props = {
 };
 
 function UserList({ onClose, subscriptions }: Props) {
+  const userListHeader = (
+    <HStack w="full" justifyContent={"space-between"} h={"64px"} px={2} pt={4}>
+      <HStack spacing={1} ml="3">
+        <Text as="b" color="blue.400">
+          {subscriptions.totalCount}
+        </Text>
+        <Text>people watching</Text>
+      </HStack>
+      <CloseButton onClick={onClose} />
+    </HStack>
+  );
+
   return (
     <VStack bg="gray.900" w="full" color="white">
-      <HStack
-        w="full"
-        justifyContent={"space-between"}
-        h={"64px"}
-        px={2}
-        pt={4}
-      >
-        <HStack spacing={1} ml="3">
-          <Text as="b" color="blue.400">
-            {subscriptions.totalCount}
-          </Text>
-          <Text>people watching</Text>
-        </HStack>
-        <CloseButton onClick={onClose} />
-      </HStack>
+      {userListHeader}
       <VStack
         w="full"
         overflowY={"auto"}
