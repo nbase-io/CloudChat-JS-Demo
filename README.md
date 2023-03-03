@@ -56,4 +56,18 @@ With the Ncloud Chat service of NAVER Cloud Platform, you don't have to develop 
  - Copy Message
 ---
 ## Implementation
-###
+### connect
+### getChannels
+### subscribe
+### unsubscribe
+### getSubscriptions
+### getMessages
+### sendMessage
+### sendImage
+### deleteMessage
+### createChannel
+### deleteChannel
+### onMessageReceived
+### onMessageDeleted
+### onMemberJoined
+### onMemberLeft
