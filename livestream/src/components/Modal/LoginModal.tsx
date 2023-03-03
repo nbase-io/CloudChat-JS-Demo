@@ -22,7 +22,7 @@ import { useForm } from "react-hook-form";
 import { ILogin } from "../../lib/interfaces/ILogin";
 import { connect } from "../../api";
 import { useMutation } from "@tanstack/react-query";
-import { CustomToast } from "../Toast/CustomToast";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -40,7 +40,6 @@ function LoginModal({
   setIsLoading,
 }: Props) {
   const ramdomUser = `guest-${Math.floor(Math.random() * 9999)}`;
-  const { addToast } = CustomToast();
   const {
     register,
     handleSubmit,
@@ -56,12 +55,12 @@ function LoginModal({
   // 1. connect
   const mutation = useMutation<any, any, ILogin>(connect, {
     onSuccess: (data) => {
+      toast.success(`Hello, ${data?.name}`);
       setUser(data);
       onModalClose();
       reset();
     },
     onError: (error) => {
-      addToast({ title: "Login failed", status: "error" });
       setIsLoading(false);
     },
     mutationKey: ["connect"],

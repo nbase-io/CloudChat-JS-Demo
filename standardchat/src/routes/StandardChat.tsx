@@ -7,11 +7,9 @@ import ChatDetailDrawer from "../components/ChatDetail/ChatDetailDrawer";
 import LeftSideBar from "../components/LeftSideBar/LeftSideBar";
 import LeftSideBarDrawer from "../components/LeftSideBar/LeftSideBarDrawer";
 import { useGlobal } from "../components/Root";
-import { CustomToast } from "../components/Toast/CustomToast";
 
 function StandardChat() {
   const { user, setIsLoading } = useGlobal();
-  const { addToast } = CustomToast();
   const userId = user?.id;
   // 2. getChannels after connect
   const {
@@ -54,11 +52,6 @@ function StandardChat() {
   useEffect(() => {
     if (subscribeError) {
       setChannel(null);
-      addToast({
-        title: `Failed to subscribe ${channel.name}`,
-        description: subscribeError.message,
-        status: "error",
-      });
     }
   }, [subscribeError]);
 

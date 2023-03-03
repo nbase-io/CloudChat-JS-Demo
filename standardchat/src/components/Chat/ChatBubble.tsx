@@ -17,8 +17,8 @@ import { VscReply, VscCopy, VscTrash, VscCheck } from "react-icons/vsc";
 import Moment from "react-moment";
 import { useDeleteMessage } from "../../api";
 import ImageViwer from "./ImageViewer";
-import { CustomToast } from "../Toast/CustomToast";
 import { useGlobal } from "../Root";
+import toast from "react-hot-toast";
 
 type Props = {
   node: any;
@@ -27,7 +27,6 @@ type Props = {
 
 function ChatBubble({ node, setReplyParentMessage }: Props) {
   const { user } = useGlobal();
-  const { addToast } = CustomToast();
 
   const {
     isOpen: isImageModalOpen,
@@ -54,26 +53,8 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
   }, [node.content]);
   const onCopyButtonClicked = () => {
     onCopy();
-    addToast({
-      title: node.content,
-      description: `has been copied to the clipboard!`,
-      status: "success",
-    });
+    toast.success(`"${node.content}" has been copied to the clipboard!`);
   };
-
-  useEffect(() => {
-    if (deleteMessageStatus === "success") {
-      addToast({
-        description: `A message has been deleted!`,
-        status: deleteMessageStatus,
-      });
-    } else if (deleteMessageStatus === "error") {
-      addToast({
-        description: `Failed to delete the message.`,
-        status: deleteMessageStatus,
-      });
-    }
-  }, [deleteMessageStatus]);
 
   const othersBubbleName = (
     <HStack>

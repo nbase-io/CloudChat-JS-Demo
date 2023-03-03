@@ -17,8 +17,8 @@ import { VscReply, VscCopy, VscTrash, VscCheck } from "react-icons/vsc";
 import Moment from "react-moment";
 import { useDeleteMessage } from "../../api";
 import ImageViwer from "./ImageViewer";
-import { CustomToast } from "../Toast/CustomToast";
 import { useGlobal } from "../Root";
+import toast from "react-hot-toast";
 
 type Props = {
   node: any;
@@ -27,7 +27,6 @@ type Props = {
 
 function ChatBubble({ node, setReplyParentMessage }: Props) {
   const { user } = useGlobal();
-  const { addToast } = CustomToast();
   const {
     isOpen: isImageModalOpen,
     onOpen: onImageModalOpen,
@@ -46,33 +45,15 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
   const { mutate: deleteMessage, status: deleteMessageStatus } =
     useDeleteMessage(node.channel_id, node.message_id);
   const { onCopy, setValue, hasCopied } = useClipboard(node.content);
+  const onCopyButtonClicked = () => {
+    onCopy();
+    toast.success(`"${node.content}" has been copied to the clipboard!`);
+  };
 
   // this is needed for copy-to-clipboard
   useEffect(() => {
     setValue(node.content);
   }, [node.content]);
-  const onCopyButtonClicked = () => {
-    onCopy();
-    addToast({
-      title: node.content,
-      description: `has been copied to the clipboard!`,
-      status: "success",
-    });
-  };
-
-  useEffect(() => {
-    if (deleteMessageStatus === "success") {
-      addToast({
-        description: `A message has been deleted!`,
-        status: deleteMessageStatus,
-      });
-    } else if (deleteMessageStatus === "error") {
-      addToast({
-        description: `Failed to delete the message.`,
-        status: deleteMessageStatus,
-      });
-    }
-  }, [deleteMessageStatus]);
 
   const othersBubbleName = (
     <HStack>
@@ -184,6 +165,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
       <HStack
         alignItems={isHovering ? "center" : "flex-end"}
         onMouseLeave={() => setIsHovering(false)}
+        w="505"
       >
         {/* time and hover buttons */}
         {isMe &&

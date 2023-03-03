@@ -15,8 +15,8 @@ import { nc } from "../../api";
 import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
 import UserList from "./UserList";
-import { CustomToast } from "../Toast/CustomToast";
 import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 type Props = {
   subscription: any;
@@ -32,7 +32,6 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
   const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
-  const { addToast } = CustomToast();
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
@@ -72,13 +71,8 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
 
   // user joined
   nc.bind("onMemberJoined", (data: any) => {
-    console.log(data);
     if (subscription?.channel_id === data.channel_id) {
-      addToast({
-        title: data.user_id,
-        description: `joined ${subscription?.channel.name}`,
-        status: "info",
-      });
+      toast(`${data.user_id} joined ${subscription?.channel.name}`);
       queryClient.invalidateQueries([
         "subscriptions",
         { channelId: subscription?.channel_id },
@@ -90,11 +84,7 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
   nc.bind("onMemberLeaved", (data: any) => {
     console.log(data);
     if (subscription?.channel_id === data.channel_id) {
-      addToast({
-        title: data.user_id,
-        description: `left ${subscription?.channel.name}`,
-        status: "info",
-      });
+      toast(`${data.user_id} left ${subscription?.channel.name}`);
       queryClient.invalidateQueries([
         "subscriptions",
         { channelId: subscription?.channel_id },

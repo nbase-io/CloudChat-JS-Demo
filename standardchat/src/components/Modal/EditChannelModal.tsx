@@ -21,8 +21,8 @@ import { updateChannel } from "../../api";
 import { useForm } from "react-hook-form";
 import { IUpdateChannel } from "../../lib/interfaces/IChannel";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CustomToast } from "../Toast/CustomToast";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -38,7 +38,6 @@ function EditChannelModal({
   setChannel,
 }: Props) {
   const queryClient = useQueryClient();
-  const { addToast } = CustomToast();
   const {
     register,
     handleSubmit,
@@ -49,18 +48,11 @@ function EditChannelModal({
 
   const mutation = useMutation<any, any, IUpdateChannel>(updateChannel, {
     onSuccess: (data) => {
-      console.log(data);
-      addToast({
-        title: `A channel ${data?.name} was edited!`,
-        status: "success",
-      });
+      toast.success(`A channel ${data?.name} was edited!`);
       setChannel(null);
       onModalClose();
       reset();
       queryClient.refetchQueries(["channels"]);
-    },
-    onError: (error) => {
-      addToast({ title: { error }, status: "error" });
     },
   });
 

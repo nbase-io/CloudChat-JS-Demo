@@ -6,7 +6,7 @@ import { nc, useMarkRead } from "../../api";
 import ChatMessages from "./ChatMessages";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGlobal } from "../Root";
-import { CustomToast } from "../Toast/CustomToast";
+import toast from "react-hot-toast";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -37,7 +37,6 @@ function Chat({
     user!.id,
     lastMessageRef.current?.node.sort_id
   );
-  const { addToast } = CustomToast();
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
@@ -62,12 +61,12 @@ function Chat({
     if (channel.id === channelId) {
       setArrivalMessage({ node: message });
     }
-    console.log(channelId, message);
   });
 
   // message deleted
   nc.bind("onMessageDeleted", (channelId: string, data: any) => {
     if (channel.id === channelId) {
+      toast.success(`A message has been deleted!`);
       // delete message
       const newMessages = messages.filter(
         (item: any) => item.node.message_id !== data.message_id
@@ -79,11 +78,7 @@ function Chat({
   // user joined
   nc.bind("onMemberJoined", (data: any) => {
     if (channel.id === data.channel_id) {
-      addToast({
-        title: data.user_id,
-        description: `joined ${channel.name}`,
-        status: "info",
-      });
+      toast(`${data.user_id} joined ${channel.name}`);
       queryClient.invalidateQueries([
         "subscriptions",
         { channelId: channel.id },
@@ -94,11 +89,7 @@ function Chat({
   // user leave
   nc.bind("onMemberLeaved", (data: any) => {
     if (channel.id === data.channel_id) {
-      addToast({
-        title: data.user_id,
-        description: `left ${channel.name}`,
-        status: "info",
-      });
+      toast(`${data.user_id} left ${channel.name}`);
       queryClient.invalidateQueries([
         "subscriptions",
         { channelId: channel.id },

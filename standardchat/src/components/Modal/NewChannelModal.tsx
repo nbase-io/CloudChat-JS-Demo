@@ -21,7 +21,7 @@ import { createChannel } from "../../api";
 import { useForm } from "react-hook-form";
 import { ICreateChannel } from "../../lib/interfaces/IChannel";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CustomToast } from "../Toast/CustomToast";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -33,7 +33,6 @@ function NewChannelModal({
   onClose: onModalClose,
 }: Props) {
   const queryClient = useQueryClient();
-  const { addToast } = CustomToast();
   const {
     register,
     handleSubmit,
@@ -43,16 +42,10 @@ function NewChannelModal({
 
   const mutation = useMutation<any, any, ICreateChannel>(createChannel, {
     onSuccess: (data) => {
-      addToast({
-        title: `New channel ${data?.name} was created!`,
-        status: "success",
-      });
+      toast.success(`New channel ${data?.name} was created!`);
       onModalClose();
       reset();
       queryClient.refetchQueries(["channels"]);
-    },
-    onError: (error) => {
-      addToast({ title: { error }, status: "error" });
     },
   });
 

@@ -5,7 +5,6 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuGroup,
   MenuItem,
   MenuList,
@@ -16,15 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoMdInformationCircleOutline, IoMdMenu } from "react-icons/io";
-import { MdOutlinePersonAddAlt, MdOutlinePersonRemove } from "react-icons/md";
 import { RxExit } from "react-icons/rx";
 import { SlOptions, SlSettings } from "react-icons/sl";
 import { useDeleteChannel, useUnsubscribe } from "../../api";
-import { CustomToast } from "../Toast/CustomToast";
 import { useQueryClient } from "@tanstack/react-query";
 import EditChannelModal from "../Modal/EditChannelModal";
 import { FaLock } from "react-icons/fa";
 import { useGlobal } from "../Root";
+import toast from "react-hot-toast";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -42,7 +40,6 @@ export const ChatHeader = ({
   const { user } = useGlobal();
   const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
   const queryClient = useQueryClient();
-  const { addToast } = CustomToast();
   const { mutate: deleteChannel, status: deleteChannelStatus } =
     useDeleteChannel(channel.id);
   const { mutate: unsubscribe, status: unsubscribeStatus } = useUnsubscribe(
@@ -53,33 +50,21 @@ export const ChatHeader = ({
 
   useEffect(() => {
     if (deleteChannelStatus === "success") {
-      addToast({
-        description: `A channel has been deleted!`,
-        status: deleteChannelStatus,
-      });
+      toast.success(`A channel has been deleted!`);
       setChannel(null);
       queryClient.refetchQueries(["channels"]);
     } else if (deleteChannelStatus === "error") {
-      addToast({
-        description: `Failed to delete the channel.`,
-        status: deleteChannelStatus,
-      });
+      toast.error(`Failed to delete the channel ${channel.name}.`);
     }
   }, [deleteChannelStatus]);
 
   useEffect(() => {
     if (unsubscribeStatus === "success") {
-      addToast({
-        description: `You have left the channel!`,
-        status: unsubscribeStatus,
-      });
+      toast.success(`You have left the channel!`);
       setChannel(null);
       queryClient.setQueryData(["subscribe", { channelId: channel.id }], null);
     } else if (unsubscribeStatus === "error") {
-      addToast({
-        description: `Failed to leave the channel.`,
-        status: unsubscribeStatus,
-      });
+      toast.error(`Failed to leave the channel ${channel.name}.`);
     }
   }, [unsubscribeStatus]);
 

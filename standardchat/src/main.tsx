@@ -7,10 +7,31 @@ import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
+  MutationCache,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import toast, { Toaster } from "react-hot-toast";
+
+const mutationCache = new MutationCache({
+  onError(error: any, variables, context, mutation) {
+    console.log(error.message);
+    console.log(variables);
+    console.log(mutation);
+    toast.error(`Something went wrong: ${error.message}`);
+  },
+});
+
+const queryCache = new QueryCache({
+  onError(error: any, query) {
+    console.log(error);
+    console.log(query);
+    toast.error(`Something went wrong: ${error.message}`);
+  },
+});
 
 const client = new QueryClient({
+  mutationCache,
+  queryCache,
   defaultOptions: {
     queries: {
       retry: false,
@@ -27,11 +48,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={client}>
-      <ChakraProvider>
+    <ChakraProvider>
+      <QueryClientProvider client={client}>
         <RouterProvider router={router} />
-      </ChakraProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+        <Toaster />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ChakraProvider>
   </React.StrictMode>
 );
