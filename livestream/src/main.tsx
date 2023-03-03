@@ -1,12 +1,32 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+  MutationCache,
+} from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import toast, { Toaster } from "react-hot-toast";
+
+const mutationCache = new MutationCache({
+  onError(error: any) {
+    toast.error(`Something went wrong: ${error.message}`);
+  },
+});
+
+const queryCache = new QueryCache({
+  onError(error: any) {
+    toast.error(`Something went wrong: ${error.message}`);
+  },
+});
 
 const client = new QueryClient({
+  mutationCache,
+  queryCache,
   defaultOptions: {
     queries: {
       retry: false,
@@ -26,6 +46,7 @@ root.render(
     <QueryClientProvider client={client}>
       <ChakraProvider>
         <RouterProvider router={router} />
+        <Toaster />
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

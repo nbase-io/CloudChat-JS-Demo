@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { RouterProvider } from "react-router-dom";
@@ -13,18 +13,13 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import toast, { Toaster } from "react-hot-toast";
 
 const mutationCache = new MutationCache({
-  onError(error: any, variables, context, mutation) {
-    console.log(error.message);
-    console.log(variables);
-    console.log(mutation);
+  onError(error: any) {
     toast.error(`Something went wrong: ${error.message}`);
   },
 });
 
 const queryCache = new QueryCache({
-  onError(error: any, query) {
-    console.log(error);
-    console.log(query);
+  onError(error: any) {
     toast.error(`Something went wrong: ${error.message}`);
   },
 });
@@ -48,12 +43,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <QueryClientProvider client={client}>
+    <QueryClientProvider client={client}>
+      <ChakraProvider>
         <RouterProvider router={router} />
         <Toaster />
         <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
