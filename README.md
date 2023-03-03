@@ -21,7 +21,7 @@
    
 ## Backgound
 Standard Chat and Live Stream demo. apps are developed to show how to use the 
-Ncloud Chat JS SDK [^1] with React in TypeScript. 
+Ncloud Chat [^1] JS SDK  with React in TypeScript. 
 
 [^1]: Ncloud Chat is a service where you can implement real-time chats, message system, and multi-user chat channels. Various SDKs and APIs are provided, so you can build a chat service easily and simply.
 With the Ncloud Chat service of NAVER Cloud Platform, you don't have to develop log-in environment or operation tools, and there's no need to build a separate system for infrastructure and user management. You can analyze statistics and run and manage your service from the intuitive and convenient Ncloud Chat dashboard. Linkage with various services in NAVER Cloud Platform allows you to build a robust chat environment.
