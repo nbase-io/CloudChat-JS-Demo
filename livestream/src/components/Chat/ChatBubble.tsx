@@ -165,7 +165,6 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
       <HStack
         alignItems={isHovering ? "center" : "flex-end"}
         onMouseLeave={() => setIsHovering(false)}
-        w="505"
       >
         {/* time and hover buttons */}
         {isMe &&
@@ -185,6 +184,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
           minH={"40px"}
         >
           {node.parent_message_id && parentBubble}
+          {/* message box */}
           <Box
             px={4}
             py={2}

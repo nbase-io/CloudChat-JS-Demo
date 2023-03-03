@@ -142,25 +142,6 @@ function Chat({
           setReplyParentMessage={setReplyParentMessage}
         />
       )}
-      {/* {!isBottom && messages.length > 0 && (
-        <Tooltip label="Scroll to bottom">
-          <IconButton
-            rounded={"full"}
-            bg={"black"}
-            color="white"
-            icon={<HiArrowDown />}
-            aria-label="Scroll to Bottom"
-            position={"absolute"}
-            w={"40px"}
-            margin={"0 auto"}
-            left={0}
-            right={0}
-            bottom={"64px"}
-            onClick={() => scrollToBottom()}
-            _hover={{ bg: "gray" }}
-          />
-        </Tooltip>
-      )} */}
       {channel && (
         <ChatInput
           channel={channel}

@@ -26,55 +26,64 @@ function StreamView({
   onChatOpen,
 }: Props) {
   const { user } = useGlobal();
-  return (
-    <VStack w="full" spacing={0}>
-      <HStack
-        bg="gray.800"
-        h={"64px"}
-        px={6}
-        w="full"
-        justifyContent={"space-between"}
+
+  const channelTitle = (
+    <HStack h={"64px"}>
+      <Heading
+        size="md"
+        color={"white"}
+        fontSize={{ base: "xs", md: "md", lg: "lg" }}
       >
-        <HStack h={"64px"}>
-          <Heading
-            size="md"
-            color={"white"}
-            fontSize={{ base: "xs", md: "md", lg: "lg" }}
-          >
-            {subscription?.channel.name}
-          </Heading>
-          <Text
-            color={"white"}
-            fontSize="2xs"
-            as="b"
-            bg="red"
-            px={2}
-            rounded="full"
-          >
-            LIVE
+        {subscription?.channel.name}
+      </Heading>
+      <Text
+        color={"white"}
+        fontSize="2xs"
+        as="b"
+        bg="red"
+        px={2}
+        rounded="full"
+      >
+        LIVE
+      </Text>
+    </HStack>
+  );
+
+  const streamViewHeader = (
+    <HStack
+      bg="gray.800"
+      h={"64px"}
+      px={6}
+      w="full"
+      justifyContent={"space-between"}
+    >
+      {channelTitle}
+      <HStack spacing={6} color="white">
+        <UserAvatar user={user} color="white" />
+        <HStack spacing={1}>
+          <AiOutlineEye />
+          <Text fontSize={{ base: "xs", lg: "sm" }}>
+            {subscriptions?.totalCount}
           </Text>
         </HStack>
-        <HStack spacing={6} color="white">
-          <UserAvatar user={user} color="white" />
-          <HStack spacing={1}>
-            <AiOutlineEye />
-            <Text fontSize={{ base: "xs", lg: "sm" }}>
-              {subscriptions?.totalCount}
-            </Text>
-          </HStack>
-          <Tooltip label="Expand Chat">
-            <IconButton
-              icon={<TbLayoutSidebarLeftExpand />}
-              variant={"ghost"}
-              aria-label={"Expand Chat"}
-              size="lg"
-              _hover={{ bgColor: "gray.700" }}
-              onClick={onChatOpen}
-              hidden={isChatOpen}
-            />
-          </Tooltip>
-        </HStack>
+        <Tooltip label="Expand Chat">
+          <IconButton
+            icon={<TbLayoutSidebarLeftExpand />}
+            variant={"ghost"}
+            aria-label={"Expand Chat"}
+            size="lg"
+            _hover={{ bgColor: "gray.700" }}
+            onClick={onChatOpen}
+            hidden={isChatOpen}
+          />
+        </Tooltip>
       </HStack>
+    </HStack>
+  );
+
+  return (
+    <VStack w="full" spacing={0}>
+      {streamViewHeader}
       <VStack justifyContent={"center"} h="100%" w="full" bg="black">
         <ReactPlayer
           url="https://ssl.pstatic.net/static/ncp/ndk/s/img/temp_video.mp4"

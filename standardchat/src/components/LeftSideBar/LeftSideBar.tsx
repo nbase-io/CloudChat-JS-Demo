@@ -1,23 +1,16 @@
 import {
-  // Avatar,
-  // AvatarBadge,
   Box,
-  // Divider,
-  // Flex,
   Heading,
-  // HStack,
   IconButton,
   List,
   ListItem,
   VStack,
-  // Text,
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatRow from "./ChatRow";
 import NewChannelModal from "../Modal/NewChannelModal";
-// import UserAvatar from "../UserAvatar/UserAvatar";
 
 type Props = {
   user: any;

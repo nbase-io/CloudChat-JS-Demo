@@ -53,6 +53,54 @@ function NewChannelModal({
     mutation.mutate(data);
   };
 
+  const channelTypeField = (
+    <VStack w="full" alignItems={"flex-start"} spacing={0}>
+      <Select
+        isInvalid={Boolean(errors.type?.message)}
+        placeholder="Choose a channel type"
+        defaultValue={"PUBLIC"}
+        {...register("type", {
+          required: "Please choose a channel type.",
+        })}
+      >
+        <option value="PUBLIC">Public</option>
+        <option value="PRIVATE">Private</option>
+      </Select>
+      <Text fontSize={"sm"} color="red.500">
+        {errors.type?.message}
+      </Text>
+    </VStack>
+  );
+
+  const channelNameField = (
+    <VStack w="full" alignItems={"flex-start"} spacing={0}>
+      <InputGroup>
+        <InputLeftElement children={<CgNametag />} />
+        <Input
+          isInvalid={Boolean(errors.name?.message)}
+          placeholder="Channel Name"
+          {...register("name", {
+            required: "Please give channel a name.",
+          })}
+        />
+      </InputGroup>
+      <Text fontSize={"sm"} color="red.500">
+        {errors.name?.message}
+      </Text>
+    </VStack>
+  );
+
+  const channelImageField = (
+    <InputGroup>
+      <InputLeftElement children={<FaImage />} />
+      <Input
+        placeholder="Channel Image URL"
+        {...register("image_url")}
+        defaultValue="https://loremflickr.com/640/360"
+      />
+    </InputGroup>
+  );
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -70,45 +118,9 @@ function NewChannelModal({
         <ModalCloseButton />
         <ModalBody py={4}>
           <VStack w="full">
-            <VStack w="full" alignItems={"flex-start"} spacing={0}>
-              <Select
-                isInvalid={Boolean(errors.type?.message)}
-                placeholder="Choose a channel type"
-                defaultValue={"PUBLIC"}
-                {...register("type", {
-                  required: "Please choose a channel type.",
-                })}
-              >
-                <option value="PUBLIC">Public</option>
-                <option value="PRIVATE">Private</option>
-              </Select>
-              <Text fontSize={"sm"} color="red.500">
-                {errors.type?.message}
-              </Text>
-            </VStack>
-            <VStack w="full" alignItems={"flex-start"} spacing={0}>
-              <InputGroup>
-                <InputLeftElement children={<CgNametag />} />
-                <Input
-                  isInvalid={Boolean(errors.name?.message)}
-                  placeholder="Channel Name"
-                  {...register("name", {
-                    required: "Please give channel a name.",
-                  })}
-                />
-              </InputGroup>
-              <Text fontSize={"sm"} color="red.500">
-                {errors.name?.message}
-              </Text>
-            </VStack>
-            <InputGroup>
-              <InputLeftElement children={<FaImage />} />
-              <Input
-                placeholder="Channel Image URL"
-                {...register("image_url")}
-                defaultValue="https://loremflickr.com/640/360"
-              />
-            </InputGroup>
+            {channelTypeField}
+            {channelNameField}
+            {channelImageField}
           </VStack>
         </ModalBody>
         <ModalFooter>

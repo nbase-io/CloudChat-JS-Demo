@@ -31,7 +31,11 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
   const hasMore = useRef(true);
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
   const [replyParentMessage, setReplyParentMessage] = useState<any>(null);
-  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
+  const {
+    isOpen: isUserListOpen,
+    onClose: onUserListClose,
+    onOpen: onUserListOpen,
+  } = useDisclosure({ defaultIsOpen: false });
 
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
@@ -106,33 +110,37 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
     }
   }, [arrivalMessage]);
 
-  return isOpen ? (
-    <UserList onClose={onClose} subscriptions={subscriptions} />
+  const chatHeader = (
+    <HStack w="full" h={"60px"} justifyContent="space-between" px={2}>
+      <Tooltip label={"Close Chat"}>
+        <IconButton
+          icon={<TbLayoutSidebarLeftCollapse />}
+          variant={"ghost"}
+          aria-label={"Collapse Chat"}
+          size="lg"
+          _hover={{ bgColor: "gray.700" }}
+          onClick={onChatClose}
+        />
+      </Tooltip>
+      <Text as="b">Live Chat</Text>
+      <Tooltip label="Members">
+        <IconButton
+          icon={<RiGroupLine />}
+          variant={"ghost"}
+          aria-label={"Attendance"}
+          size="lg"
+          _hover={{ bgColor: "gray.700" }}
+          onClick={onUserListOpen}
+        />
+      </Tooltip>
+    </HStack>
+  );
+
+  return isUserListOpen ? (
+    <UserList onClose={onUserListClose} subscriptions={subscriptions} />
   ) : (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
-      <HStack w="full" h={"60px"} justifyContent="space-between" px={2}>
-        <Tooltip label={"Close Chat"}>
-          <IconButton
-            icon={<TbLayoutSidebarLeftCollapse />}
-            variant={"ghost"}
-            aria-label={"Collapse Chat"}
-            size="lg"
-            _hover={{ bgColor: "gray.700" }}
-            onClick={onChatClose}
-          />
-        </Tooltip>
-        <Text as="b">Live Chat</Text>
-        <Tooltip label="Members">
-          <IconButton
-            icon={<RiGroupLine />}
-            variant={"ghost"}
-            aria-label={"Attendance"}
-            size="lg"
-            _hover={{ bgColor: "gray.700" }}
-            onClick={onOpen}
-          />
-        </Tooltip>
-      </HStack>
+      {chatHeader}
       <Divider borderColor={"gray"} />
       {isGettingMessages && <Progress size="xs" isIndeterminate w="full" />}
       <ChatMessages

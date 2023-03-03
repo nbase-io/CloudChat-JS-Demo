@@ -5,7 +5,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { TbSearch, TbX, TbSettings } from "react-icons/tb";
+import { TbSettings } from "react-icons/tb";
 import EditChannelModal from "../Modal/EditChannelModal";
 import { useGlobal } from "../Root";
 

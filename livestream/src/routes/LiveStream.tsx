@@ -46,21 +46,32 @@ function LiveStream() {
     }
   }, [subscriptionStatus]);
 
+  const chatView = (
+    <Popover isOpen={isChatAlertOpen}>
+      <Chat
+        subscription={subscription}
+        subscriptions={subscriptions}
+        onChatClose={onChatClose}
+      />
+      <PopoverContent bg="gray.900" borderColor="gray.600" color="white">
+        <PopoverArrow bg="gray.900" />
+        <PopoverHeader as="b" borderBottom={0}>
+          Live Chat
+        </PopoverHeader>
+        <PopoverBody color="gray.300">
+          Please have a good manner to each other to make the live broad casting
+          the best experience possible, thank you!
+        </PopoverBody>
+        <PopoverFooter borderColor={"gray.600"}>
+          <Button colorScheme="blue" w="full" onClick={onChatAlertClose}>
+            Okay
+          </Button>
+        </PopoverFooter>
+      </PopoverContent>
+    </Popover>
+  );
+
   return (
-    // <HStack w="full" h="-webkit-calc(100vh - 65px)" bg={"grey.100"} spacing={0}>
-    //   <Flex as="main" h={"full"} flex={1}>
-    //     <StreamView subscriptions={subscriptions} subscription={subscription} />
-    //   </Flex>
-    //   <Flex
-    //     as="aside"
-    //     h={"full"}
-    //     w={"full"}
-    //     maxW={{ base: "xs", xl: "sm" }}
-    //     display={{ base: "none", lg: "flex" }}
-    //   >
-    //     <Chat subscription={subscription} subscriptions={subscriptions} />
-    //   </Flex>
-    // </HStack>
     <Flex
       w="full"
       h="-webkit-calc(100vh - 65px)"
@@ -87,28 +98,7 @@ function LiveStream() {
         maxW={{ base: "full", lg: "sm" }}
         hidden={!isChatOpen}
       >
-        <Popover isOpen={isChatAlertOpen}>
-          <Chat
-            subscription={subscription}
-            subscriptions={subscriptions}
-            onChatClose={onChatClose}
-          />
-          <PopoverContent bg="gray.900" borderColor="gray.600" color="white">
-            <PopoverArrow bg="gray.900" />
-            <PopoverHeader as="b" borderBottom={0}>
-              Live Chat
-            </PopoverHeader>
-            <PopoverBody color="gray.300">
-              Please have a good manner to each other to make the live broad
-              casting the best experience possible, thank you!
-            </PopoverBody>
-            <PopoverFooter borderColor={"gray.600"}>
-              <Button colorScheme="blue" w="full" onClick={onChatAlertClose}>
-                Okay
-              </Button>
-            </PopoverFooter>
-          </PopoverContent>
-        </Popover>
+        {chatView}
       </Flex>
     </Flex>
   );

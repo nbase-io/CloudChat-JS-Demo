@@ -2,13 +2,12 @@ import * as ncloudchat from "cloudchat";
 // import ncloudchat * as ncloudchat from "../../../cloudchat-sdk-javascript/src";
 
 import {
-  useInfiniteQuery,
+  // useInfiniteQuery,
   useMutation,
   useQuery,
-  useQueryClient,
+  // useQueryClient,
 } from "@tanstack/react-query";
 
-import { IUser } from "./lib/interfaces/IUser";
 import { IFriendship } from "./lib/interfaces/IFriendship";
 import {
   IChannel,

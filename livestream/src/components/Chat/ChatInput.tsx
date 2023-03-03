@@ -18,14 +18,6 @@ import {
   CloseButton,
   Image,
   Spinner,
-  Button,
-  Portal,
-  PopoverArrow,
-  PopoverHeader,
-  PopoverCloseButton,
-  PopoverBody,
-  PopoverFooter,
-  Center,
   PopoverAnchor,
 } from "@chakra-ui/react";
 import {
@@ -132,6 +124,41 @@ function ChatInput({
     </HStack>
   );
 
+  const chatInputBar = (
+    <InputGroup>
+      <InputLeftElement>
+        <Popover isLazy isOpen={isEmojiOpen} onClose={onEmojiClose}>
+          <PopoverTrigger>
+            <Box>
+              <Tooltip label={"Add emoji"}>
+                <IconButton
+                  colorScheme={"black"}
+                  aria-label="Emoji"
+                  variant={"ghost"}
+                  icon={<RiEmotionHappyLine />}
+                  onClick={onEmojiToggle}
+                  ml={2}
+                />
+              </Tooltip>
+            </Box>
+          </PopoverTrigger>
+          <PopoverContent>
+            <Picker data={data} onEmojiSelect={emojiSelected} />
+          </PopoverContent>
+        </Popover>
+      </InputLeftElement>
+      <Input
+        borderRadius={120}
+        variant={"outline"}
+        placeholder="Type your message"
+        autoComplete="off"
+        onChange={(e) => setInput(e.target.value)}
+        value={input}
+        ref={inputRef}
+      />
+    </InputGroup>
+  );
+
   return (
     <FormControl
       as={"form"}
@@ -142,38 +169,7 @@ function ChatInput({
       {replyParentMessage !== null && replyMessageView()}
       <PopoverAnchor>
         <Flex pl={4} py={2}>
-          <InputGroup>
-            <InputLeftElement>
-              <Popover isLazy isOpen={isEmojiOpen} onClose={onEmojiClose}>
-                <PopoverTrigger>
-                  <Box>
-                    <Tooltip label={"Add emoji"}>
-                      <IconButton
-                        colorScheme={"black"}
-                        aria-label="Emoji"
-                        variant={"ghost"}
-                        icon={<RiEmotionHappyLine />}
-                        onClick={onEmojiToggle}
-                        ml={2}
-                      />
-                    </Tooltip>
-                  </Box>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <Picker data={data} onEmojiSelect={emojiSelected} />
-                </PopoverContent>
-              </Popover>
-            </InputLeftElement>
-            <Input
-              borderRadius={120}
-              variant={"outline"}
-              placeholder="Type your message"
-              autoComplete="off"
-              onChange={(e) => setInput(e.target.value)}
-              value={input}
-              ref={inputRef}
-            />
-          </InputGroup>
+          {chatInputBar}
           <Tooltip label={"Send image or video"}>
             <IconButton
               colorScheme={"black"}

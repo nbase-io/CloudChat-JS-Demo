@@ -70,6 +70,92 @@ function LoginModal({
     mutation.mutate(data);
   };
 
+  const nameField = (
+    <VStack w="full" alignItems={"flex-start"} spacing={0}>
+      <InputGroup>
+        <InputLeftElement children={<CgNametag />} />
+        <Input
+          isInvalid={Boolean(errors.name?.message)}
+          defaultValue={ramdomUser.toUpperCase()}
+          placeholder="Name"
+          {...register("name", {
+            required: "Please input a name.",
+          })}
+        />
+      </InputGroup>
+      <Text fontSize={"sm"} color="red.500">
+        {errors.name?.message}
+      </Text>
+    </VStack>
+  );
+
+  const idField = (
+    <VStack w="full" alignItems={"flex-start"} spacing={0}>
+      <InputGroup>
+        <InputLeftElement children={<FaUser />} />
+        <Input
+          isInvalid={Boolean(errors.id?.message)}
+          defaultValue={ramdomUser.toLowerCase()}
+          placeholder="ID"
+          {...register("id", { required: "Please input an id." })}
+        />
+      </InputGroup>
+      <Text fontSize={"sm"} color="red.500">
+        {errors.id?.message}
+      </Text>
+    </VStack>
+  );
+
+  const profileField = (
+    <InputGroup>
+      <InputLeftElement children={<FaImage />} />
+      <Input
+        placeholder="Profile URL"
+        {...register("profile")}
+        defaultValue="https://loremflickr.com/640/360"
+      />
+    </InputGroup>
+  );
+
+  const serverAndProjectIdFields = (
+    <VStack w="full">
+      <VStack w="full" alignItems={"flex-start"} spacing={0}>
+        <Select
+          isInvalid={Boolean(errors.server?.message)}
+          placeholder="Select a server"
+          defaultValue={"alpha"}
+          {...register("server", {
+            required: "Please choose a server",
+          })}
+        >
+          <option value="localhost">localhost</option>
+          <option value="alpha">Alpha</option>
+          <option value="beta">Beta</option>
+          <option value="real">Real</option>
+        </Select>
+        <Text fontSize={"sm"} color="red.500">
+          {errors.server?.message}
+        </Text>
+      </VStack>
+      <VStack w="full" alignItems={"flex-start"} spacing={0}>
+        <InputGroup>
+          <InputLeftElement children={<FaProjectDiagram />} />
+          <Input
+            isInvalid={Boolean(errors.projectId?.message)}
+            placeholder="Project ID"
+            defaultValue={"339c2b1c-d35b-47f2-828d-5f02a130146a"}
+            {...register("projectId", {
+              required: "Please input a project id",
+            })}
+          />
+        </InputGroup>
+        <Text fontSize={"sm"} color="red.500">
+          {errors.projectId?.message}
+        </Text>
+      </VStack>
+    </VStack>
+  );
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -92,86 +178,16 @@ function LoginModal({
         </ModalHeader>
         <ModalBody py={4}>
           <VStack>
-            <VStack w="full" alignItems={"flex-start"} spacing={0}>
-              <InputGroup>
-                <InputLeftElement children={<CgNametag />} />
-                <Input
-                  isInvalid={Boolean(errors.name?.message)}
-                  defaultValue={ramdomUser.toUpperCase()}
-                  placeholder="Name"
-                  {...register("name", {
-                    required: "Please input a name.",
-                  })}
-                />
-              </InputGroup>
-              <Text fontSize={"sm"} color="red.500">
-                {errors.name?.message}
-              </Text>
-            </VStack>
-            <VStack w="full" alignItems={"flex-start"} spacing={0}>
-              <InputGroup>
-                <InputLeftElement children={<FaUser />} />
-                <Input
-                  isInvalid={Boolean(errors.id?.message)}
-                  defaultValue={ramdomUser.toLowerCase()}
-                  placeholder="ID"
-                  {...register("id", { required: "Please input an id." })}
-                />
-              </InputGroup>
-              <Text fontSize={"sm"} color="red.500">
-                {errors.id?.message}
-              </Text>
-            </VStack>
-            <InputGroup>
-              <InputLeftElement children={<FaImage />} />
-              <Input
-                placeholder="Profile URL"
-                {...register("profile")}
-                defaultValue="https://loremflickr.com/640/360"
-              />
-            </InputGroup>
+            {nameField}
+            {idField}
+            {profileField}
           </VStack>
           <Button mt={6} colorScheme={"blue"} w="full" type="submit">
             Start
           </Button>
         </ModalBody>
         <ModalFooter hidden={!isServerSelectionOpen}>
-          <VStack w="full">
-            <VStack w="full" alignItems={"flex-start"} spacing={0}>
-              <Select
-                isInvalid={Boolean(errors.server?.message)}
-                placeholder="Select a server"
-                defaultValue={"alpha"}
-                {...register("server", {
-                  required: "Please choose a server",
-                })}
-              >
-                <option value="localhost">localhost</option>
-                <option value="alpha">Alpha</option>
-                <option value="beta">Beta</option>
-                <option value="real">Real</option>
-              </Select>
-              <Text fontSize={"sm"} color="red.500">
-                {errors.server?.message}
-              </Text>
-            </VStack>
-            <VStack w="full" alignItems={"flex-start"} spacing={0}>
-              <InputGroup>
-                <InputLeftElement children={<FaProjectDiagram />} />
-                <Input
-                  isInvalid={Boolean(errors.projectId?.message)}
-                  placeholder="Project ID"
-                  defaultValue={"339c2b1c-d35b-47f2-828d-5f02a130146a"}
-                  {...register("projectId", {
-                    required: "Please input a project id",
-                  })}
-                />
-              </InputGroup>
-              <Text fontSize={"sm"} color="red.500">
-                {errors.projectId?.message}
-              </Text>
-            </VStack>
-          </VStack>
+          {serverAndProjectIdFields}
         </ModalFooter>
       </ModalContent>
     </Modal>

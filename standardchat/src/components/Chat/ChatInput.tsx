@@ -96,6 +96,66 @@ function ChatInput({
     }
   }, [plainFiles]);
 
+  function replyMessageView() {
+    return (
+      <HStack px={4} py={2} justifyContent={"space-between"}>
+        <VStack alignItems={"flex-start"}>
+          <Text fontSize={"2xs"} as="b">
+            {`Reply to ${replyParentMessage.sender.name}`}
+          </Text>
+          {replyParentMessage.message_type === "text" ? (
+            <Text fontSize={"xs"} noOfLines={1} color={"gray"}>
+              {replyParentMessage.content}
+            </Text>
+          ) : (
+            <Image
+              src={`https://alpha-api.cloudchat.dev${replyParentMessage.attachment_filenames.url}`}
+              alt={replyParentMessage.attachment_filenames.name}
+              fallback={<Spinner />}
+              maxW={"3xs"}
+            />
+          )}
+        </VStack>
+        <CloseButton onClick={() => setReplyParentMessage(null)} />
+      </HStack>
+    );
+  }
+
+  const chatInputBar = (
+    <InputGroup>
+      <InputLeftElement>
+        <Popover isLazy isOpen={isOpen} onClose={onClose}>
+          <PopoverTrigger>
+            <Box>
+              <Tooltip label={"Add emoji"}>
+                <IconButton
+                  colorScheme={"black"}
+                  aria-label="Emoji"
+                  variant={"ghost"}
+                  icon={<RiEmotionHappyLine />}
+                  onClick={onToggle}
+                  ml={2}
+                />
+              </Tooltip>
+            </Box>
+          </PopoverTrigger>
+          <PopoverContent>
+            <Picker data={data} onEmojiSelect={emojiSelected} />
+          </PopoverContent>
+        </Popover>
+      </InputLeftElement>
+      <Input
+        borderRadius={120}
+        variant={"outline"}
+        placeholder="Type your message"
+        autoComplete="off"
+        onChange={(e) => setInput(e.target.value)}
+        value={input}
+        ref={inputRef}
+      />
+    </InputGroup>
+  );
+
   return (
     <FormControl
       as={"form"}
@@ -103,61 +163,9 @@ function ChatInput({
       borderTopColor="gray.100"
       borderTopWidth={1}
     >
-      {replyParentMessage !== null && (
-        <HStack px={4} py={2} justifyContent={"space-between"}>
-          <VStack alignItems={"flex-start"}>
-            <Text fontSize={"2xs"} as="b">
-              {`Reply to ${replyParentMessage.sender.name}`}
-            </Text>
-            {replyParentMessage.message_type === "text" ? (
-              <Text fontSize={"xs"} noOfLines={1} color={"gray"}>
-                {replyParentMessage.content}
-              </Text>
-            ) : (
-              <Image
-                src={`https://alpha-api.cloudchat.dev${replyParentMessage.attachment_filenames.url}`}
-                alt={replyParentMessage.attachment_filenames.name}
-                fallback={<Spinner />}
-                maxW={"3xs"}
-              />
-            )}
-          </VStack>
-          <CloseButton onClick={() => setReplyParentMessage(null)} />
-        </HStack>
-      )}
+      {replyParentMessage !== null && replyMessageView()}
       <Flex pl={4} py={2}>
-        <InputGroup>
-          <InputLeftElement>
-            <Popover isLazy isOpen={isOpen} onClose={onClose}>
-              <PopoverTrigger>
-                <Box>
-                  <Tooltip label={"Add emoji"}>
-                    <IconButton
-                      colorScheme={"black"}
-                      aria-label="Emoji"
-                      variant={"ghost"}
-                      icon={<RiEmotionHappyLine />}
-                      onClick={onToggle}
-                      ml={2}
-                    />
-                  </Tooltip>
-                </Box>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Picker data={data} onEmojiSelect={emojiSelected} />
-              </PopoverContent>
-            </Popover>
-          </InputLeftElement>
-          <Input
-            borderRadius={120}
-            variant={"outline"}
-            placeholder="Type your message"
-            autoComplete="off"
-            onChange={(e) => setInput(e.target.value)}
-            value={input}
-            ref={inputRef}
-          />
-        </InputGroup>
+        {chatInputBar}
         <Tooltip label={"Send image or video"}>
           <IconButton
             colorScheme={"black"}

@@ -20,6 +20,33 @@ function ChatRow({ channel, subscription }: Props) {
   //   refetch();
   // }, [subscription]);
 
+  const channelNameAndLastMessage = (
+    <VStack
+      overflow={"hidden"}
+      flex={1}
+      ml={3}
+      spacing={0}
+      alignItems="flex-start"
+    >
+      <HStack spacing={1}>
+        <Heading fontSize={12} w="full">
+          {channel.name}
+        </Heading>
+        {channel.type === "PRIVATE" && <FaLock size={"10"} />}
+      </HStack>
+      <Text
+        overflow={"hidden"}
+        textOverflow="ellipsis"
+        whiteSpace={"nowrap"}
+        w="full"
+        fontSize={"xs"}
+        color="gray.500"
+      >
+        {channel.last_message && channel.last_message.content}
+      </Text>
+    </VStack>
+  );
+
   return (
     <Flex
       py={4}
@@ -32,30 +59,7 @@ function ChatRow({ channel, subscription }: Props) {
       _hover={{ bg: "gray.50", cursor: "pointer" }}
     >
       <Avatar name={channel.name} src={channel.image_url} />
-      <VStack
-        overflow={"hidden"}
-        flex={1}
-        ml={3}
-        spacing={0}
-        alignItems="flex-start"
-      >
-        <HStack spacing={1}>
-          <Heading fontSize={12} w="full">
-            {channel.name}
-          </Heading>
-          {channel.type === "PRIVATE" && <FaLock size={"10"} />}
-        </HStack>
-        <Text
-          overflow={"hidden"}
-          textOverflow="ellipsis"
-          whiteSpace={"nowrap"}
-          w="full"
-          fontSize={"xs"}
-          color="gray.500"
-        >
-          {channel.last_message && channel.last_message.content}
-        </Text>
-      </VStack>
+      {channelNameAndLastMessage}
       <VStack justifyContent={"center"} alignItems="center" spacing={1}>
         <Text fontSize="xs" color={"gray.500"} w="full">
           {channel.last_message && (
