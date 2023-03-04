@@ -433,3 +433,4 @@ nc.bind("onMemberLeaved", (data: any) => {
 ```
 ## Getting Help
 Please see our [official document guide](https://guide.ncloud-docs.com/docs/bizapp-ncloudchat-javascriptsdk) for more information about the NcloudChat JS SDK.
+
