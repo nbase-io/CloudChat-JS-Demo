@@ -76,7 +76,10 @@ function ChatInput({
   const sendText = (e: any) => {
     e.preventDefault();
     if (input) {
-      input.includes("#") ? sendIntegration() : sendMessage();
+      sendMessage();
+      if (input.includes("#")) {
+        sendIntegration();
+      }
     }
     setInput(""); // clear input
     setReplyParentMessage(null); // clear parent message
