@@ -65,6 +65,7 @@ function EditChannelModal({
     setValue("name", channel.name);
     setValue("type", channel.type);
     setValue("image_url", channel.image_url);
+    setValue("translation", channel.translation);
   }, [channel]);
 
   const channelTypeField = (

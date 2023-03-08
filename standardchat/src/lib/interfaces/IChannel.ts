@@ -30,4 +30,5 @@ export interface IUpdateChannel {
   type: string;
   name: string;
   image_url: string;
+  translation: boolean;
 }

@@ -19,6 +19,7 @@ import { useDeleteMessage } from "../../api";
 import ImageViwer from "./ImageViewer";
 import { useGlobal } from "../Root";
 import toast from "react-hot-toast";
+import JSONPretty from "react-json-pretty";
 
 type Props = {
   node: any;
@@ -153,6 +154,23 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
     </HStack>
   );
 
+  const messageContent = () => {
+    if (node.translate) {
+      return <JSONPretty data={node.content}></JSONPretty>;
+    } else {
+      return node.message_type === "text" ? (
+        <Text>{node.content}</Text>
+      ) : (
+        <Image
+          src={`https://alpha-api.cloudchat.dev${node.attachment_filenames?.url}`}
+          alt={node.attachment_filenames?.name}
+          onClick={onImageModalOpen}
+          fallback={<Spinner />}
+        />
+      );
+    }
+  };
+
   return (
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
       {!isMe && othersBubbleName}
@@ -181,7 +199,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
         <VStack
           onMouseEnter={() => setIsHovering(true)}
           spacing={0}
-          maxW={80}
+          // maxW={80}
           minH={"40px"}
         >
           {node.parent_message_id && parentBubble}
@@ -196,16 +214,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
             borderBottomRightRadius={bottomRightRadius}
             _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
           >
-            {node.message_type === "text" ? (
-              <Text>{node.content}</Text>
-            ) : (
-              <Image
-                src={`https://alpha-api.cloudchat.dev${node.attachment_filenames?.url}`}
-                alt={node.attachment_filenames?.name}
-                onClick={onImageModalOpen}
-                fallback={<Spinner />}
-              />
-            )}
+            {messageContent()}
           </Box>
         </VStack>
         {/* time and hover buttons */}

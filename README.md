@@ -19,6 +19,14 @@
 2. clean up codes
 3. add comments
 4. add MIT license
+
+#### 03-08-2023
+1. add ncloud chat document link button
+2. add npm link buttn
+3. add Google Analytics
+4. getChannels only fetch public
+5. wider message bubble width
+6. add sendIntegration (chatGPT, Papago translation)
    
 ## Backgound
 [Standard Chat]((https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 

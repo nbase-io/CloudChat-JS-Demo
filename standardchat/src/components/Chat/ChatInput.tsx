@@ -27,7 +27,7 @@ import {
 import { useFilePicker } from "use-file-picker";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import { useSendImage, useSendMessage } from "../../api";
+import { useSendImage, useSendIntegration, useSendMessage } from "../../api";
 
 type Props = {
   channel: any;
@@ -46,6 +46,11 @@ function ChatInput({
     channel.id,
     input,
     replyParentMessage?.message_id
+  );
+  const { mutate: sendIntegration } = useSendIntegration(
+    channel.translation,
+    channel.id,
+    input
   );
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [
@@ -71,8 +76,7 @@ function ChatInput({
   const sendText = (e: any) => {
     e.preventDefault();
     if (input) {
-      // send message
-      sendMessage(channel.id, input);
+      input.includes("#") ? sendIntegration() : sendMessage();
     }
     setInput(""); // clear input
     setReplyParentMessage(null); // clear parent message

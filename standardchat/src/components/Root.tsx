@@ -10,7 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Link, Outlet, useOutletContext } from "react-router-dom";
-import { FaSketch, FaGithub } from "react-icons/fa";
+import { FaSketch, FaGithub, FaNpm } from "react-icons/fa";
+import { SiNaver, SiSketch, SiGithub, SiNpm } from "react-icons/si";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
 import Loading from "./Loading/Loading";
@@ -54,10 +55,34 @@ function Root() {
         Live Stream <ExternalLinkIcon mx="2px" />
       </ChakraLink>
       <HStack spacing={2}>
-        <Tooltip label={"Go to Github"}>
-          <Link to={"https://github.com/nbase-io/CloudChat-JS-Demo"}>
+        <Tooltip label={"Ncloud Chat"}>
+          <Link
+            to={"https://www.ncloud.com/product/businessApplication/ncloudChat"}
+            target="_blank"
+          >
             <IconButton
-              icon={<FaGithub />}
+              icon={<SiNaver />}
+              variant={"ghost"}
+              aria-label={"NAVER Button"}
+            />
+          </Link>
+        </Tooltip>
+        <Tooltip label={"Go to NPM"}>
+          <Link to={"https://www.npmjs.com/package/cloudchat"} target="_blank">
+            <IconButton
+              icon={<SiNpm />}
+              variant={"ghost"}
+              aria-label={"NPM Button"}
+            />
+          </Link>
+        </Tooltip>
+        <Tooltip label={"Go to Github"}>
+          <Link
+            to={"https://github.com/nbase-io/CloudChat-JS-Demo"}
+            target="_blank"
+          >
+            <IconButton
+              icon={<SiGithub />}
               variant={"ghost"}
               aria-label={"Github Button"}
             />
@@ -68,9 +93,10 @@ function Root() {
             to={
               "https://kr.object.ncloudstorage.com/ncloudchat/NCP_Ncloud%20Chat_UI%20Kit_v1.0.sketch"
             }
+            target="_blank"
           >
             <IconButton
-              icon={<FaSketch />}
+              icon={<SiSketch />}
               variant={"ghost"}
               aria-label={"Download Sketch Button"}
             />

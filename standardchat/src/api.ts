@@ -78,7 +78,7 @@ export const useGetChannels = (enabled: boolean) =>
   useQuery<IChannel[]>(
     ["channels"],
     async () => {
-      const filter = { state: true };
+      const filter = { state: true, type: "PUBLIC" };
       const sort = { created_at: -1 };
       const option = { offset: 0, per_page: 100 };
       return await nc.getChannels(filter, sort, option);
@@ -203,6 +203,28 @@ export const useSendMessage = (
   );
 };
 
+// sendIntegration (chatGPT, papago, clover, etc.)
+export const useSendIntegration = (
+  translation: boolean,
+  channel_id: string,
+  message: string
+) => {
+  return useMutation(async () => {
+    const messageContent = message.replace(/^#/, "");
+    const data = {
+      text: messageContent,
+      srcLang: "auto",
+      targetLang: "en,ja,vi,zh-CN,th",
+    };
+    return translation
+      ? await nc.sendIntegration(channel_id, "translation", data)
+      : await nc.sendIntegration(channel_id, "chatgpt", {
+          prompt: messageContent,
+          model: "gpt-3.5-turbo",
+        });
+  });
+};
+
 // sendImage
 export const useSendImage = (channel_id: string, file: any) =>
   useMutation(async () => await nc.sendImage(channel_id, file));
@@ -219,7 +241,6 @@ export const useMarkRead = (
   sort_id: string
 ) =>
   useMutation(async () => {
-    console.log(channel_id, message_id, user_id, sort_id);
     return await nc.markRead(channel_id, { user_id, message_id, sort_id });
   });
 
