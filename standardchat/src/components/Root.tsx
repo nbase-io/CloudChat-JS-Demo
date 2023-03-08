@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Link, Outlet, useOutletContext } from "react-router-dom";
-import { FaSketch, FaGithub, FaNpm } from "react-icons/fa";
 import { SiNaver, SiSketch, SiGithub, SiNpm } from "react-icons/si";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
@@ -68,7 +67,7 @@ function Root() {
           </Link>
         </Tooltip>
         <Tooltip label={"Go to NPM"}>
-          <Link to={"https://www.npmjs.com/package/cloudchat"} target="_blank">
+          <Link to={"https://www.npmjs.com/package/ncloudchat"} target="_blank">
             <IconButton
               icon={<SiNpm />}
               variant={"ghost"}

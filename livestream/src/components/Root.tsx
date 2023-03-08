@@ -67,7 +67,7 @@ function Root() {
           </Link>
         </Tooltip>
         <Tooltip label={"Go to NPM"}>
-          <Link to={"https://www.npmjs.com/package/cloudchat"} target="_blank">
+          <Link to={"https://www.npmjs.com/package/ncloudchat"} target="_blank">
             <IconButton
               icon={<SiNpm />}
               variant={"ghost"}
