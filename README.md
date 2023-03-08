@@ -29,7 +29,7 @@
 6. add sendIntegration (chatGPT, Papago translation)
    
 ## Backgound
-[Standard Chat]((https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 
+[Standard Chat](https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 
 [Ncloud Chat](https://guide.ncloud-docs.com/docs/bizapp-ncloudchat-javascriptsdk) [^1] JS SDK  with [React](https://reactjs.org/docs/getting-started.html) in [TypeScript](https://www.typescriptlang.org/). 
 
 [^1]: Ncloud Chat is a service where you can implement real-time chats, message system, and multi-user chat channels. Various SDKs and APIs are provided, so you can build a chat service easily and simply.
