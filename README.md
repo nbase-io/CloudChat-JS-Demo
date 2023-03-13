@@ -27,6 +27,9 @@
 4. getChannels only fetch public
 5. wider message bubble width
 6. add sendIntegration (chatGPT, Papago translation)
+
+#### 03-13-2023
+bug fix
    
 ## Backgound
 [Standard Chat](https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 
