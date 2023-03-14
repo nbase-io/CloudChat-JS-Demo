@@ -12,7 +12,6 @@ import {
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Link, Outlet, useOutletContext } from "react-router-dom";
 import { SiNaver, SiSketch, SiGithub, SiNpm } from "react-icons/si";
-import { BiSupport } from "react-icons/bi";
 import { FaHandsHelping } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
