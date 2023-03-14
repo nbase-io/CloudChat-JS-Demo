@@ -7,10 +7,13 @@ import {
   IconButton,
   useDisclosure,
   Link as ChakraLink,
+  Button,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Link, Outlet, useOutletContext } from "react-router-dom";
 import { SiNaver, SiSketch, SiGithub, SiNpm } from "react-icons/si";
+import { BiSupport } from "react-icons/bi";
+import { FaHandsHelping } from "react-icons/fa";
 import LoginModal from "./Modal/LoginModal";
 import { IUser } from "../lib/interfaces/IUser";
 import Loading from "./Loading/Loading";
@@ -54,6 +57,20 @@ function Root() {
         Live Stream <ExternalLinkIcon mx="2px" />
       </ChakraLink>
       <HStack spacing={2}>
+        <Tooltip label={"Ask for Support"}>
+          <Link
+            to={"https://www.ncloud.com/support/question/sales/?language=ko-KR"}
+            target="_blank"
+          >
+            <Button
+              rightIcon={<FaHandsHelping />}
+              aria-label={"Ask Support Link Button"}
+              variant={"ghost"}
+            >
+              Contact Us
+            </Button>
+          </Link>
+        </Tooltip>
         <Tooltip label={"Ncloud Chat"}>
           <Link
             to={"https://www.ncloud.com/product/businessApplication/ncloudChat"}
