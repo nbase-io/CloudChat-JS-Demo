@@ -32,6 +32,10 @@
 #### 03-15-2023
 1. improve logo imgs and buttons on mobile view
 2. add colorful favicon
+
+#### 03-16-2023
+1. update sendIntegration as cloudchat v1.0.68
+2. add integration channel info toast
    
 ## Backgound
 [Standard Chat]((https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 

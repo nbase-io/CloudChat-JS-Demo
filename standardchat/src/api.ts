@@ -205,23 +205,35 @@ export const useSendMessage = (
 
 // sendIntegration (chatGPT, papago, clover, etc.)
 export const useSendIntegration = (
-  translation: boolean,
-  channel_id: string,
+  // translation: boolean,
+  // channel_id: string,
+  // message: string
+  channel: any,
   message: string
 ) => {
   return useMutation(async () => {
     const messageContent = message.replace(/^#/, "");
-    const data = {
-      text: messageContent,
-      srcLang: "auto",
-      targetLang: "en,ja,vi,zh-CN,th",
-    };
-    return translation
-      ? await nc.sendIntegration(channel_id, "translation", data)
-      : await nc.sendIntegration(channel_id, "chatgpt", {
-          prompt: messageContent,
-          model: "gpt-3.5-turbo",
-        });
+    let data = null;
+    switch (channel.integration_id) {
+      case "chatgpt":
+        data = { prompt: messageContent, model: "gpt-3.5-turbo" };
+        break;
+      case "clove_papago":
+        data = {
+          text: messageContent,
+          srcLang: "auto",
+          targetLang: "en,ja,vi,zh-CN,th",
+        };
+        break;
+      default:
+        return;
+    }
+    return await nc.sendIntegration(
+      channel.id,
+      channel.integration_id,
+      "all",
+      data
+    );
   });
 };
 

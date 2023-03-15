@@ -47,11 +47,7 @@ function ChatInput({
     input,
     replyParentMessage?.message_id
   );
-  const { mutate: sendIntegration } = useSendIntegration(
-    channel.translation,
-    channel.id,
-    input
-  );
+  const { mutate: sendIntegration } = useSendIntegration(channel, input);
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [
     openFileSelector,
@@ -77,7 +73,7 @@ function ChatInput({
     e.preventDefault();
     if (input) {
       sendMessage();
-      if (input.includes("#")) {
+      if (channel.integration_id && input.includes("#")) {
         sendIntegration();
       }
     }

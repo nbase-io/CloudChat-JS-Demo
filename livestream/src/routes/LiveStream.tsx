@@ -1,14 +1,4 @@
-import {
-  Button,
-  Flex,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Flex, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { nc, useGetSubscriptions, useSubscribe } from "../api";
 import Chat from "../components/Chat/Chat";
@@ -46,31 +36,6 @@ function LiveStream() {
     }
   }, [subscriptionStatus]);
 
-  const chatView = (
-    <Popover isOpen={isChatAlertOpen}>
-      <Chat
-        subscription={subscription}
-        subscriptions={subscriptions}
-        onChatClose={onChatClose}
-      />
-      <PopoverContent bg="gray.900" borderColor="gray.600" color="white">
-        <PopoverArrow bg="gray.900" />
-        <PopoverHeader as="b" borderBottom={0}>
-          Live Chat
-        </PopoverHeader>
-        <PopoverBody color="gray.300">
-          Please have a good manner to each other to make the live broad casting
-          the best experience possible, thank you!
-        </PopoverBody>
-        <PopoverFooter borderColor={"gray.600"}>
-          <Button colorScheme="blue" w="full" onClick={onChatAlertClose}>
-            Okay
-          </Button>
-        </PopoverFooter>
-      </PopoverContent>
-    </Popover>
-  );
-
   return (
     <Flex
       w="full"
@@ -82,7 +47,6 @@ function LiveStream() {
         as="main"
         h={{ base: "-webkit-calc(50vh - 33px)", lg: "full" }}
         w={"full"}
-        flex={1}
       >
         <StreamView
           subscriptions={subscriptions}
@@ -95,10 +59,14 @@ function LiveStream() {
         as="aside"
         h={{ base: "-webkit-calc(50vh - 33px)", lg: "full" }}
         w={"full"}
-        maxW={{ base: "full", lg: "sm" }}
+        maxW={{ base: "full", lg: "lg" }}
         hidden={!isChatOpen}
       >
-        {chatView}
+        <Chat
+          subscription={subscription}
+          subscriptions={subscriptions}
+          onChatClose={onChatClose}
+        />
       </Flex>
     </Flex>
   );
