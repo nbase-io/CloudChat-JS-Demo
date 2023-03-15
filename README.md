@@ -28,6 +28,10 @@
 5. wider message bubble width
 6. add sendIntegration (chatGPT, Papago translation)
 7. add json viewer with word wrap
+
+#### 03-15-2023
+1. improve logo imgs and buttons on mobile view
+2. add colorful favicon
    
 ## Backgound
 [Standard Chat]((https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 
