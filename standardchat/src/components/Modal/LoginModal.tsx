@@ -169,7 +169,7 @@ function LoginModal({
         <ModalHeader>
           <Center>
             <Image
-              src="./ncloudchat-logo.png"
+              src="./assets/img/ncloudchat-logo.png"
               alt="Ncloud Chat Logo"
               height={7}
               onClick={clickHandler}

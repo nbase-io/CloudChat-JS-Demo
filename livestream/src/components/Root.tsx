@@ -27,6 +27,9 @@ export function useGlobal() {
   return useOutletContext<GlobalContextType>();
 }
 
+const small = "./assets/img/ncloudchat-logo-simple.png";
+const large = "./assets/img/ncloudchat-logo.png";
+
 function Root() {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,15 +39,28 @@ function Root() {
     <HStack
       justifyContent={"space-between"}
       py={3}
-      px={8}
+      px={4}
       borderBottomWidth={1}
+      spacing={0}
     >
       <Box color="red.500">
         <Link to={"/"}>
+          {/* no idea why srcSet is not working below*/}
           <Image
-            src="./ncloudchat-logo.png"
+            // srcSet={`${small} 1x, ${large} 2x`}
+            src={`${large}`}
             alt="Ncloud Chat Logo"
             height={7}
+            display={{ base: "none", md: "block" }}
+            minW="28px"
+          />
+          <Image
+            src={`${small}`}
+            alt="Ncloud Chat Logo"
+            height={7}
+            display={{ base: "block", md: "none" }}
+            minW="28px"
+            mr="2"
           />
         </Link>
       </Box>
@@ -55,7 +71,7 @@ function Root() {
       >
         Standard Chat <ExternalLinkIcon mx="2px" />
       </ChakraLink>
-      <HStack spacing={2}>
+      <HStack spacing={0}>
         <Tooltip label={"Ask for Support"}>
           <Link
             to={"https://www.ncloud.com/support/question/sales/?language=ko-KR"}
@@ -65,6 +81,7 @@ function Root() {
               rightIcon={<FaHandsHelping />}
               aria-label={"Ask Support Link Button"}
               variant={"ghost"}
+              fontSize={{ base: "xs", md: "sm", lg: "md" }}
             >
               Contact Us
             </Button>
@@ -79,6 +96,7 @@ function Root() {
               icon={<SiNaver />}
               variant={"ghost"}
               aria-label={"NAVER Button"}
+              fontSize={{ base: "sm", md: "md" }}
             />
           </Link>
         </Tooltip>
@@ -88,6 +106,7 @@ function Root() {
               icon={<SiNpm />}
               variant={"ghost"}
               aria-label={"NPM Button"}
+              fontSize={{ base: "sm", md: "md" }}
             />
           </Link>
         </Tooltip>
@@ -100,6 +119,7 @@ function Root() {
               icon={<SiGithub />}
               variant={"ghost"}
               aria-label={"Github Button"}
+              fontSize={{ base: "sm", md: "md" }}
             />
           </Link>
         </Tooltip>
@@ -114,6 +134,8 @@ function Root() {
               icon={<SiSketch />}
               variant={"ghost"}
               aria-label={"Download Sketch Button"}
+              fontSize={{ base: "sm", md: "md" }}
+              display={{ base: "none", sm: "flex" }}
             />
           </Link>
         </Tooltip>
