@@ -20,6 +20,7 @@ import ImageViwer from "./ImageViewer";
 import { useGlobal } from "../Root";
 import toast from "react-hot-toast";
 import JSONPretty from "react-json-pretty";
+import "./ChatBubble.css";
 
 type Props = {
   node: any;
@@ -156,7 +157,12 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
 
   const messageContent = () => {
     if (node.translate) {
-      return <JSONPretty data={node.content}></JSONPretty>;
+      return (
+        <JSONPretty
+          themeClassName="custom-json-pretty"
+          data={node.content}
+        ></JSONPretty>
+      );
     } else {
       return node.message_type === "text" ? (
         <Text>{node.content}</Text>

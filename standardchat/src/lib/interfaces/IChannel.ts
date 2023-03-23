@@ -8,6 +8,7 @@ export interface IChannel {
   name: string;
   user_id: IUser;
   unique_id: string;
+  integration_id: string;
   type: string;
   translation: boolean;
   members: string[];

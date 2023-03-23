@@ -27,9 +27,15 @@
 4. getChannels only fetch public
 5. wider message bubble width
 6. add sendIntegration (chatGPT, Papago translation)
+7. add json viewer with word wrap
 
-#### 03-13-2023
-bug fix
+#### 03-15-2023
+1. improve logo imgs and buttons on mobile view
+2. add colorful favicon
+
+#### 03-16-2023
+1. update sendIntegration as cloudchat v1.0.68
+2. add integration channel info toast
    
 ## Backgound
 [Standard Chat](https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 

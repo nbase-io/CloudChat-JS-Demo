@@ -291,7 +291,7 @@ function LoginModal({ isOpen: isModalOpen, onClose: onModalClose, setUser }) {
                       children: /* @__PURE__ */ jsxDEV(
                         Image,
                         {
-                          src: "./ncloudchat-logo.png",
+                          src: "./assets/img/ncloudchat-logo.png",
                           alt: "Ncloud Chat Logo",
                           height: 7,
                           onClick: clickHandler,
@@ -963,7 +963,7 @@ function Root() {
                         children: /* @__PURE__ */ jsxDEV(
                           Image,
                           {
-                            src: "./ncloudchat-logo.png",
+                            src: "./assets/img/ncloudchat-logo.png",
                             alt: "Ncloud Chat Logo",
                             height: 7,
                           },

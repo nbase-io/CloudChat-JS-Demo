@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Flex, Divider, Box, Text, Progress } from "@chakra-ui/react";
+import { Flex, Divider, useToast, Progress } from "@chakra-ui/react";
 import { ChatHeader } from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { nc, useMarkRead } from "../../api";
 import ChatMessages from "./ChatMessages";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGlobal } from "../Root";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 type Props = {
   onLeftSideBarOpen: () => void;
@@ -38,6 +38,8 @@ function Chat({
     lastMessageRef.current?.node.sort_id
   );
 
+  const guideToast = useToast();
+
   // getMessages: using state instead of react query for educational purpose
   const getMessages = async () => {
     setIsGettingMessages(true);
@@ -58,6 +60,7 @@ function Chat({
 
   // message received
   nc.bind("onMessageReceived", (channelId: string, message: any) => {
+    console.log(message);
     if (channel.id === channelId) {
       setArrivalMessage({ node: message });
     }
@@ -107,12 +110,24 @@ function Chat({
     setMessages([]);
     hasMore.current = true;
     lastMessageRef.current = undefined;
+    guideToast.closeAll();
   }, [subscription]);
 
   // getMessages if messages are cleared (channel changed)
   useEffect(() => {
     if (hasMore.current && messages.length === 0 && subscription) {
       getMessages();
+      if (channel.integration_id) {
+        guideToast({
+          position: "top",
+          title: channel?.integration_id,
+          description: `이 채널은 ${channel?.integration_id} 기능이 연동되어 있습니다. 연동된 기능을 사용하려면, 메시지 앞에 "#"을 붙여주세요. 예: #오늘 서울 날씨 어때?`,
+          status: "info",
+          duration: 20000,
+          isClosable: true,
+          variant: "subtle",
+        });
+      }
     }
     // keep track of the last message
     if (messages.length > 0 && messages[0]) {
