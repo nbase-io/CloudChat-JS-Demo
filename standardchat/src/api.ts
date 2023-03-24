@@ -192,11 +192,6 @@ export const useGetSubscriptions = (
         allPage.map((page) => {
           return (currentLength += page.edges.length);
         });
-        console.log("allPage", allPage);
-        console.log("currentLength", currentLength);
-        console.log("totalCount", lastPage.totalCount);
-        console.log("nextPage", nextPage);
-        console.log(currentLength < lastPage.totalCount);
         return currentLength < lastPage.totalCount ? nextPage : undefined;
       },
     }

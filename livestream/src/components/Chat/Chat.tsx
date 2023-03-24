@@ -86,7 +86,6 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
 
   // user leave
   nc.bind("onMemberLeaved", (data: any) => {
-    console.log(data);
     if (subscription?.channel_id === data.channel_id) {
       toast(`${data.user_id} left ${subscription?.channel.name}`);
       queryClient.invalidateQueries([
