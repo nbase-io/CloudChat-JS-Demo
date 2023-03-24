@@ -21,7 +21,7 @@ function ChatDetailHeader({ channel, setChannel }: Props) {
 
   return (
     <HStack justify={"space-between"} w="full" px={8} mb={8}>
-      <Text fontSize={"xl"} as="b">
+      <Text fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }} as="b">
         Channel Info.
       </Text>
       <HStack>

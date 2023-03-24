@@ -36,18 +36,24 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
   return (
     <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>
       <ChatDetailHeader channel={channel} setChannel={setChannel} />
-      <Avatar size="xl" name={channel?.name} src={channel?.image_url}></Avatar>
+      <Avatar
+        size={{ base: "md", md: "lg", lg: "xl" }}
+        name={channel?.name}
+        src={channel?.image_url}
+      ></Avatar>
       <Heading size={"md"} mt={3}>
         {channel?.name}
       </Heading>
       <Accordion w="full" px={8} mt={12} allowToggle>
         <AccordionItem border={"none"}>
           <AccordionButton bg="gray.100" borderRadius={4}>
-            <HStack spacing={1} flex={1}>
+            <HStack
+              spacing={1}
+              flex={1}
+              fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}
+            >
               {!subscriptions && <Skeleton>&nsbp;</Skeleton>}
-              <Text fontSize={"s"} color="blue.500">
-                {subscriptions?.edges?.length}
-              </Text>
+              <Text color="blue.500">{subscriptions?.edges?.length}</Text>
               <Text as="b">Members</Text>
             </HStack>
             {/* {isPrivate && isAdmin && (
@@ -78,6 +84,7 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
               justifyContent={"flex-start"}
               alignItems={"flex-start"}
               spacing={2}
+              fontSize={{ base: "xs", sm: "sm", md: "md" }}
             >
               {subscriptions?.edges?.map((edge: any) => (
                 <UserAvatar

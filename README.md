@@ -36,6 +36,10 @@
 #### 03-16-2023
 1. update sendIntegration as cloudchat v1.0.68
 2. add integration channel info toast
+
+#### 03-24-2023
+1. subscription list infinte scroll
+2. more mobile friendly
    
 ## Backgound
 [Standard Chat]((https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 
