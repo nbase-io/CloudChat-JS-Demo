@@ -166,31 +166,29 @@ function ChatInput({
       borderTopWidth={1}
     >
       {replyParentMessage !== null && replyMessageView()}
-      <PopoverAnchor>
-        <Flex pl={4} py={2}>
-          {chatInputBar}
-          <Tooltip label={"Send image or video"}>
-            <IconButton
-              colorScheme={"black"}
-              aria-label="Send Image"
-              variant={"ghost"}
-              icon={<RiImageLine />}
-              ml={2}
-              onClick={() => openFileSelector()}
-            />
-          </Tooltip>
-          <Tooltip label={"Send message"}>
-            <IconButton
-              colorScheme={"black"}
-              aria-label="Send Message"
-              variant={"ghost"}
-              icon={<RiSendPlaneLine />}
-              mr={2}
-              type={"submit"}
-            />
-          </Tooltip>
-        </Flex>
-      </PopoverAnchor>
+      <Flex pl={4} py={2}>
+        {chatInputBar}
+        <Tooltip label={"Send image or video"}>
+          <IconButton
+            colorScheme={"black"}
+            aria-label="Send Image"
+            variant={"ghost"}
+            icon={<RiImageLine />}
+            ml={2}
+            onClick={() => openFileSelector()}
+          />
+        </Tooltip>
+        <Tooltip label={"Send message"}>
+          <IconButton
+            colorScheme={"black"}
+            aria-label="Send Message"
+            variant={"ghost"}
+            icon={<RiSendPlaneLine />}
+            mr={2}
+            type={"submit"}
+          />
+        </Tooltip>
+      </Flex>
     </FormControl>
   );
 }
