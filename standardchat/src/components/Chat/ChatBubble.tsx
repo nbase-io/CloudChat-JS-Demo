@@ -205,7 +205,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
         <VStack
           onMouseEnter={() => setIsHovering(true)}
           spacing={0}
-          maxW={{ base: 60 }}
+          maxW={{ base: 60, sm: "xl" }}
           minH={"40px"}
         >
           {node.parent_message_id && parentBubble}

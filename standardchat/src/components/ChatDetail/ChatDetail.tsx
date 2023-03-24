@@ -1,21 +1,9 @@
-import {
-  Flex,
-  HStack,
-  Text,
-  Avatar,
-  Heading,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-  VStack,
-  Skeleton,
-} from "@chakra-ui/react";
+import { Flex, Box, Text, Avatar, Heading } from "@chakra-ui/react";
 import { useGetSubscriptions } from "../../api";
 import { useGlobal } from "../Root";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import ChatDetailHeader from "./ChatDetailHeader";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 type Props = {
   channel: any;
@@ -26,10 +14,11 @@ type Props = {
 function ChatDetail({ channel, subscription, setChannel }: Props) {
   const { user } = useGlobal();
   // getSubscriptions after subscribe
-  const { data: subscriptions } = useGetSubscriptions(
-    !!subscription,
-    channel?.id
-  );
+  const {
+    data: subscriptions,
+    fetchNextPage,
+    hasNextPage,
+  } = useGetSubscriptions(!!subscription, channel?.id);
   const isPrivate = channel.type === "PRIVATE";
   const isAdmin = channel.user?.id === user!.id;
 
@@ -44,59 +33,42 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
       <Heading size={"md"} mt={3}>
         {channel?.name}
       </Heading>
-      <Accordion w="full" px={8} mt={12} allowToggle>
-        <AccordionItem border={"none"}>
-          <AccordionButton bg="gray.100" borderRadius={4}>
-            <HStack
-              spacing={1}
-              flex={1}
-              fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg" }}
-            >
-              {!subscriptions && <Skeleton>&nsbp;</Skeleton>}
-              <Text color="blue.500">{subscriptions?.edges?.length}</Text>
-              <Text as="b">Members</Text>
-            </HStack>
-            {/* {isPrivate && isAdmin && (
-              <Box
-                // size={"xs"}
-                bg="black"
-                color="white"
-                mr="3"
-                fontWeight={"bold"}
-                fontSize={"xs"}
-                px={2}
-                py={1}
-                borderRadius={4}
-                _hover={{ bg: "gray" }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                Invite
+      {subscriptions && (
+        <Text fontSize="sm" color="gray.500" mt="1" mb="4">
+          {subscriptions?.pages[0]?.totalCount} Members
+        </Text>
+      )}
+      <Flex
+        px={6}
+        overflowY="auto"
+        flexDirection={"column"}
+        pb={4}
+        id="scrollableSubscriptionDiv"
+        w="full"
+        // justifyContent={"flex-start"}
+        // alignItems={"flex-start"}
+        fontSize={{ base: "xs", sm: "sm", md: "md" }}
+      >
+        <InfiniteScroll
+          dataLength={subscriptions?.pages?.length! * 25 || 0}
+          next={fetchNextPage}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+          hasMore={hasNextPage || false}
+          scrollableTarget="scrollableSubscriptionDiv"
+          loader={"Loading more..."}
+        >
+          {subscriptions?.pages?.map((page: any) =>
+            page.edges.map((edge: any) => (
+              <Box key={edge.node.user_id} mt="1">
+                <UserAvatar user={edge.node.user} />
               </Box>
-            )} */}
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel pb={4}>
-            <VStack
-              overflowY={"auto"}
-              // minH={subscriptions?.length === 0 ? 0 : 24}
-              py={2}
-              w="full"
-              justifyContent={"flex-start"}
-              alignItems={"flex-start"}
-              spacing={2}
-              fontSize={{ base: "xs", sm: "sm", md: "md" }}
-            >
-              {subscriptions?.edges?.map((edge: any) => (
-                <UserAvatar
-                  user={edge.node.user}
-                  key={edge.node.user_id}
-                  online={edge.node.online}
-                />
-              ))}
-            </VStack>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
+            ))
+          )}
+        </InfiniteScroll>
+      </Flex>
     </Flex>
   );
 }
