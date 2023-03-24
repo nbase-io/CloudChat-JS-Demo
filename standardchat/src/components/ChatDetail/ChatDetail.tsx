@@ -62,7 +62,7 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
         >
           {subscriptions?.pages?.map((page: any) =>
             page.edges.map((edge: any) => (
-              <Box key={edge.node.user_id} mt="1">
+              <Box key={edge.node.user_id} mt="2">
                 <UserAvatar user={edge.node.user} />
               </Box>
             ))
