@@ -228,7 +228,7 @@ export const useSendIntegration = (
       case "chatgpt":
         data = { prompt: messageContent, model: "gpt-3.5-turbo" };
         break;
-      case "clove_papago":
+      case "clova_papago":
         data = {
           text: messageContent,
           srcLang: "auto",
