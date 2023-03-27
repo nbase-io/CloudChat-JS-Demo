@@ -63,7 +63,7 @@ function StreamView({
         <HStack spacing={1}>
           <AiOutlineEye />
           <Text fontSize={{ base: "xs", lg: "sm" }}>
-            {subscriptions?.totalCount}
+            {subscriptions?.pages[0]?.totalCount}
           </Text>
         </HStack>
         <Tooltip label="Expand Chat">

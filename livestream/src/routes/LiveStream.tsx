@@ -17,13 +17,21 @@ function LiveStream() {
   const { setIsLoading } = useGlobal();
   const [isSubscribable, setIsSubscribable] = useState(false);
   // subscribe after connect
-  const { data: subscription, isLoading: isSubscribing } = useSubscribe(
+  const { data: subscription } = useSubscribe(
     isSubscribable,
     "c80e0fb6-c07a-4a80-b4c0-1a483f477fea"
   );
-  // get subscriptions after subscribe
-  const { data: subscriptions, status: subscriptionStatus } =
-    useGetSubscriptions(!!subscription, "c80e0fb6-c07a-4a80-b4c0-1a483f477fea");
+
+  // getSubscriptions after subscribe
+  const {
+    data: subscriptions,
+    fetchNextPage,
+    hasNextPage,
+    status: subscriptionsStatus,
+  } = useGetSubscriptions(
+    !!subscription,
+    "c80e0fb6-c07a-4a80-b4c0-1a483f477fea"
+  );
 
   // WARNING: subscribe AFTER socket connection
   nc.bind("onConnected", (payload: string) => {
@@ -31,10 +39,10 @@ function LiveStream() {
   });
 
   useEffect(() => {
-    if (subscriptionStatus === "error" || subscriptionStatus === "success") {
+    if (subscriptionsStatus === "error" || subscriptionsStatus === "success") {
       setIsLoading(false);
     }
-  }, [subscriptionStatus]);
+  }, [subscriptionsStatus]);
 
   return (
     <Flex
@@ -66,6 +74,8 @@ function LiveStream() {
           subscription={subscription}
           subscriptions={subscriptions}
           onChatClose={onChatClose}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
         />
       </Flex>
     </Flex>

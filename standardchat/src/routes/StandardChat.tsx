@@ -97,6 +97,7 @@ function StandardChat() {
             channel={channel}
             subscription={subscription}
             setChannel={setChannel}
+            isChatDetailDrawerOpen={isChatDetailOpen}
           />
         </Flex>
       )}

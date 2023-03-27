@@ -22,9 +22,17 @@ type Props = {
   subscription: any;
   subscriptions: any;
   onChatClose: any;
+  fetchNextPage: any;
+  hasNextPage: boolean | undefined;
 };
 
-function Chat({ subscription, subscriptions, onChatClose }: Props) {
+function Chat({
+  subscription,
+  subscriptions,
+  onChatClose,
+  fetchNextPage,
+  hasNextPage,
+}: Props) {
   const queryClient = useQueryClient();
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
@@ -136,7 +144,12 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
   );
 
   return isUserListOpen ? (
-    <UserList onClose={onUserListClose} subscriptions={subscriptions} />
+    <UserList
+      onClose={onUserListClose}
+      subscriptions={subscriptions}
+      fetchNextPage={fetchNextPage}
+      hasNextPage={hasNextPage}
+    />
   ) : (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
       {chatHeader}

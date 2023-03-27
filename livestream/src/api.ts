@@ -1,7 +1,7 @@
 import * as ncloudchat from "cloudchat";
 // import * as ncloudchat from "../../../cloudchat-sdk-javascript/src";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ILogin } from "./lib/interfaces/ILogin";
 
@@ -104,17 +104,27 @@ export const useGetSubscriptions = (
   enabled: boolean,
   channel_id: string | undefined
 ) =>
-  useQuery<any>(
+  useInfiniteQuery(
     [`subscriptions`, { channelId: channel_id }],
-    async () => {
+    async ({ pageParam = 0 }) => {
       if (channel_id) {
         const filter = { channel_id: channel_id };
         const sort = { created_at: -1 };
-        const option = { offset: 0, per_page: 100 };
+        const option = { offset: pageParam, per_page: 25 };
         return await nc.getSubscriptions(filter, sort, option);
       }
     },
-    { enabled: enabled }
+    {
+      enabled: enabled,
+      getNextPageParam: (lastPage, allPage: any[]) => {
+        const nextPage = allPage.length * 25;
+        var currentLength = 0;
+        allPage.map((page) => {
+          return (currentLength += page.edges.length);
+        });
+        return currentLength < lastPage.totalCount ? nextPage : undefined;
+      },
+    }
   );
 
 // sendMessage

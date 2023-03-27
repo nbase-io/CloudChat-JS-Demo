@@ -40,6 +40,10 @@
 #### 03-24-2023
 1. subscription list infinte scroll
 2. more mobile friendly
+
+#### 03-27-2023
+1. add infinite scrolling subscriptions on mobile standard chat
+2. add infinite scrolling subscriptions on livestream
    
 ## Backgound
 [Standard Chat]((https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 

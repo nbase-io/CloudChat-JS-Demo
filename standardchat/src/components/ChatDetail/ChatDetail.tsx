@@ -1,4 +1,12 @@
-import { Flex, Box, Text, Avatar, Heading } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Text,
+  Avatar,
+  Heading,
+  Button,
+  Center,
+} from "@chakra-ui/react";
 import { useGetSubscriptions } from "../../api";
 import { useGlobal } from "../Root";
 import UserAvatar from "../UserAvatar/UserAvatar";
@@ -9,15 +17,22 @@ type Props = {
   channel: any;
   subscription: any;
   setChannel: any;
+  isChatDetailDrawerOpen: boolean;
 };
 
-function ChatDetail({ channel, subscription, setChannel }: Props) {
+function ChatDetail({
+  channel,
+  subscription,
+  setChannel,
+  isChatDetailDrawerOpen,
+}: Props) {
   const { user } = useGlobal();
   // getSubscriptions after subscribe
   const {
     data: subscriptions,
     fetchNextPage,
     hasNextPage,
+    isFetchingNextPage,
   } = useGetSubscriptions(!!subscription, channel?.id);
   const isPrivate = channel.type === "PRIVATE";
   const isAdmin = channel.user?.id === user!.id;
@@ -45,8 +60,6 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
         pb={4}
         id="scrollableSubscriptionDiv"
         w="full"
-        // justifyContent={"flex-start"}
-        // alignItems={"flex-start"}
         fontSize={{ base: "xs", sm: "sm", md: "md" }}
       >
         <InfiniteScroll
@@ -66,6 +79,21 @@ function ChatDetail({ channel, subscription, setChannel }: Props) {
                 <UserAvatar user={edge.node.user} />
               </Box>
             ))
+          )}
+          {isChatDetailDrawerOpen && (
+            <Center>
+              <Button
+                isLoading={isFetchingNextPage}
+                my={4}
+                colorScheme="twitter"
+                size="xs"
+                width={"30%"}
+                onClick={() => fetchNextPage()}
+                variant="outline"
+              >
+                see more
+              </Button>
+            </Center>
           )}
         </InfiniteScroll>
       </Flex>
