@@ -1,16 +1,7 @@
-FROM node:18-alpine
+# 기본 Nginx 이미지 사용
+FROM nginx:latest
 
-WORKDIR /app
+# Nginx 설정 파일 복사
+COPY nginx.config /etc/nginx/conf.d/default.conf
 
-COPY . /app
-
-ENV NODE_ENV=production
-COPY package.json .
-RUN npm install serve -g
-RUN npm install typescript -g
-RUN npm i --save-dev @types/react-dom
-RUN npm install
-RUN npm run build
-EXPOSE 3000
-
-CMD ["npm", "run", "serve"]
+COPY dist /usr/share/nginx/html
