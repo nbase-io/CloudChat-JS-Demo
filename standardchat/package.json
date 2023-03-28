@@ -20,7 +20,7 @@
     "@emotion/styled": "^11.10.5",
     "@tanstack/react-query": "^4.24.4",
     "@tanstack/react-query-devtools": "^4.24.4",
-    "cloudchat": "^1.0.68",
+    "cloudchat": "^1.0.69",
     "emoji-mart": "^5.5.2",
     "firebase": "^9.17.2",
     "framer-motion": "^8.5.5",
