@@ -214,14 +214,8 @@ export const useSendMessage = (
 };
 
 // sendIntegration (chatGPT, papago, clover, etc.)
-export const useSendIntegration = (
-  // translation: boolean,
-  // channel_id: string,
-  // message: string
-  channel: any,
-  message: string
-) => {
-  return useMutation(async () => {
+export const useSendIntegration = (channel: any, message: string) =>
+  useMutation(async () => {
     const messageContent = message.replace(/^#/, "");
     let data = null;
     switch (channel.integration_id) {
@@ -245,7 +239,6 @@ export const useSendIntegration = (
       data
     );
   });
-};
 
 // sendImage
 export const useSendImage = (channel_id: string, file: any) =>

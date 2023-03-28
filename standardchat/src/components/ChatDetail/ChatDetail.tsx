@@ -80,7 +80,7 @@ function ChatDetail({
               </Box>
             ))
           )}
-          {isChatDetailDrawerOpen && (
+          {isChatDetailDrawerOpen && hasNextPage && (
             <Center>
               <Button
                 isLoading={isFetchingNextPage}
