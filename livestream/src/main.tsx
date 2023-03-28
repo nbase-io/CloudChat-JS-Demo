@@ -44,6 +44,7 @@ const client = new QueryClient({
   queryCache,
   defaultOptions: {
     queries: {
+      enabled: false,
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
