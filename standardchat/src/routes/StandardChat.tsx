@@ -101,6 +101,7 @@ function StandardChat() {
           />
         </Flex>
       )}
+
       <LeftSideBarDrawer
         isOpen={isLeftSideBarOpen}
         onClose={onLeftSideBarClose}
