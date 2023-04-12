@@ -82,7 +82,7 @@ function LeftSideBar({
         justifyContent={"space-between"}
         mt={8}
       >
-        <Heading fontSize="xl">Channels</Heading>
+        <Heading fontSize={22}>Channels</Heading>
         <Tooltip label={"Create new channel"}>
           <IconButton
             rounded={"full"}

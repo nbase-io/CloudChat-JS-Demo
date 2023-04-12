@@ -42,7 +42,7 @@ function ChatMessages({
             <Divider />
             <Text
               my={4}
-              fontSize={10}
+              fontSize={12}
               minW={"40"}
               color={"gray"}
               align="center"
@@ -70,7 +70,7 @@ function ChatMessages({
                 <Divider />
                 <Text
                   my={4}
-                  fontSize={10}
+                  fontSize={12}
                   minW={"40"}
                   color={"gray"}
                   align="center"
@@ -86,7 +86,7 @@ function ChatMessages({
                 <Divider />
                 <Text
                   my={4}
-                  fontSize={10}
+                  fontSize={12}
                   minW={"40"}
                   color={"gray"}
                   align="center"

@@ -41,15 +41,15 @@ function ChatDetail({
     <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>
       <ChatDetailHeader channel={channel} setChannel={setChannel} />
       <Avatar
-        size={{ base: "md", md: "lg", lg: "xl" }}
+        size={{ base: "md", md: "md", lg: "lg" }}
         name={channel?.name}
         src={channel?.image_url}
       ></Avatar>
-      <Heading size={"md"} mt={3}>
+      <Heading size={15} mt={3}>
         {channel?.name}
       </Heading>
       {subscriptions && (
-        <Text fontSize="sm" color="gray.500" mt="1" mb="4">
+        <Text fontSize={13} color="gray.500" mt="1" mb="4">
           {subscriptions?.pages[0]?.totalCount} Members
         </Text>
       )}

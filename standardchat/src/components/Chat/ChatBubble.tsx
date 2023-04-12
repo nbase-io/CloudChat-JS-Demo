@@ -123,7 +123,11 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
   const parentMessage = () => {
     if (node.parent_message) {
       if (node.parent_message?.message_type === "text") {
-        return <Text fontSize={"sm"}>{node.parent_message?.content}</Text>;
+        return (
+          <Text fontSize={"13px"} color={isMe ? "white" : "#555"}>
+            {node.parent_message?.content}
+          </Text>
+        );
       } else {
         return (
           <Image
@@ -147,8 +151,8 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
       w="full"
       borderTopLeftRadius={topLeftRadius}
       borderTopRightRadius={18}
-      bg={isMe ? "blue.500" : "gray.500"}
-      color={node.parent_message ? "white" : "gray.100"}
+      bg={isMe ? "#1370ce" : "#d7dce0"}
+      color={node.parent_message ? "#555" : "gray.100"}
     >
       {!node.parent_message && <FaExclamationCircle />}
       {parentMessage()}
@@ -165,7 +169,9 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
       );
     } else {
       return node.message_type === "text" ? (
-        <Text>{node.content}</Text>
+        <Text fontSize={"15px"} color={isMe ? "white" : "#222"}>
+          {node.content}
+        </Text>
       ) : (
         <Image
           src={`https://alpha-api.cloudchat.dev${node.attachment_filenames?.url}`}
@@ -181,7 +187,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
     <VStack mt={6} alignItems={allignment} alignSelf={allignment}>
       {!isMe && othersBubbleName}
       {node.parent_message_id && node.parent_message && (
-        <HStack fontSize={12} spacing={1}>
+        <HStack fontSize={13} spacing={1}>
           <VscReply />
           <Text>reply to</Text>
           <Text as="b">{node.parent_message?.sender?.name}</Text>
@@ -213,7 +219,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
             px={4}
             py={2}
             w="full"
-            bg={isMe ? "blue.50" : "gray.100"}
+            bg={isMe ? "#117ce9" : "#eaedef"}
             borderTopLeftRadius={node.parent_message_id ? 0 : topLeftRadius}
             borderTopRightRadius={node.parent_message_id ? 0 : 18}
             borderBottomLeftRadius={18}
