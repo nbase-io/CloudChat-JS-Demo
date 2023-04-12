@@ -44,6 +44,9 @@
 #### 03-27-2023
 1. add infinite scrolling subscriptions on mobile standard chat
 2. add infinite scrolling subscriptions on livestream
+
+#### 04-12-2023
+1. font, font color, font size updated on both standard chat and livestream
    
 ## Backgound
 [Standard Chat]((https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 

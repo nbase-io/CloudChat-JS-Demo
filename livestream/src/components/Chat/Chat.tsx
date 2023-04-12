@@ -124,18 +124,20 @@ function Chat({
           icon={<TbLayoutSidebarLeftCollapse />}
           variant={"ghost"}
           aria-label={"Collapse Chat"}
-          size="lg"
+          size="md"
           _hover={{ bgColor: "gray.700" }}
           onClick={onChatClose}
         />
       </Tooltip>
-      <Text as="b">Live Chat</Text>
+      <Text as="b" fontSize={15}>
+        Live Chat
+      </Text>
       <Tooltip label="Members">
         <IconButton
           icon={<RiGroupLine />}
           variant={"ghost"}
           aria-label={"Attendance"}
-          size="lg"
+          size="md"
           _hover={{ bgColor: "gray.700" }}
           onClick={onUserListOpen}
         />

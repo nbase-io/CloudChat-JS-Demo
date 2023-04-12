@@ -224,7 +224,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
             borderTopRightRadius={node.parent_message_id ? 0 : 18}
             borderBottomLeftRadius={18}
             borderBottomRightRadius={bottomRightRadius}
-            _hover={{ bg: isMe ? "blue.300" : "gray.400" }}
+            _hover={{ bg: isMe ? "blue.600" : "gray.400" }}
           >
             {messageContent()}
           </Box>
