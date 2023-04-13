@@ -3,6 +3,8 @@
 ### Live Stream ([demo](https://livestream.ncloudchat.com/))
 
 ## Updates
+#### 04-14-2023
+1. update layout
 #### 01-22-2023 
 1. add live stream
 2. add reply message
