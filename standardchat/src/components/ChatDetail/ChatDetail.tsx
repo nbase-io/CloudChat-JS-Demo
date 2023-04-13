@@ -45,13 +45,14 @@ function ChatDetail({
         name={channel?.name}
         src={channel?.image_url}
       ></Avatar>
-      <Heading size={15} mt={3}>
+      <Heading fontSize={15} mt={3}>
         {channel?.name}
       </Heading>
       {subscriptions && (
-        <Text fontSize={13} color="gray.500" mt="1" mb="4">
-          {subscriptions?.pages[0]?.totalCount} Members
-        </Text>
+        <Flex fontSize={13} mt="1" mb="4" as={"b"}>
+          <Text color={"#117ce9"}>{subscriptions?.pages[0]?.totalCount}</Text>
+          <Text>&nbsp;Members</Text>
+        </Flex>
       )}
       <Flex
         px={6}
