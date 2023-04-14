@@ -5,6 +5,7 @@
 ## Updates
 #### 04-14-2023
 1. update layout
+2. bug fix
 #### 01-22-2023 
 1. add live stream
 2. add reply message
