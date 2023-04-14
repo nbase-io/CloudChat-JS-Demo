@@ -1,17 +1,25 @@
-import { HStack, VStack, Text, CloseButton } from "@chakra-ui/react";
+import { HStack, VStack, Text, CloseButton, Flex, Box } from "@chakra-ui/react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import UserAvatar from "../UserAvatar/UserAvatar";
 
 type Props = {
   onClose: any;
   subscriptions: any;
+  fetchNextPage: any;
+  hasNextPage: boolean | undefined;
 };
 
-function UserList({ onClose, subscriptions }: Props) {
+function UserList({
+  onClose,
+  subscriptions,
+  fetchNextPage,
+  hasNextPage,
+}: Props) {
   const userListHeader = (
     <HStack w="full" justifyContent={"space-between"} h={"64px"} px={2} pt={4}>
       <HStack spacing={1} ml="3">
         <Text as="b" color="blue.400">
-          {subscriptions.totalCount}
+          {subscriptions.pages[0].totalCount}
         </Text>
         <Text>people watching</Text>
       </HStack>
@@ -22,7 +30,7 @@ function UserList({ onClose, subscriptions }: Props) {
   return (
     <VStack bg="gray.900" w="full" color="white">
       {userListHeader}
-      <VStack
+      {/* <VStack
         w="full"
         overflowY={"auto"}
         py={2}
@@ -38,7 +46,40 @@ function UserList({ onClose, subscriptions }: Props) {
             color="white"
           />
         ))}
-      </VStack>
+      </VStack> */}
+      <Flex
+        px={6}
+        overflowY="auto"
+        flexDirection={"column"}
+        pb={4}
+        id="scrollableSubscriptionDiv"
+        w="full"
+        fontSize={{ base: "xs", sm: "sm", md: "md" }}
+      >
+        <InfiniteScroll
+          dataLength={subscriptions?.pages?.length! * 25 || 0}
+          next={fetchNextPage}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+          hasMore={hasNextPage || false}
+          scrollableTarget="scrollableSubscriptionDiv"
+          loader={"Loading more..."}
+        >
+          {subscriptions?.pages?.map((page: any) =>
+            page.edges.map((edge: any) => (
+              <Box key={edge.node.user_id} mt="2">
+                <UserAvatar
+                  user={edge.node.user}
+                  online={edge.node.online}
+                  color="white"
+                />
+              </Box>
+            ))
+          )}
+        </InfiniteScroll>
+      </Flex>
     </VStack>
   );
 }

@@ -121,8 +121,14 @@ export const ChatHeader = ({
       </Tooltip>
       <Stat mt={6}>
         <HStack>
-          <Avatar size="md" name={channel?.name} src={channel?.image_url} />
-          <StatNumber>{channel?.name}</StatNumber>
+          <Avatar
+            size={{ base: "sm", sm: "sm", md: "md" }}
+            name={channel?.name}
+            src={channel?.image_url}
+          />
+          <StatNumber fontSize={{ base: "sm", sm: "sm", md: "lg", lg: "22px" }}>
+            {channel?.name}
+          </StatNumber>
           {channel.type === "PRIVATE" && <FaLock size={"14"} />}
         </HStack>
       </Stat>

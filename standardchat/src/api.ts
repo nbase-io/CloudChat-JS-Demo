@@ -2,7 +2,7 @@ import * as ncloudchat from "cloudchat";
 // import ncloudchat * as ncloudchat from "../../../cloudchat-sdk-javascript/src";
 
 import {
-  // useInfiniteQuery,
+  useInfiniteQuery,
   useMutation,
   useQuery,
   // useQueryClient,
@@ -174,17 +174,27 @@ export const useGetSubscriptions = (
   enabled: boolean,
   channel_id: string | undefined
 ) =>
-  useQuery<any>(
+  useInfiniteQuery(
     [`subscriptions`, { channelId: channel_id }],
-    async () => {
+    async ({ pageParam = 0 }) => {
       if (channel_id) {
         const filter = { channel_id: channel_id };
         const sort = { created_at: -1 };
-        const option = { offset: 0, per_page: 100 };
+        const option = { offset: pageParam, per_page: 25 };
         return await nc.getSubscriptions(filter, sort, option);
       }
     },
-    { enabled: enabled }
+    {
+      enabled: enabled,
+      getNextPageParam: (lastPage, allPage: any[]) => {
+        const nextPage = allPage.length * 25;
+        var currentLength = 0;
+        allPage.map((page) => {
+          return (currentLength += page.edges.length);
+        });
+        return currentLength < lastPage.totalCount ? nextPage : undefined;
+      },
+    }
   );
 
 // sendMessage
@@ -204,21 +214,15 @@ export const useSendMessage = (
 };
 
 // sendIntegration (chatGPT, papago, clover, etc.)
-export const useSendIntegration = (
-  // translation: boolean,
-  // channel_id: string,
-  // message: string
-  channel: any,
-  message: string
-) => {
-  return useMutation(async () => {
+export const useSendIntegration = (channel: any, message: string) =>
+  useMutation(async () => {
     const messageContent = message.replace(/^#/, "");
     let data = null;
     switch (channel.integration_id) {
       case "chatgpt":
         data = { prompt: messageContent, model: "gpt-3.5-turbo" };
         break;
-      case "clove_papago":
+      case "clova_papago":
         data = {
           text: messageContent,
           srcLang: "auto",
@@ -235,7 +239,6 @@ export const useSendIntegration = (
       data
     );
   });
-};
 
 // sendImage
 export const useSendImage = (channel_id: string, file: any) =>

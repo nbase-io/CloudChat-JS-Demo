@@ -3,6 +3,9 @@
 ### Live Stream ([demo](https://livestream.ncloudchat.com/))
 
 ## Updates
+#### 04-14-2023
+1. update layout
+2. bug fix
 #### 01-22-2023 
 1. add live stream
 2. add reply message
@@ -36,6 +39,17 @@
 #### 03-16-2023
 1. update sendIntegration as cloudchat v1.0.68
 2. add integration channel info toast
+
+#### 03-24-2023
+1. subscription list infinte scroll
+2. more mobile friendly
+
+#### 03-27-2023
+1. add infinite scrolling subscriptions on mobile standard chat
+2. add infinite scrolling subscriptions on livestream
+
+#### 04-12-2023
+1. font, font color, font size updated on both standard chat and livestream
    
 ## Backgound
 [Standard Chat](https://standardchat.ncloudchat.com/) and [Live Stream](https://livestream.ncloudchat.com/) demo. apps are developed to show how to use the 

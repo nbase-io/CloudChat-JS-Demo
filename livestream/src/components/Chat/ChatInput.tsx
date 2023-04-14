@@ -146,6 +146,7 @@ function ChatInput({
           </PopoverContent>
         </Popover>
       </InputLeftElement>
+
       <Input
         borderRadius={120}
         variant={"outline"}

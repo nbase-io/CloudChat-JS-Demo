@@ -29,7 +29,7 @@ function ChatRow({ channel, subscription }: Props) {
       alignItems="flex-start"
     >
       <HStack spacing={1}>
-        <Heading fontSize={12} w="full">
+        <Heading fontSize={15} w="full">
           {channel.name}
         </Heading>
         {channel.type === "PRIVATE" && <FaLock size={"10"} />}
@@ -39,7 +39,7 @@ function ChatRow({ channel, subscription }: Props) {
         textOverflow="ellipsis"
         whiteSpace={"nowrap"}
         w="full"
-        fontSize={"xs"}
+        fontSize={13}
         color="gray.500"
       >
         {channel.last_message && channel.last_message.content}

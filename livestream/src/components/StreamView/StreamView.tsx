@@ -32,7 +32,7 @@ function StreamView({
       <Heading
         size="md"
         color={"white"}
-        fontSize={{ base: "xs", md: "md", lg: "lg" }}
+        fontSize={{ base: "xs", md: "md", lg: "22" }}
       >
         {subscription?.channel.name}
       </Heading>
@@ -62,8 +62,8 @@ function StreamView({
         <UserAvatar user={user} color="white" />
         <HStack spacing={1}>
           <AiOutlineEye />
-          <Text fontSize={{ base: "xs", lg: "sm" }}>
-            {subscriptions?.totalCount}
+          <Text fontSize={{ base: "xs", lg: "13" }}>
+            {subscriptions?.pages[0]?.totalCount}
           </Text>
         </HStack>
         <Tooltip label="Expand Chat">

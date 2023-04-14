@@ -13,6 +13,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import toast, { Toaster } from "react-hot-toast";
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import theme from "../theme.fonts";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -44,6 +45,7 @@ const client = new QueryClient({
   queryCache,
   defaultOptions: {
     queries: {
+      enabled: false,
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
@@ -59,7 +61,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={client}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <RouterProvider router={router} />
         <Toaster />
       </ChakraProvider>

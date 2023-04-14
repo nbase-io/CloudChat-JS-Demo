@@ -1,95 +1,103 @@
 import {
   Flex,
-  HStack,
+  Box,
   Text,
   Avatar,
   Heading,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-  VStack,
-  Skeleton,
+  Button,
+  Center,
 } from "@chakra-ui/react";
 import { useGetSubscriptions } from "../../api";
 import { useGlobal } from "../Root";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import ChatDetailHeader from "./ChatDetailHeader";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 type Props = {
   channel: any;
   subscription: any;
   setChannel: any;
+  isChatDetailDrawerOpen: boolean;
 };
 
-function ChatDetail({ channel, subscription, setChannel }: Props) {
+function ChatDetail({
+  channel,
+  subscription,
+  setChannel,
+  isChatDetailDrawerOpen,
+}: Props) {
   const { user } = useGlobal();
   // getSubscriptions after subscribe
-  const { data: subscriptions } = useGetSubscriptions(
-    !!subscription,
-    channel?.id
-  );
+  const {
+    data: subscriptions,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetSubscriptions(!!subscription, channel?.id);
   const isPrivate = channel.type === "PRIVATE";
   const isAdmin = channel.user?.id === user!.id;
 
   return (
     <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>
       <ChatDetailHeader channel={channel} setChannel={setChannel} />
-      <Avatar size="xl" name={channel?.name} src={channel?.image_url}></Avatar>
-      <Heading size={"md"} mt={3}>
+      <Avatar
+        size={{ base: "md", md: "md", lg: "lg" }}
+        name={channel?.name}
+        src={channel?.image_url}
+      ></Avatar>
+      <Heading fontSize={15} mt={3}>
         {channel?.name}
       </Heading>
-      <Accordion w="full" px={8} mt={12} allowToggle>
-        <AccordionItem border={"none"}>
-          <AccordionButton bg="gray.100" borderRadius={4}>
-            <HStack spacing={1} flex={1}>
-              {!subscriptions && <Skeleton>&nsbp;</Skeleton>}
-              <Text fontSize={"s"} color="blue.500">
-                {subscriptions?.edges?.length}
-              </Text>
-              <Text as="b">Members</Text>
-            </HStack>
-            {/* {isPrivate && isAdmin && (
-              <Box
-                // size={"xs"}
-                bg="black"
-                color="white"
-                mr="3"
-                fontWeight={"bold"}
-                fontSize={"xs"}
-                px={2}
-                py={1}
-                borderRadius={4}
-                _hover={{ bg: "gray" }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                Invite
+      {subscriptions && (
+        <Flex fontSize={13} mt="1" mb="4" as={"b"}>
+          <Text color={"#117ce9"}>{subscriptions?.pages[0]?.totalCount}</Text>
+          <Text>&nbsp;Members</Text>
+        </Flex>
+      )}
+      <Flex
+        px={6}
+        overflowY="auto"
+        flexDirection={"column"}
+        pb={4}
+        id="scrollableSubscriptionDiv"
+        w="full"
+        fontSize={{ base: "xs", sm: "sm", md: "md" }}
+      >
+        <InfiniteScroll
+          dataLength={subscriptions?.pages?.length! * 25 || 0}
+          next={fetchNextPage}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+          hasMore={hasNextPage || false}
+          scrollableTarget="scrollableSubscriptionDiv"
+          loader={"Loading more..."}
+        >
+          {subscriptions?.pages?.map((page: any) =>
+            page.edges.map((edge: any) => (
+              <Box key={edge.node.user_id} mt="2">
+                <UserAvatar user={edge.node.user} />
               </Box>
-            )} */}
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel pb={4}>
-            <VStack
-              overflowY={"auto"}
-              // minH={subscriptions?.length === 0 ? 0 : 24}
-              py={2}
-              w="full"
-              justifyContent={"flex-start"}
-              alignItems={"flex-start"}
-              spacing={2}
-            >
-              {subscriptions?.edges?.map((edge: any) => (
-                <UserAvatar
-                  user={edge.node.user}
-                  key={edge.node.user_id}
-                  online={edge.node.online}
-                />
-              ))}
-            </VStack>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
+            ))
+          )}
+          {isChatDetailDrawerOpen && hasNextPage && (
+            <Center>
+              <Button
+                isLoading={isFetchingNextPage}
+                my={4}
+                colorScheme="twitter"
+                size="xs"
+                width={"30%"}
+                onClick={() => fetchNextPage()}
+                variant="outline"
+              >
+                see more
+              </Button>
+            </Center>
+          )}
+        </InfiniteScroll>
+      </Flex>
     </Flex>
   );
 }

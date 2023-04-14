@@ -60,7 +60,6 @@ function Chat({
 
   // message received
   nc.bind("onMessageReceived", (channelId: string, message: any) => {
-    console.log(message);
     if (channel.id === channelId) {
       setArrivalMessage({ node: message });
     }

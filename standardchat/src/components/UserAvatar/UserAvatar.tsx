@@ -14,7 +14,7 @@ function UserAvatar({ user, online = false, color = "black" }: Props) {
           {online && <AvatarBadge boxSize={3} bg="green.500" />}
         </Avatar>
       </Tooltip>
-      <Text as="b" color={color}>
+      <Text as="b" color={color} fontSize={13}>
         {user?.name}
       </Text>
     </HStack>

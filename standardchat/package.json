@@ -18,12 +18,14 @@
     "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fontsource/roboto": "^4.5.8",
     "@tanstack/react-query": "^4.24.4",
     "@tanstack/react-query-devtools": "^4.24.4",
-    "cloudchat": "^1.0.68",
+    "cloudchat": "^1.0.69",
     "emoji-mart": "^5.5.2",
     "firebase": "^9.17.2",
     "framer-motion": "^8.5.5",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.2",
@@ -41,6 +43,7 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
     "typescript": "^4.9.5",
-    "vite": "^4.0.0"
+    "vite": "^4.0.0",
+    "vite-plugin-environment": "^1.1.3"
   }
 }

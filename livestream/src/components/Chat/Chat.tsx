@@ -22,9 +22,17 @@ type Props = {
   subscription: any;
   subscriptions: any;
   onChatClose: any;
+  fetchNextPage: any;
+  hasNextPage: boolean | undefined;
 };
 
-function Chat({ subscription, subscriptions, onChatClose }: Props) {
+function Chat({
+  subscription,
+  subscriptions,
+  onChatClose,
+  fetchNextPage,
+  hasNextPage,
+}: Props) {
   const queryClient = useQueryClient();
   const [messages, setMessages] = useState<any>([]);
   const [isGettingMessages, setIsGettingMessages] = useState(false);
@@ -86,7 +94,6 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
 
   // user leave
   nc.bind("onMemberLeaved", (data: any) => {
-    console.log(data);
     if (subscription?.channel_id === data.channel_id) {
       toast(`${data.user_id} left ${subscription?.channel.name}`);
       queryClient.invalidateQueries([
@@ -117,18 +124,20 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
           icon={<TbLayoutSidebarLeftCollapse />}
           variant={"ghost"}
           aria-label={"Collapse Chat"}
-          size="lg"
+          size="md"
           _hover={{ bgColor: "gray.700" }}
           onClick={onChatClose}
         />
       </Tooltip>
-      <Text as="b">Live Chat</Text>
+      <Text as="b" fontSize={15}>
+        Live Chat
+      </Text>
       <Tooltip label="Members">
         <IconButton
           icon={<RiGroupLine />}
           variant={"ghost"}
           aria-label={"Attendance"}
-          size="lg"
+          size="md"
           _hover={{ bgColor: "gray.700" }}
           onClick={onUserListOpen}
         />
@@ -137,7 +146,12 @@ function Chat({ subscription, subscriptions, onChatClose }: Props) {
   );
 
   return isUserListOpen ? (
-    <UserList onClose={onUserListClose} subscriptions={subscriptions} />
+    <UserList
+      onClose={onUserListClose}
+      subscriptions={subscriptions}
+      fetchNextPage={fetchNextPage}
+      hasNextPage={hasNextPage}
+    />
   ) : (
     <VStack bg="gray.900" w="full" color="white" spacing={0}>
       {chatHeader}
