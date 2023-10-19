@@ -9,11 +9,7 @@ import {
 } from "@tanstack/react-query";
 
 import { IFriendship } from "./lib/interfaces/IFriendship";
-import {
-  IChannel,
-  ICreateChannel,
-  IUpdateChannel,
-} from "./lib/interfaces/IChannel";
+import { IChannel, ICreateChannel, IUpdateChannel } from "./lib/interfaces/IChannel";
 import { ICountUnread } from "./lib/interfaces/ICountUnread";
 import { ICreateSubscription } from "./lib/interfaces/ICreateSubscription";
 import { ILogin } from "./lib/interfaces/ILogin";
@@ -22,13 +18,7 @@ import { ILogin } from "./lib/interfaces/ILogin";
 export const nc = new ncloudchat.Chat(true);
 
 // connect
-export const connect = async ({
-  name,
-  id,
-  profile,
-  server,
-  projectId,
-}: ILogin) => {
+export const connect = async ({ name, id, profile, server, projectId }: ILogin) => {
   nc.initialize(projectId);
   nc.setLang("en");
   switch (server) {
@@ -116,10 +106,7 @@ export const useGetChannels = (enabled: boolean) =>
 //   );
 
 // getChannel
-export const useGetChannel = (
-  enabled: boolean,
-  channel_id: string | undefined
-) =>
+export const useGetChannel = (enabled: boolean, channel_id: string | undefined) =>
   useQuery<IChannel>(
     ["channel"],
     async () => {
@@ -133,10 +120,7 @@ export const useGetChannel = (
   );
 
 // countUnread
-export const useCountUnread = (
-  enabled: boolean,
-  channel_id: string | undefined
-) =>
+export const useCountUnread = (enabled: boolean, channel_id: string | undefined) =>
   useQuery<ICountUnread>(
     [`countUnread`, { channelId: channel_id }],
     async () => {
@@ -150,10 +134,7 @@ export const useCountUnread = (
   );
 
 // subscribe
-export const useSubscribe = (
-  enabled: boolean,
-  channel_id: string | undefined
-) =>
+export const useSubscribe = (enabled: boolean, channel_id: string | undefined) =>
   useQuery<ICreateSubscription, any>(
     [`subscribe`, { channelId: channel_id }],
     async () => {
@@ -166,14 +147,10 @@ export const useSubscribe = (
     }
   );
 
-export const useUnsubscribe = (channel_id: string) =>
-  useMutation(async () => await nc.unsubscribe(channel_id));
+export const useUnsubscribe = (channel_id: string) => useMutation(async () => await nc.unsubscribe(channel_id));
 
 // getSubscriptions
-export const useGetSubscriptions = (
-  enabled: boolean,
-  channel_id: string | undefined
-) =>
+export const useGetSubscriptions = (enabled: boolean, channel_id: string | undefined) =>
   useInfiniteQuery(
     [`subscriptions`, { channelId: channel_id }],
     async ({ pageParam = 0 }) => {
@@ -198,11 +175,7 @@ export const useGetSubscriptions = (
   );
 
 // sendMessage
-export const useSendMessage = (
-  channel_id: string,
-  message: string,
-  parent_message_id: string | null
-) => {
+export const useSendMessage = (channel_id: string, message: string, parent_message_id: string | null) => {
   return useMutation(
     async () =>
       await nc.sendMessage(channel_id, {
@@ -229,42 +202,47 @@ export const useSendIntegration = (channel: any, message: string) =>
           targetLang: "en,ja,vi,zh-CN,th",
         };
         break;
+      case "hyperclovax":
+        data = {
+          topK: 0,
+          includeAiFilters: true,
+          maxTokens: 300,
+          temperature: 0.3,
+          messages: [
+            {
+              role: "system",
+              content: "- 아래는 AI 클로바와 사용자의 대화입니다.\n- 클로바는 민감한 사회적 문제, 욕설, 위험, 폭력적인 발언을 하지 않습니다.\n",
+            },
+            {
+              role: "user",
+              content: messageContent,
+            },
+          ],
+          stopBefore: [],
+          repeatPenalty: 5.0,
+          topP: 0.8,
+        };
+        break;
       default:
         return;
     }
-    return await nc.sendIntegration(
-      channel.id,
-      channel.integration_id,
-      "all",
-      data
-    );
+    return await nc.sendIntegration(channel.id, channel.integration_id, "all", data);
   });
 
 // sendImage
-export const useSendImage = (channel_id: string, file: any) =>
-  useMutation(async () => await nc.sendImage(channel_id, file));
+export const useSendImage = (channel_id: string, file: any) => useMutation(async () => await nc.sendImage(channel_id, file));
 
 // deleteMessage
-export const useDeleteMessage = (channel_id: string, message_id: string) =>
-  useMutation(async () => await nc.deleteMessage(channel_id, message_id));
+export const useDeleteMessage = (channel_id: string, message_id: string) => useMutation(async () => await nc.deleteMessage(channel_id, message_id));
 
 // markRead
-export const useMarkRead = (
-  channel_id: string,
-  message_id: string,
-  user_id: string,
-  sort_id: string
-) =>
+export const useMarkRead = (channel_id: string, message_id: string, user_id: string, sort_id: string) =>
   useMutation(async () => {
     return await nc.markRead(channel_id, { user_id, message_id, sort_id });
   });
 
 // create channel
-export const createChannel = async ({
-  type,
-  name,
-  image_url,
-}: ICreateChannel) =>
+export const createChannel = async ({ type, name, image_url }: ICreateChannel) =>
   await nc.createChannel({
     type: type,
     name: name,
@@ -272,16 +250,10 @@ export const createChannel = async ({
   });
 
 // delete channel
-export const useDeleteChannel = (channel_id: string) =>
-  useMutation(async () => await nc.deleteChannel(channel_id));
+export const useDeleteChannel = (channel_id: string) => useMutation(async () => await nc.deleteChannel(channel_id));
 
 // update channel
-export const updateChannel = async ({
-  channel_id,
-  type,
-  name,
-  image_url,
-}: IUpdateChannel) => {
+export const updateChannel = async ({ channel_id, type, name, image_url }: IUpdateChannel) => {
   return await nc.updateChannel(channel_id, {
     type: type,
     name: name,
