@@ -80,7 +80,16 @@ function Chat({
   // user joined
   nc.bind("onMemberJoined", (data: any) => {
     if (channel.id === data.channel_id) {
-      toast(`${data.user_id} joined ${channel.name}`);
+      toast(`${data.user_id} joined ${channel.name}`, {
+        duration: 5000,
+        position: "bottom-center",
+        icon: "👋",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
       queryClient.invalidateQueries([
         "subscriptions",
         { channelId: channel.id },
@@ -91,7 +100,16 @@ function Chat({
   // user leave
   nc.bind("onMemberLeft", (data: any) => {
     if (channel.id === data.channel_id) {
-      toast(`${data.user_id} left ${channel.name}`);
+      toast(`${data.user_id} left ${channel.name}`, {
+        duration: 5000,
+        position: "bottom-center",
+        icon: "✌️",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
       queryClient.invalidateQueries([
         "subscriptions",
         { channelId: channel.id },
