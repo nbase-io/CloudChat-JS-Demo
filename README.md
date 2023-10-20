@@ -3,6 +3,9 @@
 ### Live Stream ([demo](https://livestream.ncloudchat.com/))
 
 ## Updates
+#### 10-10-2023
+1. HyperCLOVAX Added
+   
 #### 04-14-2023
 1. update layout
 2. bug fix
