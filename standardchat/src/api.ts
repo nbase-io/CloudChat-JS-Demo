@@ -202,6 +202,9 @@ export const useSendIntegration = (channel: any, message: string) =>
           targetLang: "en,ja,vi,zh-CN,th",
         };
         break;
+      case "sentiment":
+        data = { content: messageContent };
+        break;
       case "hyperclovax":
       case "hyperclovax002":
       case "hyperclovax003":
