@@ -138,7 +138,7 @@ function Chat({
         guideToast({
           position: "top",
           title: channel?.integration_id,
-          description: `이 채널은 ${channel?.integration_id} 기능이 연동되어 있습니다. 연동된 기능을 사용하려면, 메시지 앞에 "#"을 붙여주세요. 예: #오늘 서울 날씨 어때?`,
+          description: `이 채널은 ${channel?.integration_id} 기능이 연동되어 있습니다. 연동된 기능을 사용하려면, 메시지 앞에 "#"을 붙여주세요. `,
           status: "info",
           duration: 20000,
           isClosable: true,
