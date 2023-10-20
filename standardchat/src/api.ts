@@ -203,6 +203,10 @@ export const useSendIntegration = (channel: any, message: string) =>
         };
         break;
       case "hyperclovax":
+      case "hyperclovax002":
+      case "hyperclovax003":
+      case "hyperclovax004":
+      case "hyperclovax005":
         data = {
           topK: 0,
           includeAiFilters: true,
