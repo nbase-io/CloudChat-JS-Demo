@@ -94,9 +94,7 @@ React query was mainly used to take care of most of the API calls. getMessages d
 ### **initialize**
 To initialize ncloudchat, you need to input your own project ID. Using setLang(),
 you can set default lanugage of the server. Server messages will be delievered 
-in set language. Server and Socket URL need to be set. Default URLs are:
-- Server URL: https://alpha-dashboard-api.cloudchat.dev
-- Socket URL: https://alpha-soc.cloudchat.dev:3000
+
 
 You may need different URLs if you use the project in different country other
 than South Korea and United States.
