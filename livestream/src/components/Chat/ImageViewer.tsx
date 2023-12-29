@@ -32,7 +32,7 @@ function ImageViwer({ node, isModalOpen, onModalClose, onModalOpen }: Props) {
           onClick={onModalClose}
         >
           <Image
-            src={`https://alpha-api.cloudchat.dev${node.attachment_filenames?.url}`}
+            src={`https://dashboard-api.beta-ncloudchat.naverncp.com${node.attachment_filenames?.url}`}
             alt={node.attachment_filenames?.name}
             onClick={onModalOpen}
             fallback={<Spinner />}

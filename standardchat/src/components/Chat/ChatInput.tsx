@@ -111,7 +111,7 @@ function ChatInput({
             </Text>
           ) : (
             <Image
-              src={`https://alpha-api.cloudchat.dev${replyParentMessage.attachment_filenames.url}`}
+              src={`https://dashboard-api.beta-ncloudchat.naverncp.com${replyParentMessage.attachment_filenames.url}`}
               alt={replyParentMessage.attachment_filenames.name}
               fallback={<Spinner />}
               maxW={"3xs"}
