@@ -139,7 +139,7 @@ function Chat({
     <HStack w="full" h={"60px"} justifyContent="space-between" px={2}>
       <Tooltip label={"Close Chat"}>
         <IconButton
-          icon={<TbLayoutSidebarLeftCollapse />}
+          icon={<TbLayoutSidebarLeftCollapse color="white" />}
           variant={"ghost"}
           aria-label={"Collapse Chat"}
           size="md"
@@ -152,7 +152,7 @@ function Chat({
       </Text>
       <Tooltip label="Members">
         <IconButton
-          icon={<RiGroupLine />}
+          icon={<RiGroupLine color="white" />}
           variant={"ghost"}
           aria-label={"Attendance"}
           size="md"

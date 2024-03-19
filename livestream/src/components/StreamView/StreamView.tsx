@@ -68,7 +68,7 @@ function StreamView({
         </HStack>
         <Tooltip label="Expand Chat">
           <IconButton
-            icon={<TbLayoutSidebarLeftExpand />}
+            icon={<TbLayoutSidebarLeftExpand color="white" />}
             variant={"ghost"}
             aria-label={"Expand Chat"}
             size="lg"
