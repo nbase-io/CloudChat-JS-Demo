@@ -123,7 +123,7 @@ function LoginModal({
         <Select
           isInvalid={Boolean(errors.server?.message)}
           placeholder="Select a server"
-          defaultValue={"alpha"}
+          defaultValue={"beta"}
           {...register("server", {
             required: "Please choose a server",
           })}

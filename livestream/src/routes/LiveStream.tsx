@@ -19,7 +19,7 @@ function LiveStream() {
   // subscribe after connect
   const { data: subscription } = useSubscribe(
     isSubscribable,
-    "c80e0fb6-c07a-4a80-b4c0-1a483f477fea"
+    "5f2d4142-6c0f-45e8-9899-3ab076e5c25b"
   );
 
   // getSubscriptions after subscribe
@@ -30,7 +30,7 @@ function LiveStream() {
     status: subscriptionsStatus,
   } = useGetSubscriptions(
     !!subscription,
-    "c80e0fb6-c07a-4a80-b4c0-1a483f477fea"
+    "5f2d4142-6c0f-45e8-9899-3ab076e5c25b"
   );
 
   // WARNING: subscribe AFTER socket connection
