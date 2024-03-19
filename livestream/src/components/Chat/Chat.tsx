@@ -182,7 +182,7 @@ function Chat({
         setReplyParentMessage={setReplyParentMessage}
       />
       <ChatInput
-        channel={{ id: "c80e0fb6-c07a-4a80-b4c0-1a483f477fea" }}
+        channel={{ id: "5f2d4142-6c0f-45e8-9899-3ab076e5c25b" }}
         replyParentMessage={replyParentMessage}
         setReplyParentMessage={setReplyParentMessage}
       />
