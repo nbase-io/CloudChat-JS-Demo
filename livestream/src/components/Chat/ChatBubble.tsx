@@ -19,7 +19,7 @@ import { useDeleteMessage } from "../../api";
 import ImageViwer from "./ImageViewer";
 import { useGlobal } from "../Root";
 import toast from "react-hot-toast";
-//
+import dayjs from "dayjs";
 
 type Props = {
   node: any;
@@ -73,9 +73,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
 
   const messageTime = (
     <Text fontSize={"xs"} color={"gray"}>
-      <Moment local format="LTS">
-        {node.created_at}
-      </Moment>
+      {dayjs(node.created_at).format("LTS")}
     </Text>
   );
 

@@ -21,6 +21,7 @@ import { useGlobal } from "../Root";
 import toast from "react-hot-toast";
 import JSONPretty from "react-json-pretty";
 import "./ChatBubble.css";
+import dayjs from "dayjs";
 
 type Props = {
   node: any;
@@ -75,9 +76,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
 
   const messageTime = (
     <Text fontSize={"xs"} color={"gray"}>
-      <Moment local format="LTS">
-        {node.created_at}
-      </Moment>
+      {dayjs(node.created_at).format("LTS")}
     </Text>
   );
 

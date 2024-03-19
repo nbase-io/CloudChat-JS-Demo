@@ -14,6 +14,15 @@ import toast, { Toaster } from "react-hot-toast";
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import theme from "../theme.fonts";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import Calender from "dayjs/plugin/calendar";
+import RelativeTime from "dayjs/plugin/relativeTime";
+
+// Extend dayjs with the LocalizedFormat plugin
+dayjs.extend(LocalizedFormat);
+dayjs.extend(Calender);
+dayjs.extend(RelativeTime);
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,

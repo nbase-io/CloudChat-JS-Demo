@@ -2,6 +2,7 @@ import { Divider, Flex, Text, Box } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Moment from "react-moment";
 import ChatBubble from "./ChatBubble";
+import dayjs from "dayjs";
 
 type Props = {
   messages: any[];
@@ -75,7 +76,7 @@ function ChatMessages({
                   color={"gray"}
                   align="center"
                 >
-                  <Moment calendar>{array[index - 1].node.created_at}</Moment>
+                  {dayjs(array[index - 1].node.created_at).calendar()}
                 </Text>
                 <Divider />
               </Flex>
@@ -91,7 +92,7 @@ function ChatMessages({
                   color={"gray"}
                   align="center"
                 >
-                  <Moment calendar>{node.created_at}</Moment>
+                  {dayjs(node.created_at).calendar()}
                 </Text>
                 <Divider />
               </Flex>

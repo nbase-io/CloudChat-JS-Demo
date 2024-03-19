@@ -123,7 +123,7 @@ function Root() {
             />
           </Link>
         </Tooltip>
-        <Tooltip label={"Download Sketch"}>
+        {/* <Tooltip label={"Download Sketch"}>
           <Link
             to={
               "https://kr.object.ncloudstorage.com/ncloudchat/NCP_Ncloud%20Chat_UI%20Kit_v1.0.sketch"
@@ -138,7 +138,7 @@ function Root() {
               display={{ base: "none", sm: "flex" }}
             />
           </Link>
-        </Tooltip>
+        </Tooltip> */}
       </HStack>
     </HStack>
   );

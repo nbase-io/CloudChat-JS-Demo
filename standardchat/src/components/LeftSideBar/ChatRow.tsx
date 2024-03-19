@@ -2,6 +2,7 @@ import { Avatar, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import Moment from "react-moment";
 // import { useCountUnread } from "../../api";
 import { FaLock } from "react-icons/fa";
+import dayjs from "dayjs";
 
 type Props = {
   channel: any;
@@ -62,11 +63,8 @@ function ChatRow({ channel, subscription }: Props) {
       {channelNameAndLastMessage}
       <VStack justifyContent={"center"} alignItems="center" spacing={1}>
         <Text fontSize="xs" color={"gray.500"} w="full">
-          {channel.last_message && (
-            <Moment fromNow local>
-              {channel.last_message.created_at}
-            </Moment>
-          )}
+          {channel.last_message &&
+            dayjs(channel.last_message.created_at).fromNow()}
         </Text>
         {/* {mark && (
           <Text
