@@ -7,6 +7,12 @@ import { ILogin } from "./lib/interfaces/ILogin";
 
 export const nc = new ncloudchat.Chat(true);
 
+interface SendMessageData {
+  channel_id: string;
+  message: string;
+  parent_message_id: string | null;
+}
+
 // connect
 export const connect = async ({
   name,
@@ -128,13 +134,9 @@ export const useGetSubscriptions = (
   );
 
 // sendMessage
-export const useSendMessage = (
-  channel_id: string,
-  message: string,
-  parent_message_id: string | null
-) => {
+export const useSendMessage = () => {
   return useMutation(
-    async () =>
+    async ({ channel_id, message, parent_message_id }: SendMessageData) =>
       await nc.sendMessage(channel_id, {
         type: "text",
         message: message,

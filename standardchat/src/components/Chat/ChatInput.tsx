@@ -42,11 +42,7 @@ function ChatInput({
 }: Props) {
   const inputRef = useRef<any>(null);
   const [input, setInput] = useState<any>("");
-  const { mutate: sendMessage, status: sendMessageStatus } = useSendMessage(
-    channel.id,
-    input,
-    replyParentMessage?.message_id
-  );
+  const { mutate: sendMessage, status: sendMessageStatus } = useSendMessage();
   const { mutate: sendIntegration } = useSendIntegration(channel, input);
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [
@@ -72,7 +68,11 @@ function ChatInput({
   const sendText = (e: any) => {
     e.preventDefault();
     if (input) {
-      sendMessage();
+      sendMessage({
+        channel_id: channel.id,
+        message: input,
+        parent_message_id: replyParentMessage?.id,
+      });
       if (channel.integration_id && input.includes("#")) {
         sendIntegration();
       }

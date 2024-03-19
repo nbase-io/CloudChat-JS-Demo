@@ -43,11 +43,7 @@ function ChatInput({
 }: Props) {
   const inputRef = useRef<any>(null);
   const [input, setInput] = useState<any>("");
-  const { mutate: sendMessage, status: sendMessageStatus } = useSendMessage(
-    channel.id,
-    input,
-    replyParentMessage?.message_id
-  );
+  const { mutate: sendMessage, status: sendMessageStatus } = useSendMessage();
   const {
     isOpen: isEmojiOpen,
     onToggle: onEmojiToggle,
@@ -77,7 +73,11 @@ function ChatInput({
     e.preventDefault();
     if (input) {
       // send message
-      sendMessage(channel.id, input);
+      sendMessage({
+        channel_id: channel.id,
+        message: input,
+        parent_message_id: replyParentMessage?.id,
+      });
     }
     setInput(""); // clear input
     setReplyParentMessage(null); // clear parent message
