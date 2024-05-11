@@ -99,7 +99,7 @@ you can set default lanugage of the server. Server messages will be delievered
 You may need different URLs if you use the project in different country other
 than South Korea and United States.
 ```typescript
-import * as ncloudchat from "cloudchat";
+import * as ncloudchat from "ncloudchat";
 
 export const nc = new ncloudchat.Chat();
 

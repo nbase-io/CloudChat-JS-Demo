@@ -81,7 +81,7 @@ import {
 } from "react-icons/fa";
 import { CgNametag } from "react-icons/cg";
 import { useForm } from "react-hook-form";
-import * as ncloudchat from "cloudchat";
+import * as ncloudchat from "ncloudchat";
 import {
   useQuery,
   useMutation,
