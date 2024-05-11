@@ -1,5 +1,4 @@
-import * as ncloudchat from "cloudchat";
-// import ncloudchat * as ncloudchat from "../../../cloudchat-sdk-javascript/src";
+import * as ncloudchat from "ncloudchat";
 
 import {
   useInfiniteQuery,
@@ -91,7 +90,18 @@ export const useGetChannels = (enabled: boolean) =>
     },
     { enabled: enabled }
   );
-
+// getUsers
+export const useGetUsers = (enabled: boolean) =>
+  useQuery<any>(
+    ["users"],
+    async () => {
+      const filter = {};
+      const sort = { created_at: -1 };
+      const option = { offset: 0, per_page: 100 };
+      return await nc.getUsers(filter, sort, option);
+    },
+    { enabled: enabled }
+  );
 // getMessages using infitite query as an example
 // export const useGetMessages = (
 //   enabled: boolean,

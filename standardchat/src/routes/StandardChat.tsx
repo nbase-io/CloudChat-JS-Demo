@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Flex, HStack, useDisclosure } from "@chakra-ui/react";
-import { useGetChannels, useMarkRead, useSubscribe, nc } from "../api";
+import { useGetChannels, useMarkRead, useGetUsers, useSubscribe, nc } from "../api";
 import Chat from "../components/Chat/Chat";
 import ChatDetail from "../components/ChatDetail/ChatDetail";
 import ChatDetailDrawer from "../components/ChatDetail/ChatDetailDrawer";
@@ -16,6 +16,13 @@ function StandardChat() {
     isLoading: isGettingChannels,
     status: getChannelsStatus,
   } = useGetChannels(!!user?.id);
+
+  const {
+    data: users,
+    isLoading: isGettingUsers,
+    status: getUsersStatus,
+  } = useGetUsers(!!user?.id);
+
   // 2. getFriendships after connect
   // const { data: friendships, isLoading: isGettingFriendships } =
   //   useGetFriendships(!!user?.id);
