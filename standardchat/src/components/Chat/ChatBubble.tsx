@@ -159,6 +159,9 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
   );
 
   const messageContent = () => {
+    if(node.attachment_filenames) {
+      console.log(`https://dashboard-api.beta-ncloudchat.naverncp.com${node.attachment_filenames?.url}`);
+    }
     if (node.translate) {
       return (
         <JSONPretty
@@ -172,6 +175,7 @@ function ChatBubble({ node, setReplyParentMessage }: Props) {
           {node.content}
         </Text>
       ) : (
+        
         <Image
           src={`https://dashboard-api.beta-ncloudchat.naverncp.com${node.attachment_filenames?.url}`}
           alt={node.attachment_filenames?.name}
