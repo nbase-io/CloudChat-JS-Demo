@@ -1,4 +1,4 @@
-import * as ncloudchat from "ncloudchat";
+import * as ncloudchat from "NCloudChat";
 // import * as ncloudchat from "../../../cloudchat-sdk-javascript/src";
 
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
