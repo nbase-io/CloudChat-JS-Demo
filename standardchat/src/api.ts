@@ -303,15 +303,16 @@ export const useMarkRead = (
 
 // create channel
 export const createChannel = async ({
-  type,
+  type: ChannelType,
   name,
   image_url,
-}: ICreateChannel) =>
-  await nc.createChannel({
-    type: type,
-    name: name,
-    imageUrl: image_url,
-  });
+}: ICreateChannel) => {
+  // await nc.createChannel({
+  //   type: type,
+  //   name: name,
+  //   imageUrl: image_url,
+  // });
+};
 
 // delete channel
 export const useDeleteChannel = (channel_id: string) =>
@@ -320,13 +321,11 @@ export const useDeleteChannel = (channel_id: string) =>
 // update channel
 export const updateChannel = async ({
   channel_id,
-  type,
   name,
   image_url,
 }: IUpdateChannel) => {
-  return await nc.updateChannel(channel_id, {
-    type: type,
-    name: name,
-    imageUrl: image_url,
-  });
+  // return await nc.updateChannel(channel_id, {
+  //   name: name,
+  //   imageUrl: image_url,
+  // });
 };
