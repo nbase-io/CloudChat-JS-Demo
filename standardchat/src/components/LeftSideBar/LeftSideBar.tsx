@@ -83,7 +83,7 @@ function LeftSideBar({
         mt={8}
       >
         <Heading fontSize={22}>Channels</Heading>
-        <Tooltip label={"Create new channel"}>
+        {/* <Tooltip label={"Create new channel"}>
           <IconButton
             rounded={"full"}
             variant="ghost"
@@ -94,7 +94,7 @@ function LeftSideBar({
             _hover={{ bg: "gray" }}
             onClick={onOpen}
           />
-        </Tooltip>
+        </Tooltip> */}
       </Box>
       {/* <InputGroup size={"md"} px={8}>
         <Input
